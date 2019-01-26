@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EV3 Controller</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="home_scenario_mode"><![CDATA[<b>MODE SCÉNARIO</b><br><i>Concevez un scénario que le robot suivra étape par étape. Par exemple, aller tout droit pendant 1 seconde, puis faire une rotation de 90° à droite.</i>]]></string>
+    <string name="home_manual_mode"><![CDATA[<b>MODE MANUEL</b><br><i>Contrôlez le robot manuellement, en le guidant suivant des directions.</i>]]></string>
+    <string name="home_project_author">Projet réalisé par Christopher Gest dans le cadre des projets tuteurés du quatrième semestre du DUT Informatique, pour les journées portes-ouvertes.</string>
+</resources>
