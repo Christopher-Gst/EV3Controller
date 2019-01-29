@@ -1,4 +1,4 @@
-package com.cgest.ev3controller;
+package com.cgest.ev3controller.capteur;
 
 public enum Couleur {
 

@@ -1,4 +1,7 @@
-package com.cgest.ev3controller;
+package com.cgest.ev3controller.scenario;
+
+import com.cgest.ev3controller.capteur.Capteur;
+import com.cgest.ev3controller.capteur.CapteurToucher;
 
 import java.security.InvalidParameterException;
 

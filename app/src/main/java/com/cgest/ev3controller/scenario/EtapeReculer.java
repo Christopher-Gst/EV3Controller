@@ -1,4 +1,6 @@
-package com.cgest.ev3controller;
+package com.cgest.ev3controller.scenario;
+
+import com.cgest.ev3controller.capteur.Capteur;
 
 public class EtapeReculer extends EtapeAvancerReculer {
 

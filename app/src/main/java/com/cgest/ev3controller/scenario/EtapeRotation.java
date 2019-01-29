@@ -1,4 +1,4 @@
-package com.cgest.ev3controller;
+package com.cgest.ev3controller.scenario;
 
 public class EtapeRotation extends Etape {
 

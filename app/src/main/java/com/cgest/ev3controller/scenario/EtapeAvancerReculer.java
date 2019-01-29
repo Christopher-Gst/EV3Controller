@@ -1,6 +1,6 @@
-package com.cgest.ev3controller;
+package com.cgest.ev3controller.scenario;
 
-import java.security.InvalidParameterException;
+import com.cgest.ev3controller.capteur.Capteur;
 
 public abstract class EtapeAvancerReculer extends Etape {
 

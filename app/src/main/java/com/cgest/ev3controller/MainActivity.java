@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cgest.ev3controller.capteur.CapteurToucher;
+import com.cgest.ev3controller.scenario.EtapeAvancer;
+import com.cgest.ev3controller.scenario.EtapePause;
+import com.cgest.ev3controller.scenario.EtapeReculer;
+import com.cgest.ev3controller.scenario.EtapeRotation;
+import com.cgest.ev3controller.scenario.Scenario;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
