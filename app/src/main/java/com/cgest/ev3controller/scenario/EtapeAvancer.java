@@ -11,8 +11,8 @@ public class EtapeAvancer extends EtapeAvancerReculer {
         super(valeur, unite);
     }
 
-    public EtapeAvancer(int valeur, int unite, Capteur capteur) {
-        super(valeur, unite, capteur);
+    public EtapeAvancer(Capteur capteur) {
+        super(capteur);
         if (capteur instanceof CapteurToucher)
             throw new InvalidParameterException("Impossible d'utiliser le capteur de toucher en contrainte lorsque le robot avance.");
     }

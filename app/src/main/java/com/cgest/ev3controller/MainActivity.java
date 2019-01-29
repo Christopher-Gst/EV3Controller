@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cgest.ev3controller.capteur.CapteurProximite;
 import com.cgest.ev3controller.capteur.CapteurToucher;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
+import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
 import com.cgest.ev3controller.scenario.EtapePause;
 import com.cgest.ev3controller.scenario.EtapeReculer;
 import com.cgest.ev3controller.scenario.EtapeRotation;
@@ -55,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Scenario sc = new Scenario();
-            sc.ajouterEtape(new EtapeAvancer(2, EtapeAvancer.SECONDES));
-            sc.ajouterEtape(new EtapeRotation(EtapeRotation.DROITE, 90));
+            sc.ajouterEtape(new EtapeAvancer(2, EtapeAvancerReculer.SECONDES));
+            sc.ajouterEtape(new EtapePause(5));
+            sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(25)));
+            /*sc.ajouterEtape(new EtapeRotation(EtapeRotation.DROITE, 90));
             sc.ajouterEtape(new EtapePause(3));
-            sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));
+            sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));*/
             String code = sc.getCode();
             Log.e(TAG, code);
             sendMessage(code);

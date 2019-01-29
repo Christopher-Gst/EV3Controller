@@ -8,7 +8,7 @@ public class EtapeReculer extends EtapeAvancerReculer {
         super(valeur, unite);
     }
 
-    public EtapeReculer(int valeur, int unite, Capteur capteur) {
-        super(valeur, unite, capteur);
+    public EtapeReculer(Capteur capteur) {
+        super(capteur);
     }
 }

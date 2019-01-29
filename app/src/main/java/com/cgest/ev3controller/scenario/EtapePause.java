@@ -10,6 +10,6 @@ public class EtapePause extends Etape {
 
     @Override
     public String getCode() {
-        return "P";
+        return "P." + temps;
     }
 }

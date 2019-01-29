@@ -14,20 +14,20 @@ public abstract class EtapeAvancerReculer extends Etape {
     // Contrainte de parcours : jusqu'à une certaine détection.
     private Capteur capteur;
 
+    // Soit le robot avance ou recule pendant une certaine durée ou sur une certaine distance.
     public EtapeAvancerReculer(int valeur, int unite) {
         this.valeur = valeur;
         this.unite = unite;
     }
 
-    public EtapeAvancerReculer(int valeur, int unite, Capteur capteur) {
-        this.valeur = valeur;
-        this.unite = unite;
+    // Soit le robot avance ou recule jusqu'à une détection.
+    public EtapeAvancerReculer(Capteur capteur) {
         this.capteur = capteur;
     }
 
     @Override
     public String getCode() {
-        return (this instanceof EtapeAvancer ? "A" : "R") + "." + valeur + "." + unite + (capteur != null ? "." + capteur.getCode() : "");
+        return (this instanceof EtapeAvancer ? "A" : "R") + "." + (capteur == null ? (valeur + "." + unite) : capteur.getCode());
     }
 
 }
