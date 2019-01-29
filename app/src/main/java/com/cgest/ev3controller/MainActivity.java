@@ -29,6 +29,56 @@ public class MainActivity extends AppCompatActivity {
     private static String mMessage = "Stop";
     private static PrintStream sender;
 
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        Log.e(TAG, "Initialisation du bluetooth...");
+        initBluetooth();
+        if (findBrick()) {
+            try {
+                Log.e(TAG, "Création du socket...");
+                createSocket();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Scenario sc = new Scenario();
+            sc.ajouterEtape(new EtapeAvancer(2, EtapeAvancer.SECONDES));
+            sc.ajouterEtape(new EtapeRotation(EtapeRotation.DROITE, 90));
+            sc.ajouterEtape(new EtapePause(3));
+            sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));
+            String code = sc.getCode();
+            Log.e(TAG, code);
+            sendMessage(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        txtMessage = (EditText) findViewById(R.id.txtMessage);
+        btnSendMessage = (Button) findViewById(R.id.btnEnvoyer);
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (findBrick()) {
+                    Log.e(TAG, "Connexion réussie");
+                    try {
+                        sendMessage(txtMessage.getText().toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e(TAG, "Le robot n'a pas été trouvé.");
+                }
+            }
+        });
+
+    }
+
     private boolean findBrick() {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         for (BluetoothDevice device : pairedDevices) {
@@ -56,43 +106,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        txtMessage = (EditText) findViewById(R.id.txtMessage);
-        btnSendMessage = (Button) findViewById(R.id.btnEnvoyer);
-        btnSendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    sendMessage(txtMessage.getText().toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        Log.e(TAG, "Initialisation du bluetooth...");
-        initBluetooth();
-        Log.e(TAG, "Bluetooth initialisé.");
-        Log.e(TAG, "Recherche du robot et connexion...");
-
-        if (findBrick()) {
-            Log.e(TAG, "Connexion réussie");
-
-            try {
-                Log.e(TAG, "Création du socket...");
-                createSocket();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.e(TAG, "Le robot n'a pas été trouvé.");
-        }
-    }
-
     public static void sendMessage(String message) throws IOException {
         try {
             OutputStream os = mSocket.getOutputStream();
@@ -101,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
             sender.println(message);
             sender.flush();
             Log.e("onSend", "Message sent");
-            mSocket.close();
-            Log.e("onSend", "Socket closed");
+            //mSocket.close();
+            //Log.e("onSend", "Socket closed");
         } catch (IllegalStateException | NullPointerException e) {
             e.printStackTrace();
         }
