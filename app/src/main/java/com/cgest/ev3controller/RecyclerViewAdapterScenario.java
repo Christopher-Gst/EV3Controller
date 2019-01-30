@@ -73,7 +73,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                 ViewHolderEtapeMouvement viewHolder0 = (ViewHolderEtapeMouvement) holder;
                 viewHolder0.spinnerEtapeMouvementTypeDeMouvement.setSelection(etape instanceof EtapeAvancer ? 0 : 1);
                 // Le robot doit se déplacer sur une certaine distance ou pendant une certaine durée.
-                if (((EtapeAvancerReculer) etape).getCapteur() != null) {
+                if (((EtapeAvancerReculer) etape).getCapteur() == null) {
                     // On sélection la contrainte "pendant" ou "sur" du spinner.
                     viewHolder0.spinnerEtapeMouvementContrainte.setSelection(((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.SECONDES ? 0 : 1);
                     // On cache tout ce qui concerne les capteurs.
@@ -84,7 +84,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     // On affiche la durée ou la distance avec la bonne unité.
                     viewHolder0.editTEtapeMouvementValeur.setVisibility(View.VISIBLE);
                     viewHolder0.textVEtapeMouvementUnite.setVisibility(View.VISIBLE);
-                    viewHolder0.editTEtapeMouvementValeur.setText(((EtapeAvancerReculer) etape).getValeur());
+                    viewHolder0.editTEtapeMouvementValeur.setText(String.valueOf(((EtapeAvancerReculer) etape).getValeur()));
                     viewHolder0.textVEtapeMouvementUnite.setText(((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.CM ? "cm" : "secondes");
                 } else { // Sinon le robot doit se déplacer jusqu'à une détection.
                     // On sélection la contrainte "jusqu'à détection" du spinner.
@@ -163,9 +163,9 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
             // On remplit le spinner de choix de contrainte de déplacement ("pendant", 'sur", "jusqu'à détection").
             ArrayList<String> contraintes = new ArrayList<>();
-            sens.add("pendant");
-            sens.add("sur");
-            sens.add("jusqu'à détection");
+            contraintes.add("pendant");
+            contraintes.add("sur");
+            contraintes.add("jusqu'à détection");
             ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(activity,
                     android.R.layout.simple_spinner_item, contraintes);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -173,9 +173,9 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
             // On remplit le spinner de choix de capteur.
             ArrayList<String> capteurs = new ArrayList<>();
-            sens.add("d'une couleur");
-            sens.add("d'un toucher");
-            sens.add("d'un objet distant de");
+            capteurs.add("d'une couleur");
+            capteurs.add("d'un toucher");
+            capteurs.add("d'un objet distant de");
             ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(activity,
                     android.R.layout.simple_spinner_item, capteurs);
             dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -185,7 +185,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             ArrayAdapter<Couleur> dataAdapter4 = new ArrayAdapter<Couleur>(activity,
                     android.R.layout.simple_spinner_item, Couleur.values());
             dataAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerEtapeMouvementCapteur.setAdapter(dataAdapter4);
+            spinnerEtapeMouvementCouleur.setAdapter(dataAdapter4);
         }
 
     }
