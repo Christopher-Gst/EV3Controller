@@ -25,7 +25,7 @@
             android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".ScenarioActivity"></activity>
+        <activity android:name=".ScenarioActivity" android:label="Édition d'un scénario"></activity>
     </application>
 
 </manifest>

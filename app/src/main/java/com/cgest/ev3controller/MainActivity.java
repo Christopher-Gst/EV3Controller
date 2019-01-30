@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cgest.ev3controller.capteur.CapteurCouleur;
 import com.cgest.ev3controller.capteur.CapteurProximite;
 import com.cgest.ev3controller.capteur.CapteurToucher;
+import com.cgest.ev3controller.capteur.Couleur;
+import com.cgest.ev3controller.scenario.Etape;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
 import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+import com.cgest.ev3controller.scenario.EtapeMusique;
 import com.cgest.ev3controller.scenario.EtapePause;
 import com.cgest.ev3controller.scenario.EtapeReculer;
 import com.cgest.ev3controller.scenario.EtapeRotation;
@@ -57,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Scenario sc = new Scenario();
-            sc.ajouterEtape(new EtapeAvancer(2, EtapeAvancerReculer.SECONDES));
-            sc.ajouterEtape(new EtapePause(5));
-            sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(25)));
-            /*sc.ajouterEtape(new EtapeRotation(EtapeRotation.DROITE, 90));
-            sc.ajouterEtape(new EtapePause(3));
-            sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));*/
+            sc.ajouterEtape(new EtapeAvancer(50, EtapeAvancer.CM));
+            //sc.ajouterEtape(new EtapeMusique());
+            //sc.ajouterEtape(new EtapeRotation(90, EtapeRotation.GAUCHE));
+            //sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(30)));
+            //sc.ajouterEtape(new EtapeMusique());
+            //sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));
             String code = sc.getCode();
             Log.e(TAG, code);
             sendMessage(code);
