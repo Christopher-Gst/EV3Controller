@@ -12,4 +12,8 @@ public class CapteurProximite extends Capteur {
     public String getCode() {
         return "P." + distanceDetection;
     }
+
+    public int getDistanceDetection() {
+        return distanceDetection;
+    }
 }

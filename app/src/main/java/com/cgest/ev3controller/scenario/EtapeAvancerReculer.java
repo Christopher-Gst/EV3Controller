@@ -30,4 +30,15 @@ public abstract class EtapeAvancerReculer extends Etape {
         return (this instanceof EtapeAvancer ? "A" : "R") + "." + (capteur == null ? (valeur + "." + unite) : capteur.getCode());
     }
 
+    public Capteur getCapteur() {
+        return capteur;
+    }
+
+    public int getValeur() {
+        return valeur;
+    }
+
+    public int getUnite() {
+        return unite;
+    }
 }

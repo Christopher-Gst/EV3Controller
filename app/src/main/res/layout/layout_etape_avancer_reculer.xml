@@ -6,60 +6,40 @@
     android:layout_margin="10dp">
 
     <TextView
-        android:id="@+id/textVScenarioRotation_Rotation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="Avancer pendant"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/textVScenarioAvancerReculer_Unite"
+        android:id="@+id/textVEtapeMouvementUnite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/editTScenarioAvancerReculer_Valeur"
+        android:layout_toEndOf="@+id/editTEtapeMouvementValeur"
         android:text="seconde(s)"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTScenarioAvancerReculer_Valeur"
+        android:id="@+id/editTEtapeMouvementValeur"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textVScenarioRotation_Rotation"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementContrainte"
         android:ems="10"
         android:inputType="number"
         android:text="60"
         android:textAlignment="center"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnScenarioAvancerReculer_ContrainteJusquA"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textVScenarioAvancerReculer_Unite"
-        android:text="+"
-        android:layout_centerVertical="true"
-        android:textStyle="bold" />
-
     <Spinner
-        android:id="@+id/spinnerScenarioRotation_DroiteGauche"
+        android:id="@+id/spinnerEtapeMouvementCouleur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/spinnerScenarioAvancerReculer_TypeDeContrainte2" />
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementCapteur" />
 
     <Spinner
-        android:id="@+id/spinnerScenarioAvancerReculer_TypeDeContrainte2"
+        android:id="@+id/spinnerEtapeMouvementCapteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/btnScenarioAvancerReculer_ContrainteJusquA" />
+        android:layout_toEndOf="@+id/textVEtapeMouvementUnite" />
 
     <ImageButton
         android:id="@+id/imageBtnScenario_SupprimerEtape"
@@ -69,4 +49,38 @@
         android:layout_centerVertical="true"
         android:background="@drawable/basic_button_unfocused_red"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <Spinner
+        android:id="@+id/spinnerEtapeMouvementContrainte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementTypeDeMouvement" />
+
+    <Spinner
+        android:id="@+id/spinnerEtapeMouvementTypeDeMouvement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <EditText
+        android:id="@+id/editTEtapeMouvementDistance"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementCouleur"
+        android:ems="10"
+        android:hint="distance"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textVEtapeMouvementDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/editTEtapeMouvementDistance"
+        android:text="cm"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

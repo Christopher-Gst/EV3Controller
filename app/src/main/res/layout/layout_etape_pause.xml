@@ -24,24 +24,24 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTScenarioPause_Duree"
-        android:layout_width="41dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textVScenarioRotation_Rotation2"
-        android:ems="10"
-        android:inputType="number"
-        android:text="180" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/editTScenarioPause_Duree"
+        android:layout_toEndOf="@+id/editTEtapePauseTemps"
         android:text="secondes"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTEtapePauseTemps"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/textVScenarioRotation_Rotation2"
+        android:ems="10"
+        android:hint="temps"
+        android:inputType="textPersonName|number" />
 
 </RelativeLayout>

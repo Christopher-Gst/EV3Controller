@@ -70,18 +70,18 @@
             android:text="Avancer" />
 
         <Button
-            android:id="@+id/btnAjouterTacheTourner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tourner" />
-
-        <Button
             android:id="@+id/btnAjouterTacheReculer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Reculer" />
+
+        <Button
+            android:id="@+id/btnAjouterTacheTourner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tourner" />
 
         <Button
             android:id="@+id/btnAjouterTachePause"

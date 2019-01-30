@@ -31,4 +31,7 @@ public class Scenario {
         return code;
     }
 
+    public ArrayList<Etape> getEtapes() {
+        return etapes;
+    }
 }

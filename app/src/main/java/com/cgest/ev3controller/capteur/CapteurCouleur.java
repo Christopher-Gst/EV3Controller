@@ -8,6 +8,10 @@ public class CapteurCouleur extends Capteur {
         this.couleur = couleur;
     }
 
+    public Couleur getCouleur() {
+        return couleur;
+    }
+
     @Override
     public String getCode() {
         return "C." + couleur;
