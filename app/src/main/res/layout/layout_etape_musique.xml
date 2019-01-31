@@ -6,7 +6,7 @@
     android:layout_margin="10dp">
 
     <ImageButton
-        android:id="@+id/imageBtnScenario_SupprimerEtape"
+        android:id="@+id/imageBtnEtapeMusiqueSupprimer"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"

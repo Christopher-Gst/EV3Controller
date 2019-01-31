@@ -6,7 +6,28 @@ public enum Couleur {
 
     @Override
     public String toString() {
-        return super.toString();
+        switch (this) {
+            case BLANC:
+                return "blanc";
+            case NOIR:
+                return "noir";
+            case ROSE:
+                return "rose";
+            case BLEU:
+                return "bleu";
+            case VERT:
+                return "vert";
+            case JAUNE:
+                return "jaune";
+            case ORANGE:
+                return "orange";
+            case ROUGE:
+                return "rouge";
+            case MARRON:
+                return "marron";
+            default:
+                return "";
+        }
     }
 
     public int getIdInEnum() {

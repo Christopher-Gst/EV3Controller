@@ -6,7 +6,7 @@
     android:layout_margin="10dp">
 
     <ImageButton
-        android:id="@+id/imageBtnScenario_SupprimerEtape3"
+        android:id="@+id/imageBtnEtapeRotationSupprimer"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
@@ -40,10 +40,11 @@
         android:layout_width="41dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/textView5"
         android:ems="10"
         android:inputType="number"
-        android:text="90"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -62,8 +63,9 @@
         android:layout_width="114dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/textVScenarioRotation_Rotation2"
-        android:textSize="18sp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
 </RelativeLayout>

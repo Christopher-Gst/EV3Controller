@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     private Scenario scenario;
     private Activity activity;
+    ImageButton btnSupprimerEtape;
 
     private boolean premiereSelectionDeDUneCouleurFaite = false;
 
@@ -153,6 +155,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         Spinner spinnerEtapeMouvementCouleur;
         EditText editTEtapeMouvementDistance;
         TextView textVEtapeMouvementDistance;
+        ImageButton btnSupprimerEtape;
 
         public ViewHolderEtapeMouvement(View itemView) {
             super(itemView);
@@ -166,6 +169,16 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             editTEtapeMouvementDistance = itemView.findViewById(R.id.editTEtapeMouvementDistance);
             textVEtapeMouvementDistance = itemView.findViewById(R.id.textVEtapeMouvementDistance);
 
+            // Bouton de suppression d'une étape.
+            btnSupprimerEtape = itemView.findViewById(R.id.imageBtnEtapeMouvementSupprimer);
+            btnSupprimerEtape.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    scenario.getEtapes().remove(getPosition());
+                    notifyDataSetChanged();
+                }
+            });
+
             // On contrôle la cohérence de l'interface au fur et à mesure que l'utilisateur manipule les spinners.
 
             // Sélection sur le spinner de contrainte de mouvement.
@@ -175,23 +188,26 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     // Si l'utilisateur sélectionne "pendant" ou "sur"...
                     if (i == 0 || i == 1) {
                         // On cache tout ce qui concerne les capteurs.
-                        spinnerEtapeMouvementCapteur.setVisibility(View.INVISIBLE);
-                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
-                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        hideView(spinnerEtapeMouvementCapteur);
+                        hideView(spinnerEtapeMouvementCouleur);
+                        hideView(editTEtapeMouvementDistance);
+                        hideView(textVEtapeMouvementDistance);
                         // On affiche le champs de valeur et d'unité.
-                        textVEtapeMouvementUnite.setVisibility(View.VISIBLE);
-                        editTEtapeMouvementValeur.setVisibility(View.VISIBLE);
+                        showView(textVEtapeMouvementUnite);
+                        showView(editTEtapeMouvementValeur);
                         // On affiche la bonne unité.
                         textVEtapeMouvementUnite.setText(i == 0 ? "secondes" : "cm");
                     } else if (i == 2) { // Sinon, s'il sélectionne "jusqu'à détection"...
                         // On affiche le spinner de sélection d'un capteur.
-                        spinnerEtapeMouvementCapteur.setVisibility(View.VISIBLE);
+                        showView(spinnerEtapeMouvementCapteur);
                         // On affiche le spinner de sélection d'une couleur seulement si le capteur utilisé est celui de couleur.
-                        spinnerEtapeMouvementCouleur.setVisibility((spinnerEtapeMouvementCapteur.getSelectedItemPosition() == 0) ? View.VISIBLE : View.INVISIBLE);
+                        if (spinnerEtapeMouvementCapteur.getSelectedItemPosition() == 0)
+                            showView(spinnerEtapeMouvementCouleur);
+                        else
+                            hideView(spinnerEtapeMouvementCouleur);
                         // On cache le champs de valeur et d'unité.
-                        textVEtapeMouvementUnite.setVisibility(View.INVISIBLE);
-                        editTEtapeMouvementValeur.setVisibility(View.INVISIBLE);
+                        hideView(textVEtapeMouvementUnite);
+                        hideView(editTEtapeMouvementValeur);
                     }
                 }
 
@@ -207,23 +223,23 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     if (i == 0) { // Détection d'un couleur.
                         // On affiche le spinner de couleur.
-                        spinnerEtapeMouvementCouleur.setVisibility(View.VISIBLE);
+                        showView(spinnerEtapeMouvementCouleur);
                         // On cache ce qui concerne les autres capteurs.
-                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        hideView(editTEtapeMouvementDistance);
+                        hideView(textVEtapeMouvementDistance);
                     } else if (i == 1) {// Détection du toucher.
                         // On cache ce qui concerne TOUS les capteurs.
-                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
-                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                        hideView(spinnerEtapeMouvementCouleur);
+                        hideView(editTEtapeMouvementDistance);
+                        hideView(textVEtapeMouvementDistance);
+                        hideView(spinnerEtapeMouvementCouleur);
                     } else if (i == 2) {// Détection d'un object à proximité.
                         // On affiche la distance et "cm" par défaut sur 20cm.
-                        editTEtapeMouvementDistance.setVisibility(View.VISIBLE);
+                        showView(editTEtapeMouvementDistance);
                         editTEtapeMouvementDistance.setText("20");
-                        textVEtapeMouvementDistance.setVisibility(View.VISIBLE);
+                        showView(textVEtapeMouvementDistance);
                         // On cache ce qui concerne les autres capteurs.
-                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                        hideView(spinnerEtapeMouvementCouleur);
                     }
                 }
 
@@ -283,6 +299,16 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             spinnerEtapeRotationSens = itemView.findViewById(R.id.spinnerEtapeRotationSens);
             editTEtapeRotationDegres = itemView.findViewById(R.id.editTEtapeRotationDegres);
 
+            // Bouton de suppression d'une étape.
+            btnSupprimerEtape = itemView.findViewById(R.id.imageBtnEtapeRotationSupprimer);
+            btnSupprimerEtape.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    scenario.getEtapes().remove(getPosition());
+                    notifyDataSetChanged();
+                }
+            });
+
             // On remplit le spinner de choix du sens de rotation ("droite", "gauche").
             ArrayList<String> sens = new ArrayList<>();
             sens.add("droite");
@@ -303,6 +329,16 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             super(itemView);
 
             editTEtapePauseTemps = itemView.findViewById(R.id.editTEtapePauseTemps);
+
+            // Bouton de suppression d'une étape.
+            btnSupprimerEtape = itemView.findViewById(R.id.imageBtnEtapePauseSupprimer);
+            btnSupprimerEtape.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    scenario.getEtapes().remove(getPosition());
+                    notifyDataSetChanged();
+                }
+            });
         }
 
     }
@@ -311,18 +347,35 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
         public ViewHolderEtapeMusique(View itemView) {
             super(itemView);
+
+            // Bouton de suppression d'une étape.
+            btnSupprimerEtape = itemView.findViewById(R.id.imageBtnEtapeMusiqueSupprimer);
+            btnSupprimerEtape.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    scenario.getEtapes().remove(getPosition());
+                    notifyDataSetChanged();
+                }
+            });
         }
 
     }
 
+    private void hideView(Spinner view) {
+        view.setVisibility(View.GONE);
+    }
+
     private void hideView(TextView view) {
-        view.setVisibility(View.INVISIBLE);
-        view.setWidth(0);
+        view.setVisibility(View.GONE);
     }
 
     private void showView(TextView view) {
         view.setVisibility(View.VISIBLE);
-        view.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    private void showView(Spinner view) {
+        view.setVisibility(View.VISIBLE);
+
     }
 
 }

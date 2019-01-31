@@ -23,7 +23,6 @@
         android:layout_toEndOf="@+id/spinnerEtapeMouvementContrainte"
         android:ems="10"
         android:inputType="number"
-        android:text="60"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp" />
@@ -47,7 +46,7 @@
         android:textSize="18sp" />
 
     <ImageButton
-        android:id="@+id/imageBtnScenario_SupprimerEtape"
+        android:id="@+id/imageBtnEtapeMouvementSupprimer"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
@@ -75,13 +74,13 @@
 
     <EditText
         android:id="@+id/editTEtapeMouvementDistance"
-        android:layout_width="80dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/spinnerEtapeMouvementCouleur"
         android:ems="10"
-        android:hint="distance"
         android:inputType="number"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp" />
 
