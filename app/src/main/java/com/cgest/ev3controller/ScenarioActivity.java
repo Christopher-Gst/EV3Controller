@@ -12,8 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cgest.ev3controller.capteur.CapteurCouleur;
+import com.cgest.ev3controller.capteur.CapteurProximite;
+import com.cgest.ev3controller.capteur.CapteurToucher;
+import com.cgest.ev3controller.capteur.Couleur;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
+import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+import com.cgest.ev3controller.scenario.EtapeMusique;
+import com.cgest.ev3controller.scenario.EtapePause;
 import com.cgest.ev3controller.scenario.EtapeReculer;
+import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
 import java.io.IOException;
@@ -100,13 +108,14 @@ public class ScenarioActivity extends AppCompatActivity {
         initRecyclerView();
 
         sc = new Scenario();
-        sc.ajouterEtape(new EtapeAvancer(50, EtapeAvancer.CM));
-        sc.ajouterEtape(new EtapeReculer(3, EtapeAvancer.SECONDES));
-        //sc.ajouterEtape(new EtapeMusique());
-        //sc.ajouterEtape(new EtapeRotation(90, EtapeRotation.GAUCHE));
-        //sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(30)));
-        //sc.ajouterEtape(new EtapeMusique());
-        //sc.ajouterEtape(new EtapeReculer(20, EtapeReculer.CM, new CapteurToucher()));
+        sc.ajouterEtape(new EtapeMusique());
+        sc.ajouterEtape(new EtapeRotation(EtapeRotation.GAUCHE, 90));
+        sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(30)));
+        sc.ajouterEtape(new EtapePause(30));
+        sc.ajouterEtape(new EtapeReculer(new CapteurToucher()));
+        sc.ajouterEtape(new EtapeAvancer(40, EtapeAvancerReculer.CM));
+        sc.ajouterEtape(new EtapeAvancer(30, EtapeAvancerReculer.SECONDES));
+        sc.ajouterEtape(new EtapeAvancer(new CapteurCouleur(Couleur.ORANGE)));
 
         adapter.setScenario(sc);
     }

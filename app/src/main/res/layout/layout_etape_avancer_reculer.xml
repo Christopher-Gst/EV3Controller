@@ -12,8 +12,8 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/editTEtapeMouvementValeur"
         android:text="seconde(s)"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/editTEtapeMouvementValeur"
@@ -25,6 +25,7 @@
         android:inputType="number"
         android:text="60"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp" />
 
     <Spinner
@@ -32,14 +33,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/spinnerEtapeMouvementCapteur" />
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementCapteur"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinnerEtapeMouvementCapteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textVEtapeMouvementUnite" />
+        android:layout_toEndOf="@+id/textVEtapeMouvementUnite"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/imageBtnScenario_SupprimerEtape"
@@ -55,14 +60,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/spinnerEtapeMouvementTypeDeMouvement" />
+        android:layout_toEndOf="@+id/spinnerEtapeMouvementTypeDeMouvement"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinnerEtapeMouvementTypeDeMouvement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/editTEtapeMouvementDistance"
@@ -72,7 +81,9 @@
         android:layout_toEndOf="@+id/spinnerEtapeMouvementCouleur"
         android:ems="10"
         android:hint="distance"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textVEtapeMouvementDistance"
@@ -81,6 +92,6 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/editTEtapeMouvementDistance"
         android:text="cm"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textColor="#000000"
+        android:textSize="18sp" />
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.cgest.ev3controller;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,6 +23,10 @@ import com.cgest.ev3controller.capteur.Couleur;
 import com.cgest.ev3controller.scenario.Etape;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
 import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+import com.cgest.ev3controller.scenario.EtapeMusique;
+import com.cgest.ev3controller.scenario.EtapePause;
+import com.cgest.ev3controller.scenario.EtapeReculer;
+import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
 import java.util.ArrayList;
@@ -29,6 +35,8 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     private Scenario scenario;
     private Activity activity;
+
+    private boolean premiereSelectionDeDUneCouleurFaite = false;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public RecyclerViewAdapterScenario(Activity activity) {
@@ -76,49 +84,40 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                 if (((EtapeAvancerReculer) etape).getCapteur() == null) {
                     // On sélection la contrainte "pendant" ou "sur" du spinner.
                     viewHolder0.spinnerEtapeMouvementContrainte.setSelection(((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.SECONDES ? 0 : 1);
-                    // On cache tout ce qui concerne les capteurs.
-                    viewHolder0.spinnerEtapeMouvementCapteur.setVisibility(View.INVISIBLE);
-                    viewHolder0.spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
-                    viewHolder0.editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                    viewHolder0.textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
                     // On affiche la durée ou la distance avec la bonne unité.
-                    viewHolder0.editTEtapeMouvementValeur.setVisibility(View.VISIBLE);
-                    viewHolder0.textVEtapeMouvementUnite.setVisibility(View.VISIBLE);
                     viewHolder0.editTEtapeMouvementValeur.setText(String.valueOf(((EtapeAvancerReculer) etape).getValeur()));
                     viewHolder0.textVEtapeMouvementUnite.setText(((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.CM ? "cm" : "secondes");
                 } else { // Sinon le robot doit se déplacer jusqu'à une détection.
                     // On sélection la contrainte "jusqu'à détection" du spinner.
                     viewHolder0.spinnerEtapeMouvementContrainte.setSelection(2);
-                    // On cache ce qui concerne une distance ou une durée.
-                    viewHolder0.editTEtapeMouvementValeur.setVisibility(View.INVISIBLE);
-                    viewHolder0.textVEtapeMouvementUnite.setVisibility(View.INVISIBLE);
-                    // On affiche tout ce qui concerne les capteurs.
-                    // D'abord, on cache tous les champs de capteur (ex : distance, couleurs, ...)
-                    viewHolder0.spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
-                    viewHolder0.textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
-                    viewHolder0.editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
                     // On sélection le bon capteur dans le spinner et on remplit les vues spécifiques à chaque capteur.
                     Capteur capteur = ((EtapeAvancerReculer) etape).getCapteur();
                     if (capteur instanceof CapteurCouleur) {
                         viewHolder0.spinnerEtapeMouvementCapteur.setSelection(0);
                         // On remplit le spinner de couleur et on l'affiche.
                         viewHolder0.spinnerEtapeMouvementCouleur.setSelection(((CapteurCouleur) capteur).getCouleur().getIdInEnum());
-                        viewHolder0.spinnerEtapeMouvementCouleur.setVisibility(View.VISIBLE);
                     } else if (capteur instanceof CapteurToucher)
                         viewHolder0.spinnerEtapeMouvementCapteur.setSelection(1);
                     else if (capteur instanceof CapteurProximite) {
                         viewHolder0.spinnerEtapeMouvementCapteur.setSelection(2);
                         // On remplit le champ de distance et on l'affiche (en plus de "cm").
-                        viewHolder0.editTEtapeMouvementDistance.setText(((CapteurProximite) capteur).getDistanceDetection());
-                        viewHolder0.editTEtapeMouvementDistance.setVisibility(View.VISIBLE);
-                        viewHolder0.textVEtapeMouvementDistance.setVisibility(View.VISIBLE);
+                        viewHolder0.editTEtapeMouvementDistance.setText(Integer.toString(((CapteurProximite) capteur).getDistanceDetection()));
                     }
                 }
                 break;
 
-            case 2:
-                ViewHolderEtapeRotation viewHolder2 = (ViewHolderEtapeRotation) holder;
+            case 1:
+                ViewHolderEtapeRotation viewHolder1 = (ViewHolderEtapeRotation) holder;
+
+                // On affiche la durée de la pause.
+                viewHolder1.spinnerEtapeRotationSens.setSelection(((EtapeRotation) etape).getSens() == EtapeRotation.DROITE ? 0 : 1);
+                viewHolder1.editTEtapeRotationDegres.setText(Integer.toString(((EtapeRotation) etape).getDegres()));
                 break;
+
+            case 2:
+                ViewHolderEtapePause viewHolder2 = (ViewHolderEtapePause) holder;
+
+                viewHolder2.editTEtapePauseTemps.setText(Integer.toString(((EtapePause) etape).getDuree()));
         }
     }
 
@@ -127,6 +126,21 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
     public int getItemCount() {
         Log.e("liste", String.valueOf(scenario.getEtapes().size()));
         return scenario.getEtapes().size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Etape etape = scenario.getEtapes().get(position);
+        if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
+            return 0;
+        } else if (etape instanceof EtapeRotation) {
+            return 1;
+        } else if (etape instanceof EtapePause) {
+            return 2;
+        } else if (etape instanceof EtapeMusique) {
+            return 3;
+        }
+        return -1;
     }
 
     public class ViewHolderEtapeMouvement extends RecyclerView.ViewHolder {
@@ -152,13 +166,80 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             editTEtapeMouvementDistance = itemView.findViewById(R.id.editTEtapeMouvementDistance);
             textVEtapeMouvementDistance = itemView.findViewById(R.id.textVEtapeMouvementDistance);
 
+            // On contrôle la cohérence de l'interface au fur et à mesure que l'utilisateur manipule les spinners.
+
+            // Sélection sur le spinner de contrainte de mouvement.
+            spinnerEtapeMouvementContrainte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    // Si l'utilisateur sélectionne "pendant" ou "sur"...
+                    if (i == 0 || i == 1) {
+                        // On cache tout ce qui concerne les capteurs.
+                        spinnerEtapeMouvementCapteur.setVisibility(View.INVISIBLE);
+                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        // On affiche le champs de valeur et d'unité.
+                        textVEtapeMouvementUnite.setVisibility(View.VISIBLE);
+                        editTEtapeMouvementValeur.setVisibility(View.VISIBLE);
+                        // On affiche la bonne unité.
+                        textVEtapeMouvementUnite.setText(i == 0 ? "secondes" : "cm");
+                    } else if (i == 2) { // Sinon, s'il sélectionne "jusqu'à détection"...
+                        // On affiche le spinner de sélection d'un capteur.
+                        spinnerEtapeMouvementCapteur.setVisibility(View.VISIBLE);
+                        // On affiche le spinner de sélection d'une couleur seulement si le capteur utilisé est celui de couleur.
+                        spinnerEtapeMouvementCouleur.setVisibility((spinnerEtapeMouvementCapteur.getSelectedItemPosition() == 0) ? View.VISIBLE : View.INVISIBLE);
+                        // On cache le champs de valeur et d'unité.
+                        textVEtapeMouvementUnite.setVisibility(View.INVISIBLE);
+                        editTEtapeMouvementValeur.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            // Sélection sur le spinner de choix de capteur.
+            spinnerEtapeMouvementCapteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i == 0) { // Détection d'un couleur.
+                        // On affiche le spinner de couleur.
+                        spinnerEtapeMouvementCouleur.setVisibility(View.VISIBLE);
+                        // On cache ce qui concerne les autres capteurs.
+                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                    } else if (i == 1) {// Détection du toucher.
+                        // On cache ce qui concerne TOUS les capteurs.
+                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                        editTEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        textVEtapeMouvementDistance.setVisibility(View.INVISIBLE);
+                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                    } else if (i == 2) {// Détection d'un object à proximité.
+                        // On affiche la distance et "cm" par défaut sur 20cm.
+                        editTEtapeMouvementDistance.setVisibility(View.VISIBLE);
+                        editTEtapeMouvementDistance.setText("20");
+                        textVEtapeMouvementDistance.setVisibility(View.VISIBLE);
+                        // On cache ce qui concerne les autres capteurs.
+                        spinnerEtapeMouvementCouleur.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
             // On remplit le spinner de choix de sens de mouvement avec "Avancer" et "Reculer".
             ArrayList<String> sens = new ArrayList<>();
             sens.add("Avancer");
             sens.add("Reculer");
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
-                    android.R.layout.simple_spinner_item, sens);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    R.layout.spinner_item, sens);
+            dataAdapter.setDropDownViewResource(R.layout.spinner_item);
             spinnerEtapeMouvementTypeDeMouvement.setAdapter(dataAdapter);
 
             // On remplit le spinner de choix de contrainte de déplacement ("pendant", 'sur", "jusqu'à détection").
@@ -167,8 +248,8 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             contraintes.add("sur");
             contraintes.add("jusqu'à détection");
             ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(activity,
-                    android.R.layout.simple_spinner_item, contraintes);
-            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    R.layout.spinner_item, contraintes);
+            dataAdapter2.setDropDownViewResource(R.layout.spinner_item);
             spinnerEtapeMouvementContrainte.setAdapter(dataAdapter2);
 
             // On remplit le spinner de choix de capteur.
@@ -177,15 +258,16 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             capteurs.add("d'un toucher");
             capteurs.add("d'un objet distant de");
             ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(activity,
-                    android.R.layout.simple_spinner_item, capteurs);
-            dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    R.layout.spinner_item, capteurs);
+            dataAdapter3.setDropDownViewResource(R.layout.spinner_item);
             spinnerEtapeMouvementCapteur.setAdapter(dataAdapter3);
 
             // On remplit le spinner des couleurs.
             ArrayAdapter<Couleur> dataAdapter4 = new ArrayAdapter<Couleur>(activity,
-                    android.R.layout.simple_spinner_item, Couleur.values());
-            dataAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    R.layout.spinner_item, Couleur.values());
+            dataAdapter4.setDropDownViewResource(R.layout.spinner_item);
             spinnerEtapeMouvementCouleur.setAdapter(dataAdapter4);
+
         }
 
     }
@@ -200,6 +282,15 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
             spinnerEtapeRotationSens = itemView.findViewById(R.id.spinnerEtapeRotationSens);
             editTEtapeRotationDegres = itemView.findViewById(R.id.editTEtapeRotationDegres);
+
+            // On remplit le spinner de choix du sens de rotation ("droite", "gauche").
+            ArrayList<String> sens = new ArrayList<>();
+            sens.add("droite");
+            sens.add("gauche");
+            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(activity,
+                    R.layout.spinner_item, sens);
+            dataAdapter2.setDropDownViewResource(R.layout.spinner_item);
+            spinnerEtapeRotationSens.setAdapter(dataAdapter2);
         }
 
     }
@@ -224,5 +315,14 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     }
 
+    private void hideView(TextView view) {
+        view.setVisibility(View.INVISIBLE);
+        view.setWidth(0);
+    }
+
+    private void showView(TextView view) {
+        view.setVisibility(View.VISIBLE);
+        view.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
 
 }

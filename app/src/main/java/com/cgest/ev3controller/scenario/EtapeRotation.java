@@ -18,4 +18,13 @@ public class EtapeRotation extends Etape {
     public String getCode() {
         return "ROT." + sens + "." + degres;
     }
+
+    public int getSens() {
+        return sens;
+    }
+
+    public int getDegres() {
+        return degres;
+    }
+
 }
