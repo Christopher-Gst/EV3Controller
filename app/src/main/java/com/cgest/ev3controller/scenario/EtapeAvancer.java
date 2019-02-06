@@ -17,4 +17,8 @@ public class EtapeAvancer extends EtapeAvancerReculer {
             throw new InvalidParameterException("Impossible d'utiliser le capteur de toucher en contrainte lorsque le robot avance.");
     }
 
+    public EtapeAvancer() {
+        super();
+    }
+
 }

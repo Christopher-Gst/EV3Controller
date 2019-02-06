@@ -11,4 +11,8 @@ public class EtapeReculer extends EtapeAvancerReculer {
     public EtapeReculer(Capteur capteur) {
         super(capteur);
     }
+
+    public EtapeReculer() {
+        super();
+    }
 }

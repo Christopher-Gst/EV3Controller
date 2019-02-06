@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import com.cgest.ev3controller.scenario.Scenario;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
@@ -96,35 +98,100 @@ public class ScenarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Log.e(TAG, sc.getCode());
-                    sendMessage(sc.getCode());
+                    Log.e(TAG, adapter.scenario.getCode());
+                    // On envoie le scénario au robot. On le fait deux fois à cause de l'instabilité du comportement du robot face au bluetooth.
+                    sendMessage(adapter.scenario.getCode());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    sendMessage(adapter.scenario.getCode());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
+        // Boutons permettant d'ajouter une étape au scénario.
+        btnAjouterTacheAvancer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.scenario.getEtapes().add(new EtapeAvancer());
+                adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+            }
+        });
+
+        btnAjouterTacheReculer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.scenario.getEtapes().add(new EtapeReculer());
+                adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+            }
+        });
+
+        btnAjouterTachePause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.scenario.getEtapes().add(new EtapePause());
+                adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+            }
+        });
+
+        btnAjouterTacheJouerSon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.scenario.getEtapes().add(new EtapeMusique());
+                adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+            }
+        });
+
+        btnAjouterTacheTourner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.scenario.getEtapes().add(new EtapeRotation());
+                adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+            }
+        });
+
         // Initialisation de la RecyclerView.
         initRecyclerView();
-
-        sc = new Scenario();
-        sc.ajouterEtape(new EtapeMusique());
-        sc.ajouterEtape(new EtapeRotation(EtapeRotation.GAUCHE, 90));
-        sc.ajouterEtape(new EtapeAvancer(new CapteurProximite(30)));
-        sc.ajouterEtape(new EtapePause(30));
-        sc.ajouterEtape(new EtapeReculer(new CapteurToucher()));
-        sc.ajouterEtape(new EtapeAvancer(40, EtapeAvancerReculer.CM));
-        sc.ajouterEtape(new EtapeAvancer(30, EtapeAvancerReculer.SECONDES));
-        sc.ajouterEtape(new EtapeAvancer(new CapteurCouleur(Couleur.ORANGE)));
-
-        adapter.setScenario(sc);
     }
 
     public void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerVScenario);
-        adapter = new RecyclerViewAdapterScenario(this);
+        adapter = new RecyclerViewAdapterScenario(this, recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Extend the Callback class
+        ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+            //and in your imlpementaion of
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                // get the viewHolder's and target's positions in your adapter data, swap them
+                Collections.swap(adapter.scenario.getEtapes(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                // and notify the adapter that its dataset has changed
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                adapter.colorerEtNumeroterLignes();
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //TODO
+            }
+
+            //defines the enabled move directions in each state (idle, swiping, dragging).
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
+        };
+
+        // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
+        ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
+        ith.attachToRecyclerView(recyclerView);
     }
 
     private boolean findBrick() {
@@ -190,13 +257,12 @@ public class ScenarioActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("onDestroy", "App beendet");
         try {
+            sendMessage("STOP");
             mSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.e("onDestroy", "App vollständig beendet");
     }
 
 }

@@ -14,6 +14,11 @@ public abstract class EtapeAvancerReculer extends Etape {
     // Contrainte de parcours : jusqu'à une certaine détection.
     private Capteur capteur;
 
+    // Attributs par défaut en cas de constructeur vide.
+    public final static int VALEUR_PAR_DEFAUT = 10;
+    private final static int UNITE_PAR_DEFAUT = 0;
+    private final static Capteur CAPTEUR_PAR_DEFAUT = null;
+
     // Soit le robot avance ou recule pendant une certaine durée ou sur une certaine distance.
     public EtapeAvancerReculer(int valeur, int unite) {
         this.valeur = valeur;
@@ -23,6 +28,12 @@ public abstract class EtapeAvancerReculer extends Etape {
     // Soit le robot avance ou recule jusqu'à une détection.
     public EtapeAvancerReculer(Capteur capteur) {
         this.capteur = capteur;
+    }
+
+    public EtapeAvancerReculer() {
+        this.valeur = VALEUR_PAR_DEFAUT;
+        this.unite = UNITE_PAR_DEFAUT;
+        this.capteur = CAPTEUR_PAR_DEFAUT;
     }
 
     @Override
@@ -40,5 +51,26 @@ public abstract class EtapeAvancerReculer extends Etape {
 
     public int getUnite() {
         return unite;
+    }
+
+    public void setCapteur(Capteur capteur) {
+        this.capteur = capteur;
+    }
+
+    public void setValeur(int valeur) {
+        this.valeur = valeur;
+    }
+
+    public void setUnite(int unite) {
+        this.unite = unite;
+    }
+
+    @Override
+    public String toString() {
+        return "EtapeAvancerReculer{ sens=" + (this instanceof EtapeAvancer ? "Avancer" : (this instanceof EtapeReculer ? "Reculer" : "?")) +
+                ", valeur=" + valeur +
+                ", unite=" + unite +
+                ", capteur=" + capteur +
+                '}';
     }
 }

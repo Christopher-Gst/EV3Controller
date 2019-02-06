@@ -8,10 +8,18 @@ public class EtapeRotation extends Etape {
     public static int GAUCHE = 1;
     // Degré de rotation à effectuer.
     private int degres;
+    // Valeurs par défaut pour le constructeur vide.
+    private final static int SENS_PAR_DEFAUT = DROITE;
+    private final static int DEGRES_PAR_DEFAUT = 90;
 
     public EtapeRotation(int sens, int degres) {
         this.sens = sens;
         this.degres = degres;
+    }
+
+    public EtapeRotation() {
+        this.sens = SENS_PAR_DEFAUT;
+        this.degres = DEGRES_PAR_DEFAUT;
     }
 
     @Override
@@ -27,4 +35,11 @@ public class EtapeRotation extends Etape {
         return degres;
     }
 
+    public void setSens(int sens) {
+        this.sens = sens;
+    }
+
+    public void setDegres(int degres) {
+        this.degres = degres;
+    }
 }
