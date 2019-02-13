@@ -1,12 +1,7 @@
 package com.cgest.ev3controller;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,7 +31,6 @@ import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -59,7 +53,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         this.scenario.getEtapes().clear();
         this.scenario.getEtapes().addAll(scenario.getEtapes());
         notifyItemRangeInserted(0, scenario.getEtapes().size() - 1);
-        colorerEtNumeroterLignes();
+        colorerLignes();
 
         Log.e("Liste", "setScenario() fait.");
     }
@@ -86,15 +80,13 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         Log.e("Liste", "onBindViewHolder");
 
         // On alterne la couleur des lignes.
-        colorerEtNumeroterLignes();
+        colorerLignes();
 
         Etape etape = scenario.getEtapes().get(position);
         // On affiche les caractéristiques de l'étape sur la view.
         switch (holder.getItemViewType()) {
             case 0:
                 ViewHolderEtapeMouvement viewHolder0 = (ViewHolderEtapeMouvement) holder;
-                // On affiche le numéro de l'étape.
-                viewHolder0.textVEtapeMouvementNumero.setText("#" + (position + 1));
 
                 viewHolder0.spinnerEtapeMouvementTypeDeMouvement.setSelection(etape instanceof EtapeAvancer ? 0 : 1);
                 // Le robot doit se déplacer sur une certaine distance ou pendant une certaine durée.
@@ -125,8 +117,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
             case 1:
                 ViewHolderEtapeRotation viewHolder1 = (ViewHolderEtapeRotation) holder;
-                // On affiche le numéro de l'étape.
-                viewHolder1.textVEtapeRotationNumero.setText("#" + (position + 1));
 
                 // On affiche la durée de la pause.
                 viewHolder1.spinnerEtapeRotationSens.setSelection(((EtapeRotation) etape).getSens() == EtapeRotation.DROITE ? 0 : 1);
@@ -135,16 +125,12 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
             case 2:
                 ViewHolderEtapePause viewHolder2 = (ViewHolderEtapePause) holder;
-                // On affiche le numéro de l'étape.
-                viewHolder2.textVEtapePauseNumero.setText("#" + (position + 1));
 
                 viewHolder2.editTEtapePauseTemps.setText(Integer.toString(((EtapePause) etape).getDuree()));
                 break;
 
             case 3:
                 ViewHolderEtapeMusique viewHolder3 = (ViewHolderEtapeMusique) holder;
-                // On affiche le numéro de l'étape.
-                viewHolder3.textVEtapeMusiqueNumero.setText("#" + (position + 1));
                 break;
         }
     }
@@ -173,7 +159,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     public class ViewHolderEtapeMouvement extends RecyclerView.ViewHolder {
 
-        TextView textVEtapeMouvementNumero;
         Spinner spinnerEtapeMouvementTypeDeMouvement;
         Spinner spinnerEtapeMouvementContrainte;
         EditText editTEtapeMouvementValeur;
@@ -187,7 +172,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         public ViewHolderEtapeMouvement(View itemView) {
             super(itemView);
 
-            textVEtapeMouvementNumero = itemView.findViewById(R.id.textVEtapeMouvementNumero);
             spinnerEtapeMouvementTypeDeMouvement = itemView.findViewById(R.id.spinnerEtapeMouvementTypeDeMouvement);
             spinnerEtapeMouvementContrainte = itemView.findViewById(R.id.spinnerEtapeMouvementContrainte);
             editTEtapeMouvementValeur = itemView.findViewById(R.id.editTEtapeMouvementValeur);
@@ -207,7 +191,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     int position = getPosition();
                     scenario.getEtapes().remove(position);
                     notifyItemRemoved(position);
-                    colorerEtNumeroterLignes();
+                    colorerLignes();
                 }
             });
 
@@ -442,14 +426,12 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     public class ViewHolderEtapeRotation extends RecyclerView.ViewHolder {
 
-        TextView textVEtapeRotationNumero;
         Spinner spinnerEtapeRotationSens;
         EditText editTEtapeRotationDegres;
 
         public ViewHolderEtapeRotation(View itemView) {
             super(itemView);
 
-            textVEtapeRotationNumero = itemView.findViewById(R.id.textVEtapeRotationNumero);
             spinnerEtapeRotationSens = itemView.findViewById(R.id.spinnerEtapeRotationSens);
             editTEtapeRotationDegres = itemView.findViewById(R.id.editTEtapeRotationDegres);
 
@@ -461,7 +443,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     int position = getPosition();
                     scenario.getEtapes().remove(position);
                     notifyItemRemoved(position);
-                    colorerEtNumeroterLignes();
+                    colorerLignes();
                 }
             });
 
@@ -509,13 +491,11 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     public class ViewHolderEtapePause extends RecyclerView.ViewHolder {
 
-        TextView textVEtapePauseNumero;
         EditText editTEtapePauseTemps;
 
         public ViewHolderEtapePause(View itemView) {
             super(itemView);
 
-            textVEtapePauseNumero = itemView.findViewById(R.id.textVEtapePauseNumero);
             editTEtapePauseTemps = itemView.findViewById(R.id.editTEtapePauseTemps);
 
             // Bouton de suppression d'une étape.
@@ -526,7 +506,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     int position = getPosition();
                     scenario.getEtapes().remove(position);
                     notifyItemRemoved(position);
-                    colorerEtNumeroterLignes();
+                    colorerLignes();
                 }
             });
 
@@ -552,12 +532,8 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     public class ViewHolderEtapeMusique extends RecyclerView.ViewHolder {
 
-        TextView textVEtapeMusiqueNumero;
-
         public ViewHolderEtapeMusique(View itemView) {
             super(itemView);
-
-            textVEtapeMusiqueNumero = itemView.findViewById(R.id.textVEtapeMusiqueNumero);
 
             // Bouton de suppression d'une étape.
             btnSupprimerEtape = itemView.findViewById(R.id.imageBtnEtapeMusiqueSupprimer);
@@ -567,18 +543,18 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     int position = getPosition();
                     scenario.getEtapes().remove(position);
                     notifyItemRemoved(position);
-                    colorerEtNumeroterLignes();
+                    colorerLignes();
                 }
             });
         }
 
     }
 
-    public void colorerEtNumeroterLignes() {
+    public void colorerLignes() {
         int nbElements = rc.getChildCount();
         for (int i = 0; i < nbElements; i++) {
             RecyclerView.ViewHolder holder = rc.getChildViewHolder(rc.getChildAt(i));
-            holder.itemView.setBackgroundColor(i % 2 == 1 ? 0x80E0EEEE : 000000);
+            holder.itemView.setBackgroundColor(i % 2 == 0 ? 000000 : 0x80E0EEEE);
         }
     }
 

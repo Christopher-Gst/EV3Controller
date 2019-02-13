@@ -19,20 +19,9 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textVEtapeMusiqueNumero"
-        android:text="Faire un bip"
-        android:textColor="#000000"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textVEtapeMusiqueNumero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:text="#"
+        android:text="Faire un bip"
         android:textColor="#000000"
         android:textSize="18sp" />
 

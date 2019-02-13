@@ -11,14 +11,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.cgest.ev3controller.capteur.CapteurCouleur;
-import com.cgest.ev3controller.capteur.CapteurProximite;
-import com.cgest.ev3controller.capteur.CapteurToucher;
-import com.cgest.ev3controller.capteur.Couleur;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
-import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
 import com.cgest.ev3controller.scenario.EtapeMusique;
 import com.cgest.ev3controller.scenario.EtapePause;
 import com.cgest.ev3controller.scenario.EtapeReculer;
@@ -172,7 +166,7 @@ public class ScenarioActivity extends AppCompatActivity {
                 Collections.swap(adapter.scenario.getEtapes(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 // and notify the adapter that its dataset has changed
                 adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                adapter.colorerEtNumeroterLignes();
+                adapter.colorerLignes();
                 return true;
             }
 
