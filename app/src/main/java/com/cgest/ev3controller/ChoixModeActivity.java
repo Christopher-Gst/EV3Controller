@@ -1,5 +1,7 @@
 package com.cgest.ev3controller;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 
 public class ChoixModeActivity extends AppCompatActivity {
 
+    // Contexte de l'activité.
+    private Activity activity;
+
     // Contrôles utilisateur.
     private Button btnModeManuel;
     private Button btnModeAuto;
@@ -19,6 +24,7 @@ public class ChoixModeActivity extends AppCompatActivity {
     private Button btnChoixModeContinuer;
     private ImageView imgVCocheModeManuel;
     private ImageView imgVCocheModeAuto;
+    private Button imgBtnChoixModeCredits;
 
     private boolean isModeManuelSelectionne;
 
@@ -30,6 +36,9 @@ public class ChoixModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_mode);
 
+        // On récupère le contexte actuel.
+        activity = this;
+
         // On récupère les Views de l'activité.
         btnModeManuel = (Button) findViewById(R.id.btnModeManuel);
         btnModeAuto = (Button) findViewById(R.id.btnModeAuto);
@@ -38,6 +47,7 @@ public class ChoixModeActivity extends AppCompatActivity {
         btnChoixModeContinuer = (Button) findViewById(R.id.btnChoixModeContinuer);
         imgVCocheModeManuel = (ImageView) findViewById(R.id.imgVCocheModeManuel);
         imgVCocheModeAuto = (ImageView) findViewById(R.id.imgVCocheModeAuto);
+        imgBtnChoixModeCredits = (Button) findViewById(R.id.btnChoixModeCredits);
 
         // On affiche la police de caractère de l'application sur les Views.
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/fontdinerdotcom_huggable.TTF");
@@ -62,6 +72,16 @@ public class ChoixModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectionnerMode(MODE_AUTOMATIQUE);
+            }
+        });
+
+        // Gestion du bouton "A propos".
+        imgBtnChoixModeCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog dialogAPropos = new CustomDialog(activity, "À propos", "Texte à définir.");
+                dialogAPropos.show();
+                dialogAPropos.afficherBtnNegatif("Fermer");
             }
         });
 

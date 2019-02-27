@@ -173,17 +173,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <Button
+        android:id="@+id/btnChoixModeCredits"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@null"
+        android:background="@drawable/credits"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/btnChoixModeContinuer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnChoixModeContinuer"
-        app:srcCompat="@drawable/credits" />
+        app:layout_constraintTop_toTopOf="@+id/btnChoixModeContinuer" />
 
 </android.support.constraint.ConstraintLayout>
