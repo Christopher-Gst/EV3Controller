@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fond_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textVModeAutoTitre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Mode Automatique"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="95sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textVModeAutoTitre">
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:background="#33000000"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Actions"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp" />
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_horloge3"
+                            android:text="Avancer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_regle"
+                            android:text="Avancer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_obstacle"
+                            android:text="Avancer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_toucher"
+                            android:text="Avancer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_couleur"
+                            android:text="Avancer" />
+                    </FrameLayout>
+
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_horloge3"
+                            android:text="Reculer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_regle"
+                            android:text="Reculer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_obstacle"
+                            android:text="Reculer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_toucher"
+                            android:text="Reculer" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_couleur"
+                            android:text="Reculer" />
+                    </FrameLayout>
+
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_droite"
+                            android:text="Tourner" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_gauche"
+                            android:text="Tourner" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_sablier"
+                            android:drawablePadding="0dp" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_musique"
+                            android:drawablePadding="0dp" />
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:background="#33000000"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scénario"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#295185"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/button18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/btn_scanner_une_action" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/icon_enregistrer"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button18" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/icon_information"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/icon_ouvrir"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button19" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/icon_lancer_scenario"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

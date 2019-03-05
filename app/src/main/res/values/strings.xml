@@ -4,6 +4,7 @@
     <string name="home_scenario_mode"><![CDATA[<b>MODE MANUEL</b><br><i>Concevez un scénario que le robot suivra étape par étape. Par exemple, aller tout droit pendant 1 seconde, puis faire une rotation de 90° à droite.</i>]]></string>
     <string name="home_manual_mode"><![CDATA[<b>MODE AUTOMATIQUE</b><br><i>Contrôlez le robot manuellement, en le guidant suivant des directions.</i>]]></string>
     <string name="home_project_author">Projet réalisé par Christopher Gest dans le cadre des projets tuteurés du quatrième semestre du DUT Informatique, pour les journées portes-ouvertes.</string>
-    <string name="choix_mode_manuel">Concevez un scénario en scannant des QR Codes. Le robot suivra votre scénario étape par étape.</string>
+    <string name="choix_mode_manuel">Concevez un scénario en choisissant des actions. Le robot suivra votre scénario étape par étape.</string>
+    <string name="choix_mode_scan">Concevez un scénario en scannant des QR Codes. Le robot suivra votre scénario étape par étape.</string>
     <string name="choix_mode_automatique">Contrôlez automatiquement le robot à l\'aide de flèches directionnelles.</string>
 </resources>
