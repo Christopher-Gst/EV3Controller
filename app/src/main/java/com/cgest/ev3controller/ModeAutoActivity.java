@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.cgest.ev3controller.scenario.EtapeArreter;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
+import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+import com.cgest.ev3controller.scenario.EtapeReculer;
+import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
 public class ModeAutoActivity extends AppCompatActivity {
@@ -25,6 +28,11 @@ public class ModeAutoActivity extends AppCompatActivity {
     private Button btnModeAutoGauche;
     private Button btnModeAutoDroite;
 
+    // Sens du robot :
+    //      0 : le robot est droit, dans le même sens que quand l'utilisateur a ouvert le mode automatique
+    //      -1 : le robot est tourné vers la gauche, en angle droit.
+    //      1 : le robot est tourné vers la droite, en angle droit.
+    private int sensRobot = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +55,152 @@ public class ModeAutoActivity extends AppCompatActivity {
         btnModeAutoHaut.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Scenario scenario = new Scenario();
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.e(TAG, "ACTION_DOWN");
-                        EtapeAvancer etapeAvancer = new EtapeAvancer(-1, -1);
-                        scenario.ajouterEtape(etapeAvancer);
+                        Scenario scenario = new Scenario();
+                        // On arrange le sens du robot pour l'orienter vers l'avant.
+                        if (sensRobot != 0) {
+                            int angleDeCorrection = 0;
+                            switch (sensRobot) {
+                                case -1:
+                                    angleDeCorrection = 90;
+                                    break;
+                                case 1:
+                                    angleDeCorrection = -90;
+                                    break;
+                            }
+                            sensRobot = 0;
+                            EtapeRotation etapeRot = new EtapeRotation(EtapeRotation.DROITE, angleDeCorrection);
+                            scenario.ajouterEtape(etapeRot);
+                        }
+                        // On fait avancer le robot.
+                        EtapeAvancer etapeRouler = new EtapeAvancer(-1, -1);
+                        scenario.ajouterEtape(etapeRouler);
+
+                        // On envoie le scénario au robot.
                         Ev3BluetoothManager.envoyerScenario(scenario);
                         break;
                     case MotionEvent.ACTION_UP:
                         Log.e(TAG, "ACTION_UP");
-                        EtapeArreter etapeArreter = new EtapeArreter();
-                        scenario.ajouterEtape(etapeArreter);
+                        envoyerCommandeArret();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnModeAutoBas.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(TAG, "ACTION_DOWN");
+                        Scenario scenario = new Scenario();
+                        // On arrange le sens du robot pour l'orienter vers l'avant.
+                        if (sensRobot != 0) {
+                            int angleDeCorrection = 0;
+                            switch (sensRobot) {
+                                case -1:
+                                    angleDeCorrection = 90;
+                                    break;
+                                case 1:
+                                    angleDeCorrection = -90;
+                                    break;
+                            }
+                            sensRobot = 0;
+                            EtapeRotation etapeRot = new EtapeRotation(EtapeRotation.DROITE, angleDeCorrection);
+                            scenario.ajouterEtape(etapeRot);
+                        }
+                        // On fait avancer le robot.
+                        EtapeReculer etapeRouler = new EtapeReculer(-1, -1);
+                        scenario.ajouterEtape(etapeRouler);
+
+                        // On envoie le scénario au robot.
                         Ev3BluetoothManager.envoyerScenario(scenario);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(TAG, "ACTION_UP");
+                        envoyerCommandeArret();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnModeAutoDroite.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(TAG, "ACTION_DOWN");
+                        Scenario scenario = new Scenario();
+                        // On arrange le sens du robot pour l'orienter vers la droite.
+                        if (sensRobot != 1) {
+                            int angleDeCorrection = 0;
+                            switch (sensRobot) {
+                                case 0:
+                                    angleDeCorrection = 90;
+                                    break;
+                                case -1:
+                                    angleDeCorrection = 180;
+                                    break;
+                            }
+                            sensRobot = 1;
+                            EtapeRotation etapeRot = new EtapeRotation(EtapeRotation.DROITE, angleDeCorrection);
+                            scenario.ajouterEtape(etapeRot);
+                        }
+                        // On fait avancer le robot.
+                        EtapeAvancer etapeRouler = new EtapeAvancer(-1, -1);
+                        scenario.ajouterEtape(etapeRouler);
+
+                        // On envoie le scénario au robot.
+                        Ev3BluetoothManager.envoyerScenario(scenario);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(TAG, "ACTION_UP");
+                        envoyerCommandeArret();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnModeAutoGauche.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(TAG, "ACTION_DOWN");
+                        Scenario scenario = new Scenario();
+                        // On arrange le sens du robot pour l'orienter vers la gauche.
+                        if (sensRobot != -1) {
+                            int angleDeCorrection = 0;
+                            switch (sensRobot) {
+                                case 0:
+                                    angleDeCorrection = 90;
+                                    break;
+                                case 1:
+                                    angleDeCorrection = 180;
+                                    break;
+                            }
+                            sensRobot = -1;
+                            EtapeRotation etapeRot = new EtapeRotation(EtapeRotation.GAUCHE, angleDeCorrection);
+                            scenario.ajouterEtape(etapeRot);
+                        }
+                        // On fait avancer le robot.
+                        EtapeAvancer etapeRouler = new EtapeAvancer(-1, -1);
+                        scenario.ajouterEtape(etapeRouler);
+
+                        // On envoie le scénario au robot.
+                        Ev3BluetoothManager.envoyerScenario(scenario);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(TAG, "ACTION_UP");
+                        envoyerCommandeArret();
                         break;
                 }
                 return true;
@@ -67,4 +208,20 @@ public class ModeAutoActivity extends AppCompatActivity {
         });
 
     }
+
+    /*private void envoyerCommandeRouler(int sens) {
+        Scenario scenario = new Scenario();
+        EtapeAvancerReculer etapeRouler = (sens == EtapeAvancerReculer.AVANCER ? new EtapeAvancer(-1, -1) : sens == EtapeAvancerReculer.RECULER ? new EtapeReculer(-1, -1) : null);
+
+        scenario.ajouterEtape(etapeRouler);
+        Ev3BluetoothManager.envoyerScenario(scenario);
+    }*/
+
+    private void envoyerCommandeArret() {
+        Scenario scenario = new Scenario();
+        EtapeArreter etapeArreter = new EtapeArreter();
+        scenario.ajouterEtape(etapeArreter);
+        Ev3BluetoothManager.envoyerScenario(scenario);
+    }
+
 }

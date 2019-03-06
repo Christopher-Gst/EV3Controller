@@ -10,6 +10,8 @@ public abstract class EtapeAvancerReculer extends Etape {
     private int unite;
     public static int SECONDES = 0;
     public static int CM = 1;
+    public static final int AVANCER = 0;
+    public static final int RECULER = 1;
 
     // Contrainte de parcours : jusqu'à une certaine détection.
     private Capteur capteur;

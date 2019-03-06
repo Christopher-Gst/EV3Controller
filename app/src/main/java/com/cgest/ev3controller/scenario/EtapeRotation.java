@@ -4,8 +4,8 @@ public class EtapeRotation extends Etape {
 
     // Rotation à droite ou à gauche repérée par des constantes.
     private int sens;
-    public static int DROITE = 0;
-    public static int GAUCHE = 1;
+    public final static int DROITE = 0;
+    public final static int GAUCHE = 1;
     // Degré de rotation à effectuer.
     private int degres;
     // Valeurs par défaut pour le constructeur vide.
