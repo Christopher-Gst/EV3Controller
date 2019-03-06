@@ -34,7 +34,8 @@
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name=".EditionScenarioActivity"></activity>
+            android:name=".EditionScenarioActivity"
+            android:screenOrientation="portrait"></activity>
 
     </application>
 
