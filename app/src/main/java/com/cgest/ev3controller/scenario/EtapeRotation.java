@@ -42,4 +42,9 @@ public class EtapeRotation extends Etape {
     public void setDegres(int degres) {
         this.degres = degres;
     }
+
+    @Override
+    public Integer getParamType() {
+        return new Integer(0);
+    }
 }

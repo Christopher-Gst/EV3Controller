@@ -26,4 +26,9 @@ public class EtapePause extends Etape {
     public EtapePause() {
         this.duree = DUREE_PAR_DEFAUT;
     }
+
+    @Override
+    public Integer getParamType() {
+        return new Integer(0);
+    }
 }

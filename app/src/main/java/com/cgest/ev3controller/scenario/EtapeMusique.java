@@ -7,4 +7,9 @@ public class EtapeMusique extends Etape {
         return "M";
     }
 
+    @Override
+    public Object getParamType() {
+        return null;
+    }
+
 }

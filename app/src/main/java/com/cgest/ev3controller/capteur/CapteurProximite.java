@@ -25,4 +25,9 @@ public class CapteurProximite extends Capteur {
     public void setDistanceDetection(int distanceDetection) {
         this.distanceDetection = distanceDetection;
     }
+
+    @Override
+    public Integer getParamType() {
+        return new Integer(0);
+    }
 }

@@ -75,4 +75,10 @@ public abstract class EtapeAvancerReculer extends Etape {
                 ", capteur=" + capteur +
                 '}';
     }
+
+    @Override
+    public Object getParamType() {
+        if (capteur != null) return capteur.getParamType();
+        return new Integer(0);
+    }
 }

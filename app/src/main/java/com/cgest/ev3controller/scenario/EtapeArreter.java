@@ -7,4 +7,9 @@ public class EtapeArreter extends Etape {
         return "ARRET";
     }
 
+    @Override
+    public Object getParamType() {
+        return null;
+    }
+
 }

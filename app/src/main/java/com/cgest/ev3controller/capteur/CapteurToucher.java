@@ -7,4 +7,9 @@ public class CapteurToucher extends Capteur {
         return "T";
     }
 
+    @Override
+    public Object getParamType() {
+        return null;
+    }
+
 }

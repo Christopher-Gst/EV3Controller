@@ -62,14 +62,17 @@
                 android:layout_height="fill_parent">
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutActions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/btnAvancerPendant"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="A.?.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -78,9 +81,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnAvancerSur"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="A.?.1">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -89,9 +94,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnAvancerCapteurProximite"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="A.P.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -100,9 +107,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnAvancerCapteurToucher"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="A.T">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -111,9 +120,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnAvancerCapteurCouleur"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="A.C.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -123,9 +134,11 @@
 
 
                     <FrameLayout
+                        android:id="@+id/btnReculerPendant"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="R.?.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -134,9 +147,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnReculerSur"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="R.?.1">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -145,9 +160,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnReculerCapteurProximite"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="R.P.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -156,9 +173,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnReculerCapteurToucher"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="R.T">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -167,9 +186,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnReculerCapteurCouleur"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="R.C.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -179,9 +200,11 @@
 
 
                     <FrameLayout
+                        android:id="@+id/btnRotationDroite"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="ROT.0.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -190,9 +213,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnRotationGauche"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="ROT.1.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -201,9 +226,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnPause"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="P.?">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -212,9 +239,11 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnMusique"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:tag="M">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -251,237 +280,6 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="40sp" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLScenario"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Avancer 3"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.42"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Tourner"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10"
-                    app:layout_constraintHorizontal_bias="0.42"/>
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Reculer 2"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Tourner"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Avancer"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Avancer"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Avancer 3"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Reculer"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Avancer 3"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17"
-                    app:layout_constraintHorizontal_bias="0.42" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
-                    app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toTopOf="@+id/textView10"
-                    app:srcCompat="@drawable/icon_horloge3" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toTopOf="@+id/textView11"
-                    app:srcCompat="@drawable/icon_droite" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45px"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintStart_toEndOf="@+id/textView12"
-                    app:layout_constraintTop_toTopOf="@+id/textView12"
-                    app:srcCompat="@drawable/icon_regle" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintStart_toEndOf="@+id/textView13"
-                    app:layout_constraintTop_toTopOf="@+id/textView13"
-                    app:srcCompat="@drawable/icon_gauche" />
-
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
-                    app:layout_constraintStart_toEndOf="@+id/textView14"
-                    app:layout_constraintTop_toTopOf="@+id/textView14"
-                    app:srcCompat="@drawable/icon_capteur_obstacle" />
-
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                    app:layout_constraintStart_toEndOf="@+id/textView16"
-                    app:layout_constraintTop_toTopOf="@+id/textView16"
-                    app:srcCompat="@drawable/icon_regle" />
-
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView17"
-                    app:layout_constraintStart_toEndOf="@+id/textView17"
-                    app:layout_constraintTop_toTopOf="@+id/textView17"
-                    app:srcCompat="@drawable/icon_capteur_toucher" />
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView18"
-                    app:layout_constraintStart_toEndOf="@+id/textView18"
-                    app:layout_constraintTop_toTopOf="@+id/textView18"
-                    app:srcCompat="@drawable/icon_horloge3" />
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
-                    app:layout_constraintStart_toEndOf="@+id/textView15"
-                    app:layout_constraintTop_toTopOf="@+id/textView15"
-                    app:srcCompat="@drawable/icon_capteur_couleur" />
-            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
     </LinearLayout>

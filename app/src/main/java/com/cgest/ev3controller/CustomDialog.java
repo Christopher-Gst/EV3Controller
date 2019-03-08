@@ -8,8 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.cgest.ev3controller.capteur.Couleur;
 
 public class CustomDialog extends Dialog implements
         android.view.View.OnClickListener {
@@ -17,8 +22,14 @@ public class CustomDialog extends Dialog implements
     private Activity activity;
     private String titre;
     private String message;
+    // Boutons d'annulation et de validation.
     private Button btnPositif;
     private Button btnNegatif;
+    // Vue affichant le message de la pop-up.
+    private TextView textVDialogMessage;
+    // Views optionnelles à afficher en fonction du contexte d'utilisation de la pop-up.
+    private EditText editTDialogNombre;
+    private Spinner spinnerDialogChoix;
 
     public CustomDialog(Activity activity) {
         super(activity);
@@ -52,6 +63,21 @@ public class CustomDialog extends Dialog implements
         btnNegatif.setVisibility(View.VISIBLE);
     }
 
+    public void afficherSaisieNombre() {
+        editTDialogNombre.setVisibility(View.VISIBLE);
+    }
+
+    public void afficherListeChoix() {
+        spinnerDialogChoix.setVisibility(View.VISIBLE);
+    }
+
+    public void setValeursListeChoix(Object[] valeurs) {
+        // On remplit le spinner avec le tableau passé en paramètres.
+        ArrayAdapter<Object> dataAdapter = new ArrayAdapter<Object>(activity,
+                R.layout.spinner_item_new, valeurs);
+        spinnerDialogChoix.setAdapter(dataAdapter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +88,12 @@ public class CustomDialog extends Dialog implements
         btnNegatif = (Button) findViewById(R.id.btnDialogNegatif);
         btnPositif.setOnClickListener(this);
         btnNegatif.setOnClickListener(this);
+        // On récupère les vues optionnelles de la pop-up, à afficher en fonction du contexte d'utilisation de la pop-up.
+        editTDialogNombre = (EditText) findViewById(R.id.editTDialogNombre);
+        spinnerDialogChoix = (Spinner) findViewById(R.id.spinnerDialogChoix);
         // On affiche le titre et le message.
         TextView textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
-        TextView textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
+        textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
         textVDialogTitre.setText(titre);
         textVDialogMessage.setText(message);
         // On applique la police de caractères de l'applications sur le texte du dialog.
@@ -80,7 +109,7 @@ public class CustomDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnDialogPositif:
-                activity.finish();
+                dismiss();
                 break;
             case R.id.btnDialogNegatif:
                 dismiss();
@@ -89,5 +118,46 @@ public class CustomDialog extends Dialog implements
                 break;
         }
         dismiss();
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+        textVDialogMessage.setText(message);
+    }
+
+    public Button getBtnPositif() {
+        return btnPositif;
+    }
+
+    public Button getBtnNegatif() {
+        return btnNegatif;
+    }
+
+    public EditText getChampSaisieNombre() {
+        return editTDialogNombre;
+    }
+
+    public Spinner getChampListeChoix() {
+        return spinnerDialogChoix;
     }
 }

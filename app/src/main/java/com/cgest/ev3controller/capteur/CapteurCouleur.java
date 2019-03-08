@@ -25,4 +25,9 @@ public class CapteurCouleur extends Capteur {
     public void setCouleur(Couleur couleur) {
         this.couleur = couleur;
     }
+
+    @Override
+    public Couleur getParamType() {
+        return Couleur.BLANC;
+    }
 }

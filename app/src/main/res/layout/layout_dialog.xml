@@ -23,18 +23,45 @@
         android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/textVDialogMessage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:background="@drawable/dialog_background_middle"
-        android:text="[MESSAGE]"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textVDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="[MESSAGE]"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTDialogNombre"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="0dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spinnerDialogChoix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:popupBackground="#000000"
+            android:visibility="gone"
+            android:backgroundTint="#FFFFFF"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
