@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -44,6 +45,8 @@ public class EditionScenarioActivity extends AppCompatActivity {
     private TextView textVEditionScenarioTitre;
     private TextView textVActions;
     private TextView textVEditionScenarioNomDuScenario;
+    // Boutons circulaire en bas de l'écran.
+    private Button btnLancerScenario;
 
     //private ConstraintLayout constraintLScenario;
     // LinearLayout contenant tous les boutons permettant d'ajouter des actions au scénario.
@@ -82,6 +85,7 @@ public class EditionScenarioActivity extends AppCompatActivity {
         textVEditionScenarioNomDuScenario = (TextView) findViewById(R.id.textVEditionScenarioNomDuScenario);
         //constraintLScenario = (ConstraintLayout) findViewById(R.id.constraintLScenario);
         linearLayoutActions = (LinearLayout) findViewById(R.id.linearLayoutActions);
+        btnLancerScenario = (Button) findViewById(R.id.btnLancerScenario);
 
         // On affiche la police de caractère de l'application ("Fontdinerdotcom Huggable") sur les Views.
         Utile.appliquerPolicePrincipale(this, textVEditionScenarioTitre);
@@ -111,6 +115,13 @@ public class EditionScenarioActivity extends AppCompatActivity {
 
         // Initialisation de la RecyclerView.
         initRecyclerView();
+
+        btnLancerScenario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Ev3BluetoothManager.envoyerScenario(adapter.scenario);
+            }
+        });
     }
 
     public void initRecyclerView() {

@@ -4,13 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.Image;
+import android.opengl.Visibility;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.concurrent.ExecutionException;
 
 public class ChoixModeActivity extends AppCompatActivity {
 
@@ -29,6 +38,13 @@ public class ChoixModeActivity extends AppCompatActivity {
     private ImageView imgVCocheModeScan;
     private ImageView imgVCocheModeAuto;
     private Button imgBtnChoixModeCredits;
+    // ConstraintLayout contenant toutes les views sur les modes (boutons, descriptions, ...).
+    private ConstraintLayout constraintLModes;
+    // Views liées à l'activation du Bluetooth ou à la connexion au robot.
+    private TextView textVChoixModeErreurBluetooth;
+    private ImageView imageVChoixModeErreurBluetooth;
+    private ProgressBar progressBarConnexionBluetooth;
+    private FrameLayout btnChoixModeReessayerConnexion;
 
     private int modeSelectionne;
 
@@ -45,6 +61,7 @@ public class ChoixModeActivity extends AppCompatActivity {
         activity = this;
 
         // On récupère les Views de l'activité.
+        constraintLModes = (ConstraintLayout) findViewById(R.id.constraintLModes);
         btnModeManuel = (Button) findViewById(R.id.btnModeManuel);
         btnModeScan = (Button) findViewById(R.id.btnModeScan);
         btnModeAuto = (Button) findViewById(R.id.btnModeAuto);
@@ -56,6 +73,11 @@ public class ChoixModeActivity extends AppCompatActivity {
         imgVCocheModeScan = (ImageView) findViewById(R.id.imgVCocheModeScan);
         imgVCocheModeAuto = (ImageView) findViewById(R.id.imgVCocheModeAuto);
         imgBtnChoixModeCredits = (Button) findViewById(R.id.btnChoixModeCredits);
+        // Views liées à l'activation du Bluetooth ou à la connexion au robot.
+        textVChoixModeErreurBluetooth = (TextView) findViewById(R.id.textVChoixModeErreurBluetooth);
+        imageVChoixModeErreurBluetooth = (ImageView) findViewById(R.id.imageVChoixModeErreurBluetooth);
+        progressBarConnexionBluetooth = (ProgressBar) findViewById(R.id.progressBarConnexionBluetooth);
+        btnChoixModeReessayerConnexion = (FrameLayout) findViewById(R.id.btnChoixModeReessayerConnexion);
 
         // On affiche la police de caractère de l'application ("Fontdinerdotcom Huggable") sur les Views.
         Utile.appliquerPolicePrincipale(this, btnModeManuel);
@@ -65,6 +87,8 @@ public class ChoixModeActivity extends AppCompatActivity {
         Utile.appliquerPolicePrincipale(this, textVChoixModeScan);
         Utile.appliquerPolicePrincipale(this, textVChoixModeAuto);
         Utile.appliquerPolicePrincipale(this, btnChoixModeContinuer);
+        Utile.appliquerPolicePrincipale(this, textVChoixModeErreurBluetooth);
+        Utile.appliquerPolicePrincipale(this, (Button) btnChoixModeReessayerConnexion.getChildAt(0));
 
         // Le mode manuel est seléctionné par défaut.
         selectionnerMode(MODE_MANUEL);
@@ -118,8 +142,18 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        // On initialise la connexion avec le robot.
-        Ev3BluetoothManager.initialiserLeManager();
+        btnChoixModeReessayerConnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageVChoixModeErreurBluetooth.setVisibility(View.INVISIBLE);
+                progressBarConnexionBluetooth.setVisibility(View.VISIBLE);
+                textVChoixModeErreurBluetooth.setText("Recherche du robot...");
+                btnChoixModeReessayerConnexion.setVisibility(View.INVISIBLE);
+                new InitBluetoothTask().execute((ChoixModeActivity) activity);
+            }
+        });
+
+        new InitBluetoothTask().execute((ChoixModeActivity) activity);
 
     }
 
@@ -171,5 +205,34 @@ public class ChoixModeActivity extends AppCompatActivity {
             btnModeAuto.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_background_home_unfocused));
         }
 
+    }
+
+    /*
+    Permet d'activer le fait de pouvoir sélectionner un mode, après que l'activation du Bluetooth et la connexion
+    au robot aient été effectives.
+     */
+    public void afficherModes() {
+        constraintLModes.setVisibility(View.VISIBLE);
+        btnChoixModeContinuer.setVisibility(View.VISIBLE);
+    }
+
+    /*
+    Permet d'afficher une erreur relative à l'activation du Bluetooth ou à la connexion au robot.
+     */
+    public void afficherErreurBluetooth(String message) {
+        progressBarConnexionBluetooth.setVisibility(View.INVISIBLE);
+        imageVChoixModeErreurBluetooth.setVisibility(View.VISIBLE);
+        textVChoixModeErreurBluetooth.setText(message);
+        btnChoixModeReessayerConnexion.setVisibility(View.VISIBLE);
+    }
+
+    /*
+    Permet de cacher une erreur relative à l'activation du Bluetooth ou à la connexion au robot.
+     */
+    public void cacherErreurBluetooth() {
+        progressBarConnexionBluetooth.setVisibility(View.INVISIBLE);
+        imageVChoixModeErreurBluetooth.setVisibility(View.INVISIBLE);
+        textVChoixModeErreurBluetooth.setVisibility(View.INVISIBLE);
+        btnChoixModeReessayerConnexion.setVisibility(View.INVISIBLE);
     }
 }

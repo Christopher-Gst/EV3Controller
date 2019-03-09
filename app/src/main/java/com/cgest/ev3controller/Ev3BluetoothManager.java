@@ -3,6 +3,7 @@ package com.cgest.ev3controller;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.drm.DrmStore;
 import android.util.Log;
 
 import com.cgest.ev3controller.scenario.Scenario;
@@ -25,19 +26,26 @@ public final class Ev3BluetoothManager {
     private static String mMessage = "Stop";
     private static PrintStream sender;
 
-    public static void initialiserLeManager() {
+    public static String initialiserLeManager(ChoixModeActivity activity) {
         // On ititialise la connexion Bluetooth avec le robot et on créer le socket de communication.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        Log.e(TAG, "Initialisation du bluetooth...");
-        initBluetooth();
-        if (findBrick()) {
-            try {
-                Log.e(TAG, "Création du socket...");
-                createSocket();
-            } catch (IOException e) {
-                e.printStackTrace();
+        String messageSurInterface = null;
+        // Si l'initialisation du Bluetooth ne renvoie pas d'erreur...
+        if ((messageSurInterface = initBluetooth()) == null) {
+            if (findBrick()) {
+                // Si la création du socket ne renvoie pas d'erreur...
+                if (!createSocket()) {
+                    Log.e(TAG, "false");
+                    messageSurInterface = "Le robot est bien appairé avec l'appareil, mais la connexion n'est pas établie." +
+                            " Assurez-vous que :\n- l'appareil est connecté au robot. La connexion doit être faite manuellement depuis" +
+                            " les paramètres de l'appareil et du robot.\n- Le programme d'écoute est lancé sur le robot.";
+                } else
+                    Log.e(TAG, "true");
+            } else {
+                messageSurInterface = "Le robot n'est pas appairé avec cet appareil. Vous devez l'appairer pour pouvoir établir la connexion.";
             }
         }
+        return messageSurInterface;
     }
 
     public static void envoyerScenario(Scenario scenario) {
@@ -66,18 +74,13 @@ public final class Ev3BluetoothManager {
         return false;
     }
 
-    private static void initBluetooth() {
-        Log.e(TAG, "Checking Bluetooth...");
-        if (mBluetoothAdapter == null) {
-            Log.e(TAG, "Device does not support Bluetooth");
-        } else {
-            Log.e(TAG, "Bluetooth supported");
-        }
-        if (!mBluetoothAdapter.isEnabled()) {
-            Log.e(TAG, "Bluetooth not enabled");
-        } else {
-            Log.e(TAG, "Bluetooth enabled");
-        }
+    private static String initBluetooth() {
+        if (mBluetoothAdapter == null)
+            return "Cet appareil ne supporte pas le Bluetooth !";
+        if (!mBluetoothAdapter.isEnabled())
+            return "Le Bluetooth n'est pas activé !";
+        else
+            return null;
     }
 
     private static void sendMessage(String message) throws IOException {
@@ -88,30 +91,30 @@ public final class Ev3BluetoothManager {
             sender.println(message);
             sender.flush();
             Log.e("onSend", "Message sent");
-            //mSocket.close();
-            //Log.e("onSend", "Socket closed");
         } catch (IllegalStateException | NullPointerException e) {
             e.printStackTrace();
         }
 
     }
 
-    private static void createSocket() throws IOException {
+    private static boolean createSocket() {
         try {
             UUID uuid = UUID.fromString(MY_UUID);
             mSocket = mDevice.createRfcommSocketToServiceRecord(uuid);
+
+            BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+            mSocket.connect();
+            OutputStream os = mSocket.getOutputStream();
+            sender = new PrintStream(os);
+
+            Log.e("createSocket", "Prêt, " + "Socket: " + mSocket + " Sender: " + sender + " OutputStream: " + os + " mDevice: " + mDevice.getName());
+
+            return true;
         } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
             e.printStackTrace();
+            return false;
         }
-
-        Log.e("createSocket", "Adapter");
-
-        BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-        mSocket.connect();
-        OutputStream os = mSocket.getOutputStream();
-        sender = new PrintStream(os);
-
-        Log.e("createSocket", "Fertig, " + "Socket: " + mSocket + " Sender: " + sender + " OutputStream: " + os + " mDevice: " + mDevice.getName());
     }
 
     private static void fermerConnexion() {
