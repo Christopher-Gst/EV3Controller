@@ -15,4 +15,10 @@ public class EtapeReculer extends EtapeAvancerReculer {
     public EtapeReculer() {
         super();
     }
+
+    @Override
+    public String getDescriptionTextuelle() {
+        return "Reculer" + (getCapteur() == null ? " " + getValeur() : "");
+    }
+
 }

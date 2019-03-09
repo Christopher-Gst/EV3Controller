@@ -31,4 +31,10 @@ public class EtapePause extends Etape {
     public Integer getParamType() {
         return new Integer(0);
     }
+
+    @Override
+    public String getDescriptionTextuelle() {
+        return String.valueOf(duree);
+    }
+
 }

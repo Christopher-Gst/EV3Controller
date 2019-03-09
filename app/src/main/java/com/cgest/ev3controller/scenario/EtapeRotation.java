@@ -47,4 +47,9 @@ public class EtapeRotation extends Etape {
     public Integer getParamType() {
         return new Integer(0);
     }
+
+    @Override
+    public String getDescriptionTextuelle() {
+        return "Tourner";
+    }
 }

@@ -6,6 +6,8 @@ public abstract class Etape {
 
     public abstract String getCode();
 
+    public abstract String getDescriptionTextuelle();
+
     public abstract Object getParamType();
 
     public static Etape getEtapeFromCode(String monEtapeStr) {

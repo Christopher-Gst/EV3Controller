@@ -72,7 +72,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="A.?.0">
+                        android:tag="A.0.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -85,7 +85,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="A.?.1">
+                        android:tag="A.0.1">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -98,7 +98,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="A.P.?">
+                        android:tag="A.P.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -124,7 +124,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="A.C.?">
+                        android:tag="A.C.blanc">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -138,7 +138,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="R.?.0">
+                        android:tag="R.0.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -151,7 +151,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="R.?.1">
+                        android:tag="R.0.1">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -164,7 +164,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="R.P.?">
+                        android:tag="R.P.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -190,7 +190,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="R.C.?">
+                        android:tag="R.C.blanc">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -204,7 +204,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="ROT.0.?">
+                        android:tag="ROT.0.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -217,7 +217,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="ROT.1.?">
+                        android:tag="ROT.1.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -230,7 +230,7 @@
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="P.?">
+                        android:tag="P.0">
 
                         <Button
                             style="@style/btnAvecTexteEtImageCentres"
@@ -280,6 +280,11 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="40sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerVScenario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </LinearLayout>

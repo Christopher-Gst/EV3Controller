@@ -12,4 +12,9 @@ public class EtapeMusique extends Etape {
         return null;
     }
 
+    @Override
+    public String getDescriptionTextuelle() {
+        return "";
+    }
+
 }

@@ -50,10 +50,10 @@ public class ScenarioActivity extends AppCompatActivity {
     private Button btnAjouterTacheJouerSon;
 
     // RecyclerView contenant la liste visuelle de étapes du scénario.
-    private RecyclerView recyclerVScenario;
+    private RecyclerView recyclerVScenarioOld;
 
     // Adapter de la RecyclerView.
-    private RecyclerViewAdapterScenario adapter;
+    private RecyclerViewAdapterScenarioOld adapter;
 
     // Scénario édité ou créée par l'utilisateur.
     Scenario sc;
@@ -73,7 +73,7 @@ public class ScenarioActivity extends AppCompatActivity {
         btnAjouterTachePause = (Button) findViewById(R.id.btnAjouterTachePause);
         btnAjouterTacheJouerSon = (Button) findViewById(R.id.btnAjouterTacheJouerSon);
 
-        recyclerVScenario = (RecyclerView) findViewById(R.id.recyclerVScenario);
+        recyclerVScenarioOld = (RecyclerView) findViewById(R.id.recyclerVScenarioOld);
 
         // On ititialise la connexion Bluetooth avec le robot et on créer le socket de communication.
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -153,8 +153,8 @@ public class ScenarioActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerVScenario);
-        adapter = new RecyclerViewAdapterScenario(this, recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerVScenarioOld);
+        adapter = new RecyclerViewAdapterScenarioOld(this, recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

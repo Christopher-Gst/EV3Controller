@@ -13,12 +13,15 @@ public class EtapeAvancer extends EtapeAvancerReculer {
 
     public EtapeAvancer(Capteur capteur) {
         super(capteur);
-        if (capteur instanceof CapteurToucher)
-            throw new InvalidParameterException("Impossible d'utiliser le capteur de toucher en contrainte lorsque le robot avance.");
     }
 
     public EtapeAvancer() {
         super();
+    }
+
+    @Override
+    public String getDescriptionTextuelle() {
+        return "Avancer" + (getCapteur() == null ? " " + getValeur() : "");
     }
 
 }

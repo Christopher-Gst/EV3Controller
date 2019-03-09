@@ -12,4 +12,9 @@ public class EtapeArreter extends Etape {
         return null;
     }
 
+    @Override
+    public String getDescriptionTextuelle() {
+        return "";
+    }
+
 }

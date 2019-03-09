@@ -209,14 +209,6 @@ public class ModeAutoActivity extends AppCompatActivity {
 
     }
 
-    /*private void envoyerCommandeRouler(int sens) {
-        Scenario scenario = new Scenario();
-        EtapeAvancerReculer etapeRouler = (sens == EtapeAvancerReculer.AVANCER ? new EtapeAvancer(-1, -1) : sens == EtapeAvancerReculer.RECULER ? new EtapeReculer(-1, -1) : null);
-
-        scenario.ajouterEtape(etapeRouler);
-        Ev3BluetoothManager.envoyerScenario(scenario);
-    }*/
-
     private void envoyerCommandeArret() {
         Scenario scenario = new Scenario();
         EtapeArreter etapeArreter = new EtapeArreter();

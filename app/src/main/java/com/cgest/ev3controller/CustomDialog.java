@@ -25,6 +25,8 @@ public class CustomDialog extends Dialog implements
     // Boutons d'annulation et de validation.
     private Button btnPositif;
     private Button btnNegatif;
+    // Bouton optionnel affiché en bas à gauche.
+    private Button btnOptionnel;
     // Vue affichant le message de la pop-up.
     private TextView textVDialogMessage;
     // Views optionnelles à afficher en fonction du contexte d'utilisation de la pop-up.
@@ -53,6 +55,10 @@ public class CustomDialog extends Dialog implements
         btnNegatif.setVisibility(View.GONE);
     }
 
+    public void cacherBtnOptionnel() {
+        btnOptionnel.setVisibility(View.GONE);
+    }
+
     public void afficherBtnPositif(String texte) {
         btnPositif.setText(texte);
         btnPositif.setVisibility(View.VISIBLE);
@@ -61,6 +67,11 @@ public class CustomDialog extends Dialog implements
     public void afficherBtnNegatif(String texte) {
         btnNegatif.setText(texte);
         btnNegatif.setVisibility(View.VISIBLE);
+    }
+
+    public void afficherBtnOptionnel(String texte) {
+        btnOptionnel.setText(texte);
+        btnOptionnel.setVisibility(View.VISIBLE);
     }
 
     public void afficherSaisieNombre() {
@@ -83,24 +94,33 @@ public class CustomDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_dialog);
-        // On récupère les boutons positif et négatif et on les rend les événements de clic actifs.
+        // Le pop-up n'est pas annulable en cliquant sur le parent, c'est-à-dire en dehors.
+        setCancelable(false);
+
+        // On récupère les boutons positif, négatif et optionnel, et on les rend les événements de clic actifs.
         btnPositif = (Button) findViewById(R.id.btnDialogPositif);
         btnNegatif = (Button) findViewById(R.id.btnDialogNegatif);
+        btnOptionnel = (Button) findViewById(R.id.btnDialogOptionnel);
         btnPositif.setOnClickListener(this);
         btnNegatif.setOnClickListener(this);
+        btnOptionnel.setOnClickListener(this);
+
         // On récupère les vues optionnelles de la pop-up, à afficher en fonction du contexte d'utilisation de la pop-up.
         editTDialogNombre = (EditText) findViewById(R.id.editTDialogNombre);
         spinnerDialogChoix = (Spinner) findViewById(R.id.spinnerDialogChoix);
+
         // On affiche le titre et le message.
         TextView textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
         textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
         textVDialogTitre.setText(titre);
         textVDialogMessage.setText(message);
+
         // On applique la police de caractères de l'applications sur le texte du dialog.
         Utile.appliquerPolicePrincipale(activity, textVDialogTitre);
         Utile.appliquerPolicePrincipale(activity, textVDialogMessage);
         Utile.appliquerPolicePrincipale(activity, btnPositif);
         Utile.appliquerPolicePrincipale(activity, btnNegatif);
+        Utile.appliquerPolicePrincipale(activity, btnOptionnel);
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
