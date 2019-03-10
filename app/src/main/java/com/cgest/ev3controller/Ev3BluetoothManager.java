@@ -34,13 +34,10 @@ public final class Ev3BluetoothManager {
         if ((messageSurInterface = initBluetooth()) == null) {
             if (findBrick()) {
                 // Si la création du socket ne renvoie pas d'erreur...
-                if (!createSocket()) {
-                    Log.e(TAG, "false");
+                if (!createSocket())
                     messageSurInterface = "Le robot est bien appairé avec l'appareil, mais la connexion n'est pas établie." +
                             " Assurez-vous que :\n- l'appareil est connecté au robot. La connexion doit être faite manuellement depuis" +
                             " les paramètres de l'appareil et du robot.\n- Le programme d'écoute est lancé sur le robot.";
-                } else
-                    Log.e(TAG, "true");
             } else {
                 messageSurInterface = "Le robot n'est pas appairé avec cet appareil. Vous devez l'appairer pour pouvoir établir la connexion.";
             }
@@ -49,6 +46,7 @@ public final class Ev3BluetoothManager {
     }
 
     public static void envoyerScenario(Scenario scenario) {
+        Log.e(TAG, "Envoi de : " + scenario.getCode());
         try {
             // On envoie le scénario au robot. On le fait deux fois à cause de l'instabilité du comportement du robot face au bluetooth.
             sendMessage(scenario.getCode());

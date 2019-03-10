@@ -49,10 +49,12 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
     // Setter permettant de fournir la liste des messages de la RecyclerView.
     public void setScenario(Scenario scenario) {
+        // On recopie le scénario passé en paramètres avec la liste des étapes et le nom du scénario.
         this.scenario.getEtapes().clear();
         this.scenario.getEtapes().addAll(scenario.getEtapes());
-        notifyItemRangeInserted(0, scenario.getEtapes().size() - 1);
-
+        this.scenario.setNom(scenario.getNom());
+        //notifyItemRangeInserted(0, this.scenario.getEtapes().size() - 1);
+        notifyDataSetChanged();
         Log.e("Liste", "setScenario() fait.");
     }
 
@@ -153,6 +155,8 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                             // On supprimer l'action du scénario et on notifie la RecyclerView.
                             scenario.getEtapes().remove(position);
                             notifyItemRemoved(position);
+                            // On notifie que le scénario a subi des modifications non enregistrées.
+                            ((EditionScenarioActivity) activity).modifsNonEnregistrees = true;
                         }
                     });
 

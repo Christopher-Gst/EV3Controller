@@ -7,4 +7,7 @@
     <string name="choix_mode_manuel">Concevez un scénario en choisissant des actions. Le robot suivra votre scénario étape par étape.</string>
     <string name="choix_mode_scan">Concevez un scénario en scannant des QR Codes. Le robot suivra votre scénario étape par étape.</string>
     <string name="choix_mode_automatique">Contrôlez automatiquement le robot à l\'aide de flèches directionnelles.</string>
+    <string name="mode_scan_indisponible">Pour utiliser ce mode, vous devez télécharger l\'application Barcode Scanner. Voulez-vous la télécharger ?\nEn cliquant sur \"Oui\", vous serez redirigé sur le Google Play Store.</string>
+    <string name="aide_mode_manuel">Aide pour le mode manuel.</string>
+    <string name="aide_mode_scan">Aide pour le mode scan.</string>
 </resources>

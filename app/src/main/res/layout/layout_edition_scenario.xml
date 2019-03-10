@@ -36,17 +36,18 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/imageVScannerUneAction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textVEditionScenarioTitre">
 
         <LinearLayout
+            android:id="@+id/linearLPanneauActions"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:background="#33000000"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textVActions"
@@ -259,11 +260,11 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageVSeparationActionsScenario"
             android:layout_width="3dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:srcCompat="@android:color/darker_gray" />
 
         <LinearLayout
@@ -290,7 +291,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageVScannerUneAction"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"

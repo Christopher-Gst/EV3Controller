@@ -1,9 +1,13 @@
 package com.cgest.ev3controller;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Map;
 
 public final class Utile {
 
@@ -18,6 +22,15 @@ public final class Utile {
         // Concernent aussi les boutons car Button hérite de TextView
         Typeface policePrincipale = Typeface.createFromAsset(context.getAssets(), "fonts/fontdinerdotcom_huggable.TTF");
         textView.setTypeface(policePrincipale);
+    }
+
+    public static boolean scannerQrCodeInstalle(Context context) {
+        try {
+            context.getPackageManager().getPackageInfo("com.google.zxing.client.android", 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
 }

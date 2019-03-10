@@ -3,8 +3,10 @@ package com.cgest.ev3controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Handler;
 import android.os.Looper;
@@ -133,12 +135,37 @@ public class ChoixModeActivity extends AppCompatActivity {
                 Intent intentNextActivity = null;
                 if (modeSelectionne == MODE_MANUEL) {
                     intentNextActivity = new Intent(ChoixModeActivity.this, EditionScenarioActivity.class);
+                    intentNextActivity.putExtra("MODE", "manuel");
                 } else if (modeSelectionne == MODE_SCAN) {
-                    intentNextActivity = new Intent(ChoixModeActivity.this, EditionScenarioActivity.class);
+                    // Si l'application "Barcode Scanner" n'est pas installé sur l'appareil, on prévient l'utilisateur,
+                    // en lui demandant de télécharger l'application.
+                    if (!Utile.scannerQrCodeInstalle(activity)) {
+                        // On crée une pop-up.
+                        final CustomDialog dialogTelechargerScanner = new CustomDialog(activity, "Mode indisponible", getResources().getString(R.string.mode_scan_indisponible));
+                        dialogTelechargerScanner.show();
+                        // On affiche des boutons "Oui" et "Non" et on spécifie l'action du "Oui".
+                        dialogTelechargerScanner.afficherBtnPositif("Oui");
+                        dialogTelechargerScanner.afficherBtnNegatif("Non");
+                        dialogTelechargerScanner.getBtnPositif().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogTelechargerScanner.dismiss();
+                                // On ouvre le Google Play Store sur la page de Barcode Scanner.
+                                Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+                                Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+                                startActivity(marketIntent);
+                            }
+                        });
+                    } else {
+                        // Si l'application est installée, on affiche le mode scan.
+                        intentNextActivity = new Intent(ChoixModeActivity.this, EditionScenarioActivity.class);
+                        intentNextActivity.putExtra("MODE", "scan");
+                    }
                 } else if (modeSelectionne == MODE_AUTOMATIQUE) {
                     intentNextActivity = new Intent(ChoixModeActivity.this, ModeAutoActivity.class);
                 }
-                startActivity(intentNextActivity);
+                if (intentNextActivity != null)
+                    startActivity(intentNextActivity);
             }
         });
 
@@ -153,8 +180,8 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        new InitBluetoothTask().execute((ChoixModeActivity) activity);
-
+        //new InitBluetoothTask().execute((ChoixModeActivity) activity);
+        afficherModes();
     }
 
     // Permet de gérer l'affichage de la sélection d'un mode.
@@ -235,4 +262,5 @@ public class ChoixModeActivity extends AppCompatActivity {
         textVChoixModeErreurBluetooth.setVisibility(View.INVISIBLE);
         btnChoixModeReessayerConnexion.setVisibility(View.INVISIBLE);
     }
+
 }

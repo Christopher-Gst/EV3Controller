@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Scenario {
+
+    // Nom du scénario, enregistré dans les préférences partagées de l'application.
+    private String nom;
+
     private ArrayList<Etape> etapes;
 
     public Scenario() {
+        nom = "";
         etapes = new ArrayList<Etape>();
     }
 
@@ -31,7 +36,31 @@ public class Scenario {
         return code;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public ArrayList<Etape> getEtapes() {
         return etapes;
     }
+
+    public static Scenario getScenarioFromCode(String code) {
+        Scenario sc = new Scenario();
+        if (code.contains(";")) {
+            String[] etapesStr = code.split(";");
+            for (String monEtapeStr : etapesStr) {
+                Etape etape = Etape.getEtapeFromCode(monEtapeStr);
+                sc.ajouterEtape(etape);
+            }
+        } else {
+            Etape etape = Etape.getEtapeFromCode(code);
+            sc.ajouterEtape(etape);
+        }
+        return sc;
+    }
+
 }

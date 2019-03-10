@@ -14,6 +14,7 @@
         android:layout_gravity="center"
         android:background="@drawable/dialog_background_top"
         android:gravity="center"
+        android:paddingHorizontal="30dp"
         android:paddingTop="17dp"
         android:text="[TITRE]"
         android:textAlignment="center"
@@ -34,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingHorizontal="30dp"
             android:text="[MESSAGE]"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
@@ -41,7 +43,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTDialogNombre"
+            android:id="@+id/editTDialogSaisie"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -72,6 +74,30 @@
         android:orientation="horizontal"
         android:paddingHorizontal="30dp"
         android:paddingBottom="30dp">
+
+        <Button
+            android:id="@+id/btnDialogIcone1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:scaleType="centerCrop"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnDialogIcone2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/white"
+            android:scaleType="centerCrop"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btnDialogOptionnel"

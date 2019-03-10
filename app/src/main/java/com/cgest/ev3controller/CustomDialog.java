@@ -2,19 +2,20 @@ package com.cgest.ev3controller;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.cgest.ev3controller.capteur.Couleur;
 
 public class CustomDialog extends Dialog implements
         android.view.View.OnClickListener {
@@ -27,11 +28,15 @@ public class CustomDialog extends Dialog implements
     private Button btnNegatif;
     // Bouton optionnel affiché en bas à gauche.
     private Button btnOptionnel;
-    // Vue affichant le message de la pop-up.
+    // Vues affichant le titre et le message de la pop-up.
+    private TextView textVDialogTitre;
     private TextView textVDialogMessage;
     // Views optionnelles à afficher en fonction du contexte d'utilisation de la pop-up.
-    private EditText editTDialogNombre;
+    private EditText editTDialogSaisie;
     private Spinner spinnerDialogChoix;
+    // Boutons avec des images en bas à gauche.
+    private Button btnDialogIcone1;
+    private Button btnDialogIcone2;
 
     public CustomDialog(Activity activity) {
         super(activity);
@@ -74,8 +79,42 @@ public class CustomDialog extends Dialog implements
         btnOptionnel.setVisibility(View.VISIBLE);
     }
 
+    public void afficherBtnIconeGauche(Drawable image) {
+        btnDialogIcone1.setBackground(image);
+        btnDialogIcone1.setVisibility(View.VISIBLE);
+    }
+
+    public void afficherBtnIconeDroite(Drawable image) {
+        btnDialogIcone2.setBackground(image);
+        btnDialogIcone2.setVisibility(View.VISIBLE);
+    }
+
     public void afficherSaisieNombre() {
-        editTDialogNombre.setVisibility(View.VISIBLE);
+        // On met la taille de l'EditText à 100dp.
+        //   - on récupère l'échelle de l'écran.
+        ViewGroup.LayoutParams param = editTDialogSaisie.getLayoutParams();
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        //   - on calcule combien font 500dp en pixels.
+        param.width = (int) (100 * scale + 0.5f);
+        editTDialogSaisie.setLayoutParams(param);
+        // On change le format du texte pouvant être saisi à Texte.
+        editTDialogSaisie.setInputType(InputType.TYPE_CLASS_NUMBER);
+        // On rend visible le champ de saisie.
+        editTDialogSaisie.setVisibility(View.VISIBLE);
+    }
+
+    public void afficherSaisieString() {
+        // On met la taille de l'EditText à 500dp.
+        //   - on récupère l'échelle de l'écran.
+        ViewGroup.LayoutParams param = editTDialogSaisie.getLayoutParams();
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        //   - on calcule combien font 500dp en pixels.
+        param.width = (int) (500 * scale + 0.5f);
+        editTDialogSaisie.setLayoutParams(param);
+        // On change le format du texte pouvant être saisi à Texte.
+        editTDialogSaisie.setInputType(InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
+        // On rend visible le champ de saisie.
+        editTDialogSaisie.setVisibility(View.VISIBLE);
     }
 
     public void afficherListeChoix() {
@@ -106,11 +145,15 @@ public class CustomDialog extends Dialog implements
         btnOptionnel.setOnClickListener(this);
 
         // On récupère les vues optionnelles de la pop-up, à afficher en fonction du contexte d'utilisation de la pop-up.
-        editTDialogNombre = (EditText) findViewById(R.id.editTDialogNombre);
+        editTDialogSaisie = (EditText) findViewById(R.id.editTDialogSaisie);
         spinnerDialogChoix = (Spinner) findViewById(R.id.spinnerDialogChoix);
 
+        // On récupère les boutons avec des images de fond en bas à gauche.
+        btnDialogIcone1 = (Button) findViewById(R.id.btnDialogIcone1);
+        btnDialogIcone2 = (Button) findViewById(R.id.btnDialogIcone2);
+
         // On affiche le titre et le message.
-        TextView textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
+        textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
         textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
         textVDialogTitre.setText(titre);
         textVDialogMessage.setText(message);
@@ -127,16 +170,6 @@ public class CustomDialog extends Dialog implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnDialogPositif:
-                dismiss();
-                break;
-            case R.id.btnDialogNegatif:
-                dismiss();
-                break;
-            default:
-                break;
-        }
         dismiss();
     }
 
@@ -154,6 +187,7 @@ public class CustomDialog extends Dialog implements
 
     public void setTitre(String titre) {
         this.titre = titre;
+        textVDialogTitre.setText(message);
     }
 
     public String getMessage() {
@@ -173,8 +207,20 @@ public class CustomDialog extends Dialog implements
         return btnNegatif;
     }
 
-    public EditText getChampSaisieNombre() {
-        return editTDialogNombre;
+    public Button getBtnOptionnel() {
+        return btnOptionnel;
+    }
+
+    public Button getBtnIconGauche() {
+        return btnDialogIcone1;
+    }
+
+    public Button getBtnIconDroite() {
+        return btnDialogIcone2;
+    }
+
+    public EditText getChampSaisie() {
+        return editTDialogSaisie;
     }
 
     public Spinner getChampListeChoix() {
