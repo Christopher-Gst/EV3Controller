@@ -81,7 +81,7 @@ public final class Ev3BluetoothManager {
             return null;
     }
 
-    private static void sendMessage(String message) throws IOException {
+    public static void sendMessage(String message) throws IOException {
         try {
             OutputStream os = mSocket.getOutputStream();
             sender = new PrintStream(os);

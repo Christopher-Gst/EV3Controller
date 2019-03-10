@@ -187,7 +187,7 @@ public class CustomDialog extends Dialog implements
 
     public void setTitre(String titre) {
         this.titre = titre;
-        textVDialogTitre.setText(message);
+        textVDialogTitre.setText(titre);
     }
 
     public String getMessage() {

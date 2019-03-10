@@ -29,6 +29,8 @@ import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 import com.cgest.ev3controller.scenario.ScenarioManager;
 
+import java.io.IOException;
+
 public class EditionScenarioActivity extends AppCompatActivity {
 
     // TAG de cette activité utilisé pour le Logcat.
@@ -257,10 +259,10 @@ public class EditionScenarioActivity extends AppCompatActivity {
             // On affiche une boîte de dialogue avec le message et les champs de saisie adaptés, pour paramétrer
             // l'action.
             final CustomDialog dialogSaisieInfosAction = new CustomDialog(activity);
-            dialogSaisieInfosAction.setTitre("Édition d'une action");
             // On affiche la pop-up avant même d'avoir spécifié le message, les vues à afficher, ... car la pop-up
             // a besoin de charger ses vues avant d'agir dessus (dans la méthode onCreate()).
             dialogSaisieInfosAction.show();
+            dialogSaisieInfosAction.setTitre("Édition d'une action");
             String messageDialog = "";
 
             // On affiche le bon message en fonction du type d'action :
@@ -489,6 +491,43 @@ public class EditionScenarioActivity extends AppCompatActivity {
                 });
             }
         });
+
+        //   -- Bouton de renommage.
+        dialogOuvrir.getBtnIconDroite().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // On récupère le nom du scénario sélectionné.
+                final String nomScenario = dialogOuvrir.getChampListeChoix().getSelectedItem().toString();
+                // On affiche une pop-up pour renommer le scénario.
+                final String messageDialog = "Donnez le nouveau nom du scénario \"" + nomScenario + "\" :";
+                final CustomDialog dialogSaisieNomScenario = new CustomDialog(activity, "Renommer un scénario", messageDialog);
+                dialogSaisieNomScenario.show();
+                // On afficher les boutons.
+                dialogSaisieNomScenario.afficherBtnPositif("Valider");
+                dialogSaisieNomScenario.afficherBtnNegatif("Annuler");
+                // On affiche le champ de saisie (EditText).
+                dialogSaisieNomScenario.afficherSaisieString();
+
+                // Si l'utilisateur appuie sur "Valider"...
+                dialogSaisieNomScenario.getBtnPositif().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Si le nom est déjà utilisé pour un autre scénario...
+                        String nomSaisi = dialogSaisieNomScenario.getChampSaisie().getText().toString();
+                        if (ScenarioManager.verifierExistenceScenario(activity, nomSaisi) && !nomSaisi.equals(nomScenario)) {
+                            dialogSaisieNomScenario.setMessage(messageDialog + "\nCe nom est déjà utilisé. Essayez avec un nom différent.");
+                        } else {
+                            // On ferme le pop-up.
+                            dialogSaisieNomScenario.dismiss();
+                            // On renomme le scénario dans les préférences partagées.
+                            ScenarioManager.renommerScenario(activity, nomScenario, nomSaisi);
+                            // On recharger le spinner pour prendre en compte la modification.
+                            dialogOuvrir.setValeursListeChoix(ScenarioManager.getTableauNomsScenarios(activity, ""));
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void afficherErreurScenarioVide() {
@@ -532,6 +571,13 @@ public class EditionScenarioActivity extends AppCompatActivity {
     }
 
     private void afficherEcranChoixMode() {
+        // On envoie un message au robot signalant qu'on change de mode.
+        try {
+            Ev3BluetoothManager.sendMessage("EXIT_MODE");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Intent intentChoixMode = new Intent(EditionScenarioActivity.this, ChoixModeActivity.class);
         startActivity(intentChoixMode);
     }

@@ -297,7 +297,7 @@
 
         <Button
             style="@style/btnAvecTexteEtImageCentres"
-            android:drawableRight="@drawable/icon_capteur_couleur"
+            android:drawableRight="@drawable/icon_actualiser"
             android:text="Réessayer"
             android:textColor="#FFFFFF" />
     </FrameLayout>

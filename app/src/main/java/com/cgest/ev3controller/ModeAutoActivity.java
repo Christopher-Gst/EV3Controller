@@ -15,6 +15,8 @@ import com.cgest.ev3controller.scenario.EtapeReculer;
 import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
+import java.io.IOException;
+
 public class ModeAutoActivity extends AppCompatActivity {
 
     // TAG de cette activité utilisé pour le Logcat.
@@ -214,6 +216,17 @@ public class ModeAutoActivity extends AppCompatActivity {
         EtapeArreter etapeArreter = new EtapeArreter();
         scenario.ajouterEtape(etapeArreter);
         Ev3BluetoothManager.envoyerScenario(scenario);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // On envoie un message au robot signalant qu'on change de mode.
+        try {
+            Ev3BluetoothManager.sendMessage("EXIT_MODE");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();
     }
 
 }

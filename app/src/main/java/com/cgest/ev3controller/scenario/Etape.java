@@ -49,8 +49,12 @@ public abstract class Etape {
         }
     }
 
+    public static String getRegex(){
+        return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(M)";
+    }
+
     public static boolean isCodeValide(String code) {
-        return code.matches("((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(M)");
+        return code.matches(getRegex());
     }
 
 }

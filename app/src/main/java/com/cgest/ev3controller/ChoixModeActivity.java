@@ -180,8 +180,15 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        //new InitBluetoothTask().execute((ChoixModeActivity) activity);
-        afficherModes();
+        if (!Utile.connexionBluetoothEtablie) {
+            // On lance la recherche du robot sur un autre thread.
+            new InitBluetoothTask().execute((ChoixModeActivity) activity);
+            Utile.connexionBluetoothEtablie = true;
+        } else {
+            cacherErreurBluetooth();
+            afficherModes();
+        }
+
     }
 
     // Permet de gérer l'affichage de la sélection d'un mode.

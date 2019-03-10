@@ -11,6 +11,8 @@ import java.util.Map;
 
 public final class Utile {
 
+    public static boolean connexionBluetoothEtablie = false;
+
     /**
      * Permet d'appliquer la police principale de l'application "fontdinerdotcom_huggable" aux vues de l'application.
      * S'applique aussi aux Buttons car Button hérite de TextView.

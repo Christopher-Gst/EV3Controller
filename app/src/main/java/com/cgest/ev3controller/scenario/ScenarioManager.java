@@ -79,4 +79,20 @@ public class ScenarioManager {
 
         editor.commit();
     }
+
+    public static void renommerScenario(Context context, String ancienNom, String nouveauNom) {
+        SharedPreferences pref = context.getApplicationContext().getSharedPreferences(NOM_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        // On récupère le code du scénario.
+        String code = pref.getString(ancienNom, "");
+
+        // On supprimer le scénario du fichier.
+        editor.remove(ancienNom);
+
+        // On recrée le scénario avec le nouveau nom.
+        editor.putString(nouveauNom, code);
+
+        editor.commit();
+    }
 }
