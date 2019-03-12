@@ -51,7 +51,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
     private ImageView imageVScannerUneAction;
     // Boutons circulaire en bas de l'écran.
     private Button btnLancerScenario;
-    private Button btnEditionScenarioAide;
     private Button btnEnregistrerScenario;
     private Button btnEditionScenarioOuvrirUnScenario;
 
@@ -70,6 +69,9 @@ public class EditionScenarioActivity extends AppCompatActivity {
     // Indique si des modifications n'ont pas été enregistrées.
     boolean modifsNonEnregistrees = false;
 
+    // Nom d'un nouveau scénario par défaut.
+    private final static String NOM_NOUVEAU_SCENARIO = "Scénario sans nom";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
         // On récupère les vues communes aux modes manuel et scan.
         textVEditionScenarioTitre = (TextView) findViewById(R.id.textVEditionScenarioTitre);
         textVEditionScenarioNomDuScenario = (TextView) findViewById(R.id.textVEditionScenarioNomDuScenario);
-        btnEditionScenarioAide = (Button) findViewById(R.id.btnEditionScenarioAide);
         // On affiche la police de caractère de l'application ("Fontdinerdotcom Huggable") sur les Views.
         Utile.appliquerPolicePrincipale(this, textVEditionScenarioTitre);
         Utile.appliquerPolicePrincipale(this, textVEditionScenarioNomDuScenario);
@@ -163,7 +164,7 @@ public class EditionScenarioActivity extends AppCompatActivity {
             });
         }
 
-        textVEditionScenarioNomDuScenario.setText("Scénario sans nom");
+        textVEditionScenarioNomDuScenario.setText(NOM_NOUVEAU_SCENARIO);
 
         // Initialisation de la RecyclerView.
         initRecyclerView();
@@ -178,19 +179,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
                     // Si le scénario est vide, on affiche une erreur.
                     afficherErreurScenarioVide();
                 }
-            }
-        });
-
-        btnEditionScenarioAide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // On affiche une pop-up expliquant le principe du mode concerné.
-                CustomDialog dialogAide = new CustomDialog(activity);
-                dialogAide.show();
-                dialogAide.setTitre("Aide");
-                // On récupère l'explication depuis les strings des ressource du projet.
-                dialogAide.setMessage(mode.equals("manuel") ? getResources().getString(R.string.aide_mode_manuel) : getResources().getString(R.string.aide_mode_scan));
-                dialogAide.afficherBtnNegatif("Fermer");
             }
         });
 
@@ -425,14 +413,27 @@ public class EditionScenarioActivity extends AppCompatActivity {
     private void ouvrirScenario() {
         final CustomDialog dialogOuvrir = new CustomDialog(activity, "Ouvrir un scénario", "Sélectionnez un scénario :");
         dialogOuvrir.show();
-        dialogOuvrir.afficherBtnPositif("Valider");
         dialogOuvrir.afficherBtnNegatif("Annuler");
         dialogOuvrir.afficherBtnOptionnel("Nouveau");
         dialogOuvrir.afficherBtnIconeGauche(getResources().getDrawable(R.drawable.icon_supprimer_80));
         dialogOuvrir.afficherBtnIconeDroite(getResources().getDrawable(R.drawable.icon_modifier_80));
-        // On affiche la liste des scénarios dans un spinner.
-        dialogOuvrir.setValeursListeChoix(ScenarioManager.getTableauNomsScenarios(activity, adapter.scenario.getNom()));
-        dialogOuvrir.afficherListeChoix();
+        // On récupère un tableau contenant les noms des scénarios enregistrés dans l'appareil.
+        String[] nomsScenariosEnregistres = ScenarioManager.getTableauNomsScenarios(activity);
+        // S'il existe des scénario enregistrés (autres que celui ouvrir actuellement)...
+        if (nomsScenariosEnregistres.length > 0) {
+            // On affiche la liste des scénarios dans un spinner.
+            dialogOuvrir.setValeursListeChoix(nomsScenariosEnregistres);
+            dialogOuvrir.afficherListeChoix();
+            // On affiche un bouton pour ouvrir le scénario sélectionné.
+            dialogOuvrir.afficherBtnPositif("Valider");
+        } else {
+            // Sinon, on indique qu'il n'existe aucun scénario dans l'appareil.
+            dialogOuvrir.setMessage("Aucun scénario n'a encore été créé sur cet appareil.");
+            // On cache les boutons "Renommer et "Supprimer".
+            dialogOuvrir.getBtnIconGauche().setVisibility(View.GONE);
+            dialogOuvrir.getBtnIconDroite().setVisibility(View.GONE);
+        }
+
 
         // On gère l'appui sur le bouton "Valider".
         dialogOuvrir.getBtnPositif().setOnClickListener(new View.OnClickListener() {
@@ -451,13 +452,14 @@ public class EditionScenarioActivity extends AppCompatActivity {
             }
         });
 
+        // On gère l'appui du nouveau "Nouveau".
         dialogOuvrir.getBtnOptionnel().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // On ferme le pop-up.
                 dialogOuvrir.dismiss();
                 // On affiche "Scénario sans nom" dans l'interface.
-                textVEditionScenarioNomDuScenario.setText("Scénario sans nom");
+                textVEditionScenarioNomDuScenario.setText(NOM_NOUVEAU_SCENARIO);
                 // On change l'objet Scenario utilisé par le RecyclerView avec un nouveau Scenario.
                 adapter.setScenario(new Scenario());
                 // On indique qu'aucune modification n'a été faite sur le scénario.
@@ -485,8 +487,35 @@ public class EditionScenarioActivity extends AppCompatActivity {
                         customConfirmation.dismiss();
                         // On supprime le scénario du fichier de préférences.
                         ScenarioManager.supprimerScenario(activity, nomScenario);
-                        // On recharger le spinner pour y enlever le scénario sélectionné.
-                        dialogOuvrir.setValeursListeChoix(ScenarioManager.getTableauNomsScenarios(activity, adapter.scenario.getNom()));
+
+                        // On cache le bouton "Valider" car la liste de nom est peut-être vide après la suppression.
+                        dialogOuvrir.cacherBtnPositif();
+                        // On récupère un tableau contenant les noms des scénarios enregistrés dans l'appareil.
+                        String[] nomsScenariosEnregistres = ScenarioManager.getTableauNomsScenarios(activity);
+                        // S'il existe des scénario enregistrés (autres que celui ouvrir actuellement)...
+                        if (nomsScenariosEnregistres.length > 0) {
+                            // On affiche la liste des scénarios dans un spinner.
+                            dialogOuvrir.setValeursListeChoix(nomsScenariosEnregistres);
+                            dialogOuvrir.afficherListeChoix();
+                            // On affiche un bouton pour ouvrir le scénario sélectionné.
+                            dialogOuvrir.afficherBtnPositif("Valider");
+                        } else {
+                            // Sinon, on indique qu'il n'existe aucun scénario dans l'appareil.
+                            dialogOuvrir.setMessage("Aucun scénario n'a encore été créé sur cet appareil.");
+                            // On cache les boutons "Renommer et "Supprimer".
+                            dialogOuvrir.getBtnIconGauche().setVisibility(View.GONE);
+                            dialogOuvrir.getBtnIconDroite().setVisibility(View.GONE);
+                        }
+
+                        // Si le scénario édité est celui qui doit être supprimé, on créé un nouveau scénario que l'on édite.
+                        if (nomScenario.equals(adapter.scenario.getNom())) {
+                            // -- On affiche le nom du scénario dans l'interface.
+                            textVEditionScenarioNomDuScenario.setText(NOM_NOUVEAU_SCENARIO);
+                            // -- On change l'objet Scenario utilisé par le RecyclerView.
+                            adapter.setScenario(new Scenario());
+                            // -- On indique qu'aucune modification n'a été faite sur le scénario.
+                            modifsNonEnregistrees = false;
+                        }
                     }
                 });
             }
@@ -522,7 +551,14 @@ public class EditionScenarioActivity extends AppCompatActivity {
                             // On renomme le scénario dans les préférences partagées.
                             ScenarioManager.renommerScenario(activity, nomScenario, nomSaisi);
                             // On recharger le spinner pour prendre en compte la modification.
-                            dialogOuvrir.setValeursListeChoix(ScenarioManager.getTableauNomsScenarios(activity, ""));
+                            dialogOuvrir.setValeursListeChoix(ScenarioManager.getTableauNomsScenarios(activity));
+                            // Si le scénario renommé est celui qui est édité actuellement...
+                            if (adapter.scenario.getNom().equals(nomScenario)) {
+                                // On renomme le scénario dans l'adapter.
+                                adapter.scenario.setNom(nomSaisi);
+                                // On affiche le nouveau nom dans l'interface.
+                                textVEditionScenarioNomDuScenario.setText(nomSaisi);
+                            }
                         }
                     }
                 });

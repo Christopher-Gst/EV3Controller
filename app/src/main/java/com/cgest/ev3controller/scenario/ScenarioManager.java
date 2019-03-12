@@ -30,7 +30,7 @@ public class ScenarioManager {
         editor.commit();
     }
 
-    public static String[] getTableauNomsScenarios(Context context, String nomAIgnorer) {
+    public static String[] getTableauNomsScenarios(Context context) {
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences(NOM_PREFS, MODE_PRIVATE);
 
         // On récupère une liste associative entre les clés et les valeurs du fichier de préférences partagées.
@@ -42,24 +42,11 @@ public class ScenarioManager {
         // Pour chaque couple clé-valeur, on n'ajoute que la clé à la liste des noms.
         int i = 0;
         for (Map.Entry<String, ?> entry : scenarios.entrySet()) {
-            if (!entry.getKey().equals(nomAIgnorer)) {
-                noms[i] = entry.getKey();
-                i++;
-            }
+            noms[i] = entry.getKey();
+            i++;
         }
 
-        // On crée un nouveau tableau ne contenant pas les éventuelles chaînes vides ou nulles (à cause du décalage lié au
-        // nom à ignorer qui peut être "" si le scénario est nouveau).
-        int nbNoms = 0;
-        for (int j = 0; j < noms.length; j++)
-            if (noms[j] != null && !noms[j].equals(""))
-                nbNoms++;
-        String[] nomsCorrects = new String[nbNoms];
-        for (int j = 0; j < nbNoms; j++)
-            nomsCorrects[j] = noms[j];
-
-        // On retourne la conversion de la liste en tableau.
-        return nomsCorrects;
+        return noms;
     }
 
     public static Scenario obtenirScenario(Context context, String nomScenario) {

@@ -29,6 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -240,6 +241,19 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/btnBip"
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="B">
+
+                        <Button
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_cloche"
+                            android:drawablePadding="0dp" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/btnMusique"
                         style="?android:attr/buttonStyle"
                         android:layout_width="match_parent"
@@ -317,17 +331,6 @@
         app:layout_constraintEnd_toStartOf="@+id/btnLancerScenario" />
 
     <Button
-        android:id="@+id/btnEditionScenarioAide"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/icon_information"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/btnEditionScenarioOuvrirUnScenario"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -336,7 +339,7 @@
         android:background="@drawable/icon_ouvrir"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnEditionScenarioAide" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnLancerScenario"
@@ -348,5 +351,16 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:src="@drawable/logo_iut_blanc"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEnregistrerScenario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnEnregistrerScenario" />
 
 </android.support.constraint.ConstraintLayout>

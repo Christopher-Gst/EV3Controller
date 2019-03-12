@@ -2,6 +2,8 @@ package com.cgest.ev3controller;
 
 import android.os.AsyncTask;
 
+import java.io.IOException;
+
 public class InitBluetoothTask extends AsyncTask<ChoixModeActivity, Void, String> {
 
     ChoixModeActivity activity;

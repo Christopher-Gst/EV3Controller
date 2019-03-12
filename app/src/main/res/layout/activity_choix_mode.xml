@@ -26,177 +26,101 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnChoixModeContinuer"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnChoixModeCredits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgVChoixModeLogo">
 
-        <TextView
-            android:id="@+id/textVChoixModeAuto"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/choix_mode_automatique"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgVModeAuto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgVChoixModeSepa"
-            app:layout_constraintTop_toTopOf="@+id/imgVModeAuto" />
-
         <Button
             android:id="@+id/btnModeManuel"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/button_background_home"
-            android:paddingLeft="95dp"
+            android:paddingVertical="0dp"
+            android:paddingLeft="100dp"
             android:paddingRight="8dp"
             android:text="Mode manuel"
             android:textAlignment="textEnd"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/imgVModeManuel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgVModeManuel" />
 
         <Button
             android:id="@+id/btnModeScan"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/button_background_home"
-            android:paddingLeft="95dp"
+            android:paddingVertical="0dp"
+            android:paddingLeft="115dp"
             android:paddingRight="8dp"
             android:text="Mode scan"
             android:textAlignment="textEnd"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/imgVModeScan"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgVModeScan" />
-
-        <TextView
-            android:id="@+id/textVChoixModeManuel"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/choix_mode_manuel"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgVModeManuel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgVChoixModeSepa"
-            app:layout_constraintTop_toTopOf="@+id/imgVModeManuel" />
-
-        <TextView
-            android:id="@+id/textVChoixModeScan"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/choix_mode_scan"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgVModeScan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgVChoixModeSepa"
-            app:layout_constraintTop_toTopOf="@+id/imgVModeScan" />
-
-        <ImageView
-            android:id="@+id/imgVCocheModeAuto"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/coche"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btnModeAuto"
-            app:layout_constraintStart_toEndOf="@+id/btnModeAuto"
-            app:layout_constraintTop_toTopOf="@+id/btnModeAuto" />
-
-        <ImageView
-            android:id="@+id/imgVChoixModeSepa"
-            android:layout_width="3dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:src="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgVCocheModeAuto"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnModeAuto"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/button_background_home"
-            android:paddingLeft="95dp"
+            android:paddingVertical="0dp"
+            android:paddingLeft="105dp"
             android:paddingRight="8dp"
             android:text="Mode automatique"
             android:textAlignment="textEnd"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/imgVModeAuto"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgVModeAuto" />
 
         <ImageView
-            android:id="@+id/imgVCocheModeManuel"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/coche"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btnModeManuel"
-            app:layout_constraintStart_toEndOf="@+id/btnModeManuel"
-            app:layout_constraintTop_toTopOf="@+id/btnModeManuel" />
-
-        <ImageView
-            android:id="@+id/imgVCocheModeScan"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/coche"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btnModeScan"
-            app:layout_constraintStart_toEndOf="@+id/btnModeScan"
-            app:layout_constraintTop_toTopOf="@+id/btnModeScan" />
-
-        <ImageView
             android:id="@+id/imgVModeAuto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="6dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:elevation="10dp"
             android:rotation="-20"
             android:src="@drawable/fleches_directionnelles"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btnModeAuto"
             app:layout_constraintTop_toBottomOf="@+id/imgVModeScan" />
 
         <ImageView
             android:id="@+id/imgVModeManuel"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:elevation="10dp"
             android:rotation="-20"
-            android:src="@drawable/logo_mode_manuel"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/logo_mode_manuel2"
+            app:layout_constraintStart_toStartOf="@+id/btnModeManuel"
             app:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <ImageView
             android:id="@+id/imgVModeScan"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:elevation="10dp"
-            android:rotation="-20"
+            android:rotation="-18"
             android:src="@drawable/qr_code"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btnModeScan"
             app:layout_constraintTop_toBottomOf="@+id/imgVModeManuel" />
 
     </android.support.constraint.ConstraintLayout>
@@ -214,21 +138,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnChoixModeContinuer"
-        android:layout_width="255dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_background_home"
-        android:paddingHorizontal="8dp"
-        android:text="Continuer >"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
         android:id="@+id/btnChoixModeCredits"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -236,9 +145,8 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/icon_information"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/btnChoixModeContinuer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnChoixModeContinuer" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textVChoixModeErreurBluetooth"
@@ -246,7 +154,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Recherche du robot..."
         android:textColor="#FFFFFF"
         android:textSize="36sp"
@@ -260,12 +167,12 @@
         android:id="@+id/imageVChoixModeErreurBluetooth"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBarConnexionBluetooth"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textVChoixModeErreurBluetooth"
         app:layout_constraintStart_toStartOf="@+id/progressBarConnexionBluetooth"
-        app:layout_constraintTop_toTopOf="@+id/progressBarConnexionBluetooth"
+        app:layout_constraintTop_toTopOf="@+id/textVChoixModeErreurBluetooth"
         app:layout_constraintVertical_bias="0.625"
-        app:srcCompat="@drawable/icon_erreur" />
+        app:srcCompat="@drawable/icon_attention" />
 
     <ProgressBar
         android:id="@+id/progressBarConnexionBluetooth"
@@ -276,7 +183,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/btnChoixModeContinuer"
+        app:layout_constraintBottom_toTopOf="@+id/btnChoixModeCredits"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgVChoixModeLogo" />
 
@@ -301,5 +208,16 @@
             android:text="Réessayer"
             android:textColor="#FFFFFF" />
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="250dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/logo_iut_blanc"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

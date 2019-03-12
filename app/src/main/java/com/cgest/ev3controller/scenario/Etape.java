@@ -40,6 +40,8 @@ public abstract class Etape {
                 return new EtapeRotation(Integer.valueOf(code[1]), Integer.valueOf(code[2]));
             case "P":
                 return new EtapePause(Integer.valueOf(code[1]));
+            case "B":
+                return new EtapeBip();
             case "M":
                 return new EtapeMusique();
             case "ARRET":
@@ -50,7 +52,7 @@ public abstract class Etape {
     }
 
     public static String getRegex(){
-        return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(M)";
+        return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(B)|(M)";
     }
 
     public static boolean isCodeValide(String code) {

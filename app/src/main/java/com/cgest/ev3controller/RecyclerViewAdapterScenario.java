@@ -100,6 +100,8 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         } // Si on fait une pause...
         else if (code.matches("P\\.[0-9]+")) {
             idImage = R.drawable.icon_sablier;
+        } else if (code.equals("B")) {
+            idImage = R.drawable.icon_cloche;
         } else if (code.equals("M")) {
             idImage = R.drawable.icon_musique;
         }
