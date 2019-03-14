@@ -49,6 +49,16 @@ public class Scenario {
     }
 
     /**
+     * Permet d'intervertir deux étapes du scénario.
+     *
+     * @param indexEtapeA L'index dans le scénario de l'une des deux étapes à intervertir.
+     * @param indexEtapeB L'index dans le scénario de l'autre des deux étapes à intervertir.
+     */
+    public void intervertirEtapes(int indexEtapeA, int indexEtapeB) {
+        Collections.swap(etapes, indexEtapeA, indexEtapeA);
+    }
+
+    /**
      * Permet d'obtenir le code d'un scénario.
      * Les codes des différentes étapes sont séparés par un ";".
      * Par conséquent, il n'y a pas de ";" à la fin de la chaîne.

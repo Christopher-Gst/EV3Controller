@@ -143,14 +143,14 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        if (!Utile.connexionBluetoothEtablie) {
+        /*if (!Utile.connexionBluetoothEtablie) {
             // On lance la recherche du robot sur un autre thread.
             new InitBluetoothTask().execute((ChoixModeActivity) activity);
             Utile.connexionBluetoothEtablie = true;
-        } else {
+        } else {*/
             cacherErreurBluetooth();
             afficherModes();
-        }
+        //}
 
     }
 

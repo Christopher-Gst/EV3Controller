@@ -2,42 +2,26 @@ package com.cgest.ev3controller;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-import com.cgest.ev3controller.capteur.Capteur;
-import com.cgest.ev3controller.capteur.CapteurCouleur;
-import com.cgest.ev3controller.capteur.CapteurProximite;
-import com.cgest.ev3controller.capteur.CapteurToucher;
-import com.cgest.ev3controller.capteur.Couleur;
 import com.cgest.ev3controller.scenario.Etape;
-import com.cgest.ev3controller.scenario.EtapeAvancer;
-import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
-import com.cgest.ev3controller.scenario.EtapeMusique;
-import com.cgest.ev3controller.scenario.EtapePause;
-import com.cgest.ev3controller.scenario.EtapeReculer;
-import com.cgest.ev3controller.scenario.EtapeRotation;
 import com.cgest.ev3controller.scenario.Scenario;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
-public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
 
     public Scenario scenario;
     private Activity activity;
     RecyclerView rc;
+    private ItemTouchHelper touchHelper;
     private static String TAG = "RecyclerViewAdapterScenario";
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -70,7 +54,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
         Etape etape = scenario.getEtapes().get(position);
         // On affiche les caractéristiques de l'étape sur la view.
-        ViewHolderEtape viewHolder = (ViewHolderEtape) holder;
+        final ViewHolderEtape viewHolder = (ViewHolderEtape) holder;
 
         viewHolder.layoutActionTexteEtImage.setText(etape.getDescriptionTextuelle());
 
@@ -107,6 +91,21 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         }
         if (idImage != 0)
             viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, idImage, 0);
+
+        viewHolder.imgVDeplacerAction.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN || event.getActionMasked() == MotionEvent.ACTION_UP) {
+                    touchHelper.startDrag(viewHolder);
+                }
+                return false;
+            }
+
+        });
+    }
+
+    public void setTouchHelper(ItemTouchHelper touchHelper) {
+        this.touchHelper = touchHelper;
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -124,12 +123,15 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolderEtape extends RecyclerView.ViewHolder {
 
         Button layoutActionTexteEtImage;
+        ImageView imgVDeplacerAction;
 
         public ViewHolderEtape(View itemView) {
             super(itemView);
+            imgVDeplacerAction = itemView.findViewById(R.id.imgVLayoutActionDeplacer);
             layoutActionTexteEtImage = itemView.findViewById(R.id.layoutActionTexteEtImage);
             Utile.appliquerPolicePrincipale(activity, layoutActionTexteEtImage);
 
+            // On gère le clic d'une action pour afficher la pop-up de modification.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -137,45 +139,31 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
                     final Etape etape = scenario.getEtapes().get(getPosition());
 
-                    // On affiche une pop-up demandant à l'utilisateur s'il souhaite modifier ou supprimer l'action sélectionnée.
-                    final CustomDialog dialog = new CustomDialog(activity, "Que faire ?", "Que voulez-vous faire sur cette action ?");
-                    dialog.show();
-                    dialog.afficherBtnNegatif("Supprimer");
-                    // On affiche le bouton "Modifier" seulement si l'action a des paramètres à modifier.
-                    if (etape.getParamType() != null)
-                        dialog.afficherBtnPositif("Modifier");
-                    dialog.afficherBtnOptionnel("Annuler");
-
-                    // S'il l'utilisateur clique sur supprimer...
-                    dialog.getBtnNegatif().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // On ferme le pop-up.
-                            dialog.dismiss();
-                            // On obtient la position de l'action sélectionnée.
-                            int position = getPosition();
-                            // On supprimer l'action du scénario et on notifie la RecyclerView.
-                            scenario.getEtapes().remove(position);
-                            notifyItemRemoved(position);
-                            // On notifie que le scénario a subi des modifications non enregistrées.
-                            ((EditionScenarioActivity) activity).modifsNonEnregistrees = true;
-                        }
-                    });
-
-                    // Si l'utilisateur clique sur modifier...
-                    dialog.getBtnPositif().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // On ferme le pop-up.
-                            dialog.dismiss();
-                            // On affiche le pop-up de modification de l'action.
-                            ((EditionScenarioActivity) activity).afficherPopUpEditionEtape(etape, false);
-                        }
-                    });
+                    // Si l'action possède des paramètres modifiables...
+                    if (etape.getParamType() != null) {
+                        // On affiche le pop-up de modification de l'action.
+                        ((EditionScenarioActivity) activity).afficherPopUpEditionEtape(etape, false);
+                    }
                 }
             });
         }
 
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        // On intervertie les deux actions.
+        Collections.swap(scenario.getEtapes(), fromPosition, toPosition);
+        // On notifie le changement de position à l'adapter.
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        // On supprime l'action du scénario.
+        scenario.getEtapes().remove(position);
+        // On notifie la suppression d'action à l'adapter.
+        notifyItemRemoved(position);
     }
 
 }
