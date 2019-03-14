@@ -20,6 +20,7 @@ public class InitBluetoothTask extends AsyncTask<ChoixModeActivity, Void, String
         if (result == null) {
             activity.cacherErreurBluetooth();
             activity.afficherModes();
+            activity.afficherIntroCapteursRobot();
         } else activity.afficherErreurBluetooth(result);
     }
 }

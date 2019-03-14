@@ -265,9 +265,13 @@ public class EditionScenarioActivity extends AppCompatActivity {
 
             // On affiche le bon message en fonction du type d'action :
             if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
-                if (((EtapeAvancerReculer) etape).getCapteur() == null)
-                    messageDialog = "Saisissez la distance de déplacement :";
-                else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurProximite)
+                if (((EtapeAvancerReculer) etape).getCapteur() == null) {
+                    // Si on avance pendant une durée...
+                    if (((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.SECONDES)
+                        messageDialog = "Saisissez la durée de déplacement :";
+                    else // Sinon, si on avance sur une distance...
+                        messageDialog = "Saisissez la distance de déplacement :";
+                } else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurProximite)
                     messageDialog = "Saisissez la distance de détection :";
                 else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurCouleur)
                     messageDialog = "Sélectionnez la couleur à détecter :";

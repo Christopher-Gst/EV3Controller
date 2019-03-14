@@ -8,6 +8,17 @@
     <string name="choix_mode_scan">Concevez un scénario en scannant des QR Codes. Le robot suivra votre scénario étape par étape.</string>
     <string name="choix_mode_automatique">Contrôlez automatiquement le robot à l\'aide de flèches directionnelles.</string>
     <string name="mode_scan_indisponible">Pour utiliser ce mode, vous devez télécharger l\'application Barcode Scanner. Voulez-vous la télécharger ?\nEn cliquant sur \"Oui\", vous serez redirigé sur le Google Play Store.</string>
-    <string name="aide_mode_manuel">Aide pour le mode manuel.</string>
-    <string name="aide_mode_scan">Aide pour le mode scan.</string>
+    <string name="credits"><![CDATA[
+<p><b>EV3 Controller</b> est une application qui a été développée dans le cadre des projets tuteurés du semestre 4 au département Informatique de l\'IUT de Laval.</p>
+<br>
+<p>L\'objectif de cette application est de piloter un <b>robot EV3</b> via une tablette selon <b>3 modes</b> :</p>
+<p>   &#8226; <b>Mode Manuel qui</b> permet de concevoir un scénario de déplacement du robot en sélectionnant des actions.</p>
+<p>   &#8226; <b>Mode Scan qui</b> permet de concevoir un scénario de déplacement du robot en scannant des cartes.</p>
+<p>   &#8226; <b>Mode Automatique qui</b> permet de piloter automatiquement le robot à l\'aide des flèches directionnelles.</p>
+<br>
+<p style=\'text-align:center\'><b>Conception et Développement de l\'application</b></p>
+<p style=\'text-align:center\'><b>Lahcen Oubahssi</b> (Maître de conférences en informatique - IUT de Laval) &amp; <b>Christopher Gest</b> (étudiant INFO2 - IUT de Laval)</p>
+<br>
+<p style=\'text-align:center\'>Mars 2019</p>
+]]></string>
 </resources>

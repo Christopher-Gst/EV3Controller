@@ -23,7 +23,6 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingHorizontal="30dp"
+            android:paddingHorizontal="60dp"
             android:text="[MESSAGE]"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
@@ -62,6 +61,12 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="#FFFFFF"
             android:popupBackground="#000000"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgVDialogImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone" />
     </LinearLayout>
 

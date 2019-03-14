@@ -1,27 +1,21 @@
 package com.cgest.ev3controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Typeface;
-import android.media.Image;
 import android.net.Uri;
-import android.opengl.Visibility;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.concurrent.ExecutionException;
 
 public class ChoixModeActivity extends AppCompatActivity {
 
@@ -41,11 +35,8 @@ public class ChoixModeActivity extends AppCompatActivity {
     private ProgressBar progressBarConnexionBluetooth;
     private FrameLayout btnChoixModeReessayerConnexion;
 
-    private int modeSelectionne;
-
-    private static final int MODE_MANUEL = 0;
-    private static final int MODE_SCAN = 1;
-    private static final int MODE_AUTOMATIQUE = 2;
+    // Numéro de l'image à afficher dans le pop-up de présentation des capteurs du robot.
+    private int idEtapeIntroCapteurs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +117,24 @@ public class ChoixModeActivity extends AppCompatActivity {
         imgBtnChoixModeCredits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog dialogAPropos = new CustomDialog(activity, "À propos", "Texte à définir.");
+                CustomDialog dialogAPropos = new CustomDialog(activity, "À propos", getResources().getString(R.string.credits));
                 dialogAPropos.show();
+                dialogAPropos.getTextVDialogMessage().setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    dialogAPropos.getTextVDialogMessage().setText(Html.fromHtml(getResources().getString(R.string.credits), Html.FROM_HTML_MODE_COMPACT));
+                } else {
+                    dialogAPropos.getTextVDialogMessage().setText(Html.fromHtml(getResources().getString(R.string.credits)));
+                }
+
+                // On met la taille du message à 200dp.
+                //   - on récupère l'échelle de l'écran.
+                ViewGroup.LayoutParams param = dialogAPropos.getTextVDialogMessage().getLayoutParams();
+                final float scale = getResources().getDisplayMetrics().density;
+                //   - on calcule combien font 200dp en pixels.
+                param.height = (int) (450 * scale + 0.5f);
+                dialogAPropos.getTextVDialogMessage().setLayoutParams(param);
+                dialogAPropos.getTextVDialogMessage().setMovementMethod(new ScrollingMovementMethod());
+
                 dialogAPropos.afficherBtnNegatif("Fermer");
             }
         });
@@ -143,14 +150,14 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        /*if (!Utile.connexionBluetoothEtablie) {
+        if (!Utile.connexionBluetoothEtablie) {
             // On lance la recherche du robot sur un autre thread.
             new InitBluetoothTask().execute((ChoixModeActivity) activity);
             Utile.connexionBluetoothEtablie = true;
-        } else {*/
+        } else {
             cacherErreurBluetooth();
             afficherModes();
-        //}
+        }
 
     }
 
@@ -181,5 +188,68 @@ public class ChoixModeActivity extends AppCompatActivity {
         textVChoixModeErreurBluetooth.setVisibility(View.INVISIBLE);
         btnChoixModeReessayerConnexion.setVisibility(View.INVISIBLE);
     }
+
+    public void afficherIntroCapteursRobot() {
+        // On créer le pop-up de présentation des capteurs du robot.
+        final CustomDialog dialogPresentationCapteurs = new CustomDialog(this);
+        dialogPresentationCapteurs.show();
+        dialogPresentationCapteurs.setTitre("Présentation des capteurs du robot EV3");
+        dialogPresentationCapteurs.getTextVDialogMessage().setVisibility(View.GONE);
+        dialogPresentationCapteurs.getImgVDialogImage().setVisibility(View.VISIBLE);
+        dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(R.drawable.intro_0));
+        dialogPresentationCapteurs.afficherBtnPositif("Suivant");
+        dialogPresentationCapteurs.afficherBtnNegatif("Précédent");
+        dialogPresentationCapteurs.getBtnNegatif().setVisibility(View.INVISIBLE);
+        dialogPresentationCapteurs.afficherBtnOptionnel("Fermer");
+
+        // On fixe la taille de l'image à 420 dp.
+        Utile.setDpHeight(this, dialogPresentationCapteurs.getImgVDialogImage(), 420);
+
+        idEtapeIntroCapteurs = 0;
+        dialogPresentationCapteurs.getBtnPositif().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (idEtapeIntroCapteurs < 6) {
+                    // On récupère le nom de l'image suivante à partir du numéro de l'image.
+                    String nomImageCapteur = "intro_" + ++idEtapeIntroCapteurs;
+                    // On affiche l'image du capteur.
+                    dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getResId(nomImageCapteur, R.drawable.class)));
+                    // Si on est à la dernière image, on afficher "Fermer" à la place de "Suivant".
+                    if (idEtapeIntroCapteurs == 6)
+                        dialogPresentationCapteurs.getBtnPositif().setText("Fermer");
+                    // On affiche le bouton "Précédent".
+                    dialogPresentationCapteurs.getBtnNegatif().setVisibility(View.VISIBLE);
+                } else { // S'il n'y a plus d'image...
+                    // On ferme le pop-up.
+                    dialogPresentationCapteurs.dismiss();
+                }
+            }
+        });
+
+        dialogPresentationCapteurs.getBtnNegatif().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // On récupère le nom de l'image suivante à partir du numéro de l'image.
+                String nomImageCapteur = "intro_" + --idEtapeIntroCapteurs;
+                // On affiche l'image du capteur.
+                dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getResId(nomImageCapteur, R.drawable.class)));
+                // On affiche le bouton précédent si nécessaire.
+                if (idEtapeIntroCapteurs - 1 < 0)
+                    dialogPresentationCapteurs.getBtnNegatif().setVisibility(View.INVISIBLE);
+                // On affiche le bouton "Suivant".
+                dialogPresentationCapteurs.getBtnPositif().setText("Suivant");
+                dialogPresentationCapteurs.getBtnPositif().setVisibility(View.VISIBLE);
+            }
+        });
+
+        dialogPresentationCapteurs.getBtnOptionnel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogPresentationCapteurs.dismiss();
+            }
+        });
+
+    }
+
 
 }

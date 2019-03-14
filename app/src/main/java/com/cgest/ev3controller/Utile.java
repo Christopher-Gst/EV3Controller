@@ -5,8 +5,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 public final class Utile {
@@ -33,6 +35,24 @@ public final class Utile {
             return false;
         }
         return true;
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static void setDpHeight(Context context, View view, int height) {
+        ViewGroup.LayoutParams param = view.getLayoutParams();
+        final float scale = context.getResources().getDisplayMetrics().density;
+        //   - on calcule combien font 500dp en pixels.
+        param.height = (int) (height * scale + 0.5f);
+        view.setLayoutParams(param);
     }
 
 }

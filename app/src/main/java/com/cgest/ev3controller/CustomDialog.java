@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class CustomDialog extends Dialog implements
     // Views optionnelles à afficher en fonction du contexte d'utilisation de la pop-up.
     private EditText editTDialogSaisie;
     private Spinner spinnerDialogChoix;
+    private ImageView imgVDialogImage;
     // Boutons avec des images en bas à gauche.
     private Button btnDialogIcone1;
     private Button btnDialogIcone2;
@@ -94,7 +96,7 @@ public class CustomDialog extends Dialog implements
         //   - on récupère l'échelle de l'écran.
         ViewGroup.LayoutParams param = editTDialogSaisie.getLayoutParams();
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        //   - on calcule combien font 500dp en pixels.
+        //   - on calcule combien font 100dp en pixels.
         param.width = (int) (100 * scale + 0.5f);
         editTDialogSaisie.setLayoutParams(param);
         // On change le format du texte pouvant être saisi à Texte.
@@ -136,6 +138,12 @@ public class CustomDialog extends Dialog implements
         // Le pop-up n'est pas annulable en cliquant sur le parent, c'est-à-dire en dehors.
         setCancelable(false);
 
+        // On affiche le titre et le message.
+        textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
+        textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
+        textVDialogTitre.setText(titre);
+        textVDialogMessage.setText(message);
+
         // On récupère les boutons positif, négatif et optionnel, et on les rend les événements de clic actifs.
         btnPositif = (Button) findViewById(R.id.btnDialogPositif);
         btnNegatif = (Button) findViewById(R.id.btnDialogNegatif);
@@ -147,16 +155,11 @@ public class CustomDialog extends Dialog implements
         // On récupère les vues optionnelles de la pop-up, à afficher en fonction du contexte d'utilisation de la pop-up.
         editTDialogSaisie = (EditText) findViewById(R.id.editTDialogSaisie);
         spinnerDialogChoix = (Spinner) findViewById(R.id.spinnerDialogChoix);
+        imgVDialogImage = (ImageView) findViewById(R.id.imgVDialogImage);
 
         // On récupère les boutons avec des images de fond en bas à gauche.
         btnDialogIcone1 = (Button) findViewById(R.id.btnDialogIcone1);
         btnDialogIcone2 = (Button) findViewById(R.id.btnDialogIcone2);
-
-        // On affiche le titre et le message.
-        textVDialogTitre = (TextView) findViewById(R.id.textVDialogTitre);
-        textVDialogMessage = (TextView) findViewById(R.id.textVDialogMessage);
-        textVDialogTitre.setText(titre);
-        textVDialogMessage.setText(message);
 
         // On applique la police de caractères de l'applications sur le texte du dialog.
         Utile.appliquerPolicePrincipale(activity, textVDialogTitre);
@@ -199,6 +202,10 @@ public class CustomDialog extends Dialog implements
         textVDialogMessage.setText(message);
     }
 
+    public TextView getTextVDialogTitre() {
+        return textVDialogTitre;
+    }
+
     public Button getBtnPositif() {
         return btnPositif;
     }
@@ -225,5 +232,13 @@ public class CustomDialog extends Dialog implements
 
     public Spinner getChampListeChoix() {
         return spinnerDialogChoix;
+    }
+
+    public ImageView getImgVDialogImage() {
+        return imgVDialogImage;
+    }
+
+    public TextView getTextVDialogMessage() {
+        return textVDialogMessage;
     }
 }
