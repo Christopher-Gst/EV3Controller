@@ -74,7 +74,7 @@ public class EditionScenarioActivity extends AppCompatActivity {
     boolean modifsNonEnregistrees = false;
 
     // Nom d'un nouveau scénario par défaut.
-    private final static String NOM_NOUVEAU_SCENARIO = "Scénario sans nom";
+    private final static String NOM_NOUVEAU_SCENARIO = "Nom du scénario";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

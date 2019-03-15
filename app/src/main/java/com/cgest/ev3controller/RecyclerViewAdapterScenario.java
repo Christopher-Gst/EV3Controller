@@ -58,36 +58,39 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
 
         viewHolder.layoutActionTexteEtImage.setText(etape.getDescriptionTextuelle());
 
+        // On vérifie si l'appareil est une tablette ou un smartphone.
+        boolean isTablette = Utile.isTablet(activity);
+
         String code = etape.getCode();
         int idImage = 0;
         // Si on avance ou recule pendant une durée...
         if (code.matches("(A|R)\\.[0-9]+\\.0")) {
-            idImage = R.drawable.icon_horloge3;
+            idImage = isTablette ? R.drawable.icon_horloge_45 : R.drawable.icon_horloge_35;
         } // Si on avance ou recule une distance...
         else if (code.matches("(A|R)\\.[0-9]+\\.1")) {
-            idImage = R.drawable.icon_regle;
+            idImage = isTablette ? R.drawable.icon_regle_45 : R.drawable.icon_regle_35;
         } // Si on avance / reculer jusqu'à détection d'un objet à proximité...
         else if (code.matches("(A|R)\\.P+\\.[0-9]+")) {
-            idImage = R.drawable.icon_capteur_obstacle;
+            idImage = isTablette ? R.drawable.icon_capteur_obstacle_45 : R.drawable.icon_capteur_obstacle_35;
         } // Si on avance / reculer jusqu'à détection d'un toucher...
         else if (code.matches("(A|R)\\.T")) {
-            idImage = R.drawable.icon_capteur_toucher;
+            idImage = isTablette ? R.drawable.icon_capteur_toucher_45 : R.drawable.icon_capteur_toucher_35;
         } // Si on avance / reculer jusqu'à détection d'une couleur...
         else if (code.matches("(A|R)\\.C\\.[a-z]+")) {
-            idImage = R.drawable.icon_capteur_couleur;
+            idImage = isTablette ? R.drawable.icon_capteur_couleur_45 : R.drawable.icon_capteur_couleur_35;
         } // Si on fait une rotation à droite...
         else if (code.matches("ROT\\.0\\.[0-9]+")) {
-            idImage = R.drawable.icon_droite;
+            idImage = isTablette ? R.drawable.icon_droite_45 : R.drawable.icon_droite_35;
         } // Si on fait une rotation à gauche...
         else if (code.matches("ROT\\.1\\.[0-9]+")) {
-            idImage = R.drawable.icon_gauche;
+            idImage = isTablette ? R.drawable.icon_gauche_45 : R.drawable.icon_gauche_35;
         } // Si on fait une pause...
         else if (code.matches("P\\.[0-9]+")) {
-            idImage = R.drawable.icon_sablier;
+            idImage = isTablette ? R.drawable.icon_sablier_45 : R.drawable.icon_sablier_35;
         } else if (code.equals("B")) {
-            idImage = R.drawable.icon_cloche;
+            idImage = isTablette ? R.drawable.icon_cloche_45 : R.drawable.icon_cloche_35;
         } else if (code.equals("M")) {
-            idImage = R.drawable.icon_musique;
+            idImage = isTablette ? R.drawable.icon_musique_45 : R.drawable.icon_musique_35;
         }
         if (idImage != 0)
             viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, idImage, 0);

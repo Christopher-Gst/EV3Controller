@@ -8,17 +8,17 @@
 
     <FrameLayout
         android:id="@+id/frameLAction"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgVLayoutActionDeplacer"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/layoutActionTexteEtImage"
-            style="@style/btnAvecTexteEtImageCentresSmartphones"
-            android:drawableRight="@drawable/icon_horloge_35"
+            style="@style/btnAvecTexteEtImageCentres"
+            android:drawableRight="@drawable/icon_horloge_45"
             android:text="[DESCRIPTION]"
             android:textColor="#FFFFFF" />
     </FrameLayout>
@@ -26,13 +26,11 @@
     <ImageView
         android:id="@+id/imgVLayoutActionDeplacer"
         android:layout_width="32dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/icon_deplacer_item"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLAction"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLAction" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

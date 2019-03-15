@@ -23,7 +23,7 @@
         android:text="[NOM DU MODE]"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="47sp"
+        android:textSize="95sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,11 +44,11 @@
 
         <LinearLayout
             android:id="@+id/linearLPanneauActions"
-            android:layout_width="135dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:background="#33000000"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textVActions"
@@ -57,7 +57,7 @@
                 android:text="Actions"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="40sp" />
 
             <ScrollView
                 android:layout_width="fill_parent"
@@ -77,8 +77,8 @@
                         android:tag="A.0.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_horloge_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_horloge_45"
                             android:text="Avancer" />
                     </FrameLayout>
 
@@ -90,8 +90,8 @@
                         android:tag="A.0.1">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_regle_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_regle_45"
                             android:text="Avancer" />
                     </FrameLayout>
 
@@ -103,8 +103,8 @@
                         android:tag="A.P.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_obstacle_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_obstacle_45"
                             android:text="Avancer" />
                     </FrameLayout>
 
@@ -116,8 +116,8 @@
                         android:tag="A.T">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_toucher_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_toucher_45"
                             android:text="Avancer" />
                     </FrameLayout>
 
@@ -129,8 +129,8 @@
                         android:tag="A.C.blanc">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_couleur_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_couleur_45"
                             android:text="Avancer" />
                     </FrameLayout>
 
@@ -143,8 +143,8 @@
                         android:tag="R.0.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_horloge_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_horloge_45"
                             android:text="Reculer" />
                     </FrameLayout>
 
@@ -156,8 +156,8 @@
                         android:tag="R.0.1">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_regle_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_regle_45"
                             android:text="Reculer" />
                     </FrameLayout>
 
@@ -169,8 +169,8 @@
                         android:tag="R.P.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_obstacle_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_obstacle_45"
                             android:text="Reculer" />
                     </FrameLayout>
 
@@ -182,8 +182,8 @@
                         android:tag="R.T">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_toucher_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_toucher_45"
                             android:text="Reculer" />
                     </FrameLayout>
 
@@ -195,8 +195,8 @@
                         android:tag="R.C.blanc">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_capteur_couleur_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_capteur_couleur_45"
                             android:text="Reculer" />
                     </FrameLayout>
 
@@ -209,8 +209,8 @@
                         android:tag="ROT.0.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_droite_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_droite_45"
                             android:text="Tourner" />
                     </FrameLayout>
 
@@ -222,8 +222,8 @@
                         android:tag="ROT.1.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_gauche_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_gauche_45"
                             android:text="Tourner" />
                     </FrameLayout>
 
@@ -235,8 +235,8 @@
                         android:tag="P.0">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_sablier_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_sablier_45"
                             android:drawablePadding="0dp" />
                     </FrameLayout>
 
@@ -248,8 +248,8 @@
                         android:tag="B">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_cloche_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_cloche_45"
                             android:drawablePadding="0dp" />
                     </FrameLayout>
 
@@ -261,8 +261,8 @@
                         android:tag="M">
 
                         <Button
-                            style="@style/btnAvecTexteEtImageCentresSmartphones"
-                            android:drawableRight="@drawable/icon_musique_35"
+                            style="@style/btnAvecTexteEtImageCentres"
+                            android:drawableRight="@drawable/icon_musique_45"
                             android:drawablePadding="0dp" />
                     </FrameLayout>
 
@@ -294,7 +294,7 @@
                 android:text="[NOM DU SCENARIO]"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="40sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerVScenario"
@@ -321,8 +321,8 @@
 
     <Button
         android:id="@+id/btnEnregistrerScenario"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/icon_enregistrer"
@@ -332,8 +332,8 @@
 
     <Button
         android:id="@+id/btnEditionScenarioOuvrirUnScenario"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/icon_ouvrir"
@@ -343,8 +343,8 @@
 
     <Button
         android:id="@+id/btnLancerScenario"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/icon_lancer_scenario"
@@ -355,7 +355,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="38dp"
+        android:layout_height="65dp"
         android:src="@drawable/logo_iut_blanc"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/btnEnregistrerScenario"

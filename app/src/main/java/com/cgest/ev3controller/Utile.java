@@ -2,6 +2,7 @@ package com.cgest.ev3controller;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +54,12 @@ public final class Utile {
         //   - on calcule combien font 500dp en pixels.
         param.height = (int) (height * scale + 0.5f);
         view.setLayoutParams(param);
+    }
+
+    public static boolean isTablet(Context context) {
+        boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
+        boolean large = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
+        return (xlarge || large);
     }
 
 }

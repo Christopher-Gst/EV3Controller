@@ -119,6 +119,7 @@ public class ChoixModeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CustomDialog dialogAPropos = new CustomDialog(activity, "À propos", getResources().getString(R.string.credits));
                 dialogAPropos.show();
+                dialogAPropos.afficherBtnNegatif("Fermer");
                 dialogAPropos.getTextVDialogMessage().setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     dialogAPropos.getTextVDialogMessage().setText(Html.fromHtml(getResources().getString(R.string.credits), Html.FROM_HTML_MODE_COMPACT));
@@ -126,16 +127,22 @@ public class ChoixModeActivity extends AppCompatActivity {
                     dialogAPropos.getTextVDialogMessage().setText(Html.fromHtml(getResources().getString(R.string.credits)));
                 }
 
-                // On met la taille du message à 200dp.
+                // On adapte la hauteur du message en fonction du type de l'appareil (tablette ou smartphone).
                 //   - on récupère l'échelle de l'écran.
                 ViewGroup.LayoutParams param = dialogAPropos.getTextVDialogMessage().getLayoutParams();
                 final float scale = getResources().getDisplayMetrics().density;
-                //   - on calcule combien font 200dp en pixels.
-                param.height = (int) (450 * scale + 0.5f);
+                //   - on calcule combien font 450 ou 200 pixels en dps.
+                int height;
+                if (Utile.isTablet(getApplicationContext())) height = 450;
+                else {
+                    height = 140;
+                    // On met la taille de la police à 14sp sur les smartphones.
+                    dialogAPropos.getTextVDialogMessage().setTextSize(14);
+                }
+                param.height = (int) (height * scale + 0.5f);
+                // On fixe la hauteur.
                 dialogAPropos.getTextVDialogMessage().setLayoutParams(param);
                 dialogAPropos.getTextVDialogMessage().setMovementMethod(new ScrollingMovementMethod());
-
-                dialogAPropos.afficherBtnNegatif("Fermer");
             }
         });
 
@@ -150,14 +157,14 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        if (!Utile.connexionBluetoothEtablie) {
+        /*if (!Utile.connexionBluetoothEtablie) {
             // On lance la recherche du robot sur un autre thread.
             new InitBluetoothTask().execute((ChoixModeActivity) activity);
             Utile.connexionBluetoothEtablie = true;
-        } else {
+        } else {*/
             cacherErreurBluetooth();
             afficherModes();
-        }
+        //}
 
     }
 

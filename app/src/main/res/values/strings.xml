@@ -1,23 +1,16 @@
 <resources>
     <string name="app_name">EV3 Controller</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="home_scenario_mode"><![CDATA[<b>MODE MANUEL</b><br><i>Concevez un scénario que le robot suivra étape par étape. Par exemple, aller tout droit pendant 1 seconde, puis faire une rotation de 90° à droite.</i>]]></string>
-    <string name="home_manual_mode"><![CDATA[<b>MODE AUTOMATIQUE</b><br><i>Contrôlez le robot manuellement, en le guidant suivant des directions.</i>]]></string>
-    <string name="home_project_author">Projet réalisé par Christopher Gest dans le cadre des projets tuteurés du quatrième semestre du DUT Informatique, pour les journées portes-ouvertes.</string>
-    <string name="choix_mode_manuel">Concevez un scénario en choisissant des actions. Le robot suivra votre scénario étape par étape.</string>
-    <string name="choix_mode_scan">Concevez un scénario en scannant des QR Codes. Le robot suivra votre scénario étape par étape.</string>
-    <string name="choix_mode_automatique">Contrôlez automatiquement le robot à l\'aide de flèches directionnelles.</string>
     <string name="mode_scan_indisponible">Pour utiliser ce mode, vous devez télécharger l\'application Barcode Scanner. Voulez-vous la télécharger ?\nEn cliquant sur \"Oui\", vous serez redirigé sur le Google Play Store.</string>
     <string name="credits"><![CDATA[
-<p><b>EV3 Controller</b> est une application qui a été développée dans le cadre des projets tuteurés du semestre 4 au département Informatique de l\'IUT de Laval.</p>
+<p>EV3 Controller est une application qui a été développée dans le cadre des projets tuteurés du semestre 4 au département Informatique de l\'IUT de Laval.</p>
 <br>
-<p>L\'objectif de cette application est de piloter un <b>robot EV3</b> via une tablette selon <b>3 modes</b> :</p>
-<p>   &#8226; <b>Mode Manuel qui</b> permet de concevoir un scénario de déplacement du robot en sélectionnant des actions.</p>
-<p>   &#8226; <b>Mode Scan qui</b> permet de concevoir un scénario de déplacement du robot en scannant des cartes.</p>
-<p>   &#8226; <b>Mode Automatique qui</b> permet de piloter automatiquement le robot à l\'aide des flèches directionnelles.</p>
+<p>L\'objectif de cette application est de piloter un robot EV3 via une tablette selon 3 modes :</p>
+<p>   &#8226; Mode Manuel qui permet de concevoir un scénario de déplacement du robot en sélectionnant des actions.</p>
+<p>   &#8226; Mode Scan qui permet de concevoir un scénario de déplacement du robot en scannant des cartes.</p>
+<p>   &#8226; Mode Automatique qui permet de piloter automatiquement le robot à l\'aide des flèches directionnelles.</p>
 <br>
-<p style=\'text-align:center\'><b>Conception et Développement de l\'application</b></p>
-<p style=\'text-align:center\'><b>Lahcen Oubahssi</b> (Maître de conférences en informatique - IUT de Laval) &amp; <b>Christopher Gest</b> (étudiant INFO2 - IUT de Laval)</p>
+<p style=\'text-align:center\'>Conception et Développement de l\'application</p>
+<p style=\'text-align:center\'>Lahcen Oubahssi (Maître de conférences en informatique - IUT de Laval) &amp; Christopher Gest (étudiant INFO2 - IUT de Laval)</p>
 <br>
 <p style=\'text-align:center\'>Mars 2019</p>
 ]]></string>

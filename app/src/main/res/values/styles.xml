@@ -32,4 +32,9 @@
         <item name="android:minWidth">0dp</item>
     </style>
 
+    <style name="btnAvecTexteEtImageCentresSmartphones" parent="btnAvecTexteEtImageCentres">
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
