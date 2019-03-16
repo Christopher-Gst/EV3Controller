@@ -110,8 +110,8 @@ public class CustomDialog extends Dialog implements
         //   - on récupère l'échelle de l'écran.
         ViewGroup.LayoutParams param = editTDialogSaisie.getLayoutParams();
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        //   - on calcule combien font 500dp en pixels.
-        param.width = (int) (500 * scale + 0.5f);
+        //   - on calcule combien font 500dp en pixels si l'appareil est une tablettre, sinon 250dp.
+        param.width = (int) ((Utile.isTablet(activity) ? 500 : 250) * scale + 0.5f);
         editTDialogSaisie.setLayoutParams(param);
         // On change le format du texte pouvant être saisi à Texte.
         editTDialogSaisie.setInputType(InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);

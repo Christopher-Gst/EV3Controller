@@ -23,16 +23,16 @@
         android:text="Mode Automatique"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="47sp"
+        android:textSize="95sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnModeAutoHaut"
-        android:layout_width="131dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="18dp"
+        android:layout_width="184dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="35dp"
         android:background="@drawable/mode_auto_haut"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/imgVCentreBtnsControleModeAuto"
@@ -41,9 +41,9 @@
 
     <Button
         android:id="@+id/btnModeAutoGauche"
-        android:layout_width="150dp"
-        android:layout_height="131dp"
-        android:layout_marginEnd="18dp"
+        android:layout_width="220dp"
+        android:layout_height="184dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/mode_auto_gauche"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/btnModeAutoBas"
@@ -52,9 +52,9 @@
 
     <Button
         android:id="@+id/btnModeAutoBas"
-        android:layout_width="131dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="18dp"
+        android:layout_width="184dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="35dp"
         android:background="@drawable/mode_auto_bas"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/btnModeAutoDroite"
@@ -63,9 +63,9 @@
 
     <Button
         android:id="@+id/btnModeAutoDroite"
-        android:layout_width="150dp"
-        android:layout_height="131dp"
-        android:layout_marginStart="18dp"
+        android:layout_width="220dp"
+        android:layout_height="184dp"
+        android:layout_marginStart="35dp"
         android:background="@drawable/mode_auto_droite"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/btnModeAutoBas"
@@ -76,6 +76,8 @@
         android:id="@+id/imgVCentreBtnsControleModeAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
