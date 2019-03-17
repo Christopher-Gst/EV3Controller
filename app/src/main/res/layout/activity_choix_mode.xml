@@ -151,7 +151,7 @@
     <TextView
         android:id="@+id/textVChoixModeErreurBluetooth"
         android:layout_width="0dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Recherche du robot..."
@@ -169,9 +169,9 @@
         android:layout_height="70dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textVChoixModeErreurBluetooth"
+        app:layout_constraintEnd_toEndOf="@+id/progressBarConnexionBluetooth"
         app:layout_constraintStart_toStartOf="@+id/progressBarConnexionBluetooth"
         app:layout_constraintTop_toTopOf="@+id/textVChoixModeErreurBluetooth"
-        app:layout_constraintVertical_bias="0.625"
         app:srcCompat="@drawable/icon_attention" />
 
     <ProgressBar

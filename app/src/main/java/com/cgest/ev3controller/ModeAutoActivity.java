@@ -30,11 +30,9 @@ public class ModeAutoActivity extends AppCompatActivity {
     private Button btnModeAutoGauche;
     private Button btnModeAutoDroite;
 
-    // Sens du robot :
-    //      0 : le robot est droit, dans le même sens que quand l'utilisateur a ouvert le mode automatique
-    //      -1 : le robot est tourné vers la gauche, en angle droit.
-    //      1 : le robot est tourné vers la droite, en angle droit.
-    private int sensRobot = 0;
+    // Angle de rotation à effectuer.
+
+    private static final int ANGLE = 22;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +105,7 @@ public class ModeAutoActivity extends AppCompatActivity {
                 Scenario scenario = new Scenario();
 
                 // On fait une rotation à 45° à droite.
-                EtapeRotation etapeRotation = new EtapeRotation(EtapeRotation.DROITE, 45);
+                EtapeRotation etapeRotation = new EtapeRotation(EtapeRotation.DROITE, ANGLE);
                 scenario.ajouterEtape(etapeRotation);
 
                 // On envoie le scénario au robot.
@@ -122,7 +120,7 @@ public class ModeAutoActivity extends AppCompatActivity {
                 Scenario scenario = new Scenario();
 
                 // On fait une rotation à 45° à gauche.
-                EtapeRotation etapeRotation = new EtapeRotation(EtapeRotation.GAUCHE, 45);
+                EtapeRotation etapeRotation = new EtapeRotation(EtapeRotation.GAUCHE, ANGLE);
                 scenario.ajouterEtape(etapeRotation);
 
                 // On envoie le scénario au robot.

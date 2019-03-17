@@ -305,44 +305,48 @@ public class EditionScenarioActivity extends AppCompatActivity {
                     String parametreDeLAction = champDeSaisie instanceof EditText ? ((EditText) champDeSaisie).getText().toString()
                             : (champDeSaisie instanceof Spinner ? ((Spinner) champDeSaisie).getSelectedItem().toString() : "");
 
-                    // On extrait le code de l'action passée en paramètre.
-                    String[] newCode = etape.getCode().split("\\.");
-                    int indexParametreAModifier = -1;
+                    // Si l'utilisateur a saisi quelque chose...
+                    if (parametreDeLAction != null && !parametreDeLAction.isEmpty()) {
+                        // On extrait le code de l'action passée en paramètre.
+                        String[] newCode = etape.getCode().split("\\.");
 
-                    // En fonction du type de l'action, on en déduit la partie du code de l'action à modifier.
-                    if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
-                        if (((EtapeAvancerReculer) etape).getCapteur() == null)
-                            indexParametreAModifier = 1;
-                        else
+                        int indexParametreAModifier = -1;
+
+                        // En fonction du type de l'action, on en déduit la partie du code de l'action à modifier.
+                        if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
+                            if (((EtapeAvancerReculer) etape).getCapteur() == null)
+                                indexParametreAModifier = 1;
+                            else
+                                indexParametreAModifier = 2;
+                        } else if (etape instanceof EtapeRotation)
                             indexParametreAModifier = 2;
-                    } else if (etape instanceof EtapeRotation)
-                        indexParametreAModifier = 2;
-                    else if (etape instanceof EtapePause)
-                        indexParametreAModifier = 1;
+                        else if (etape instanceof EtapePause)
+                            indexParametreAModifier = 1;
 
-                    // On modifie la partie du code concernée.
-                    newCode[indexParametreAModifier] = parametreDeLAction;
+                        // On modifie la partie du code concernée.
+                        newCode[indexParametreAModifier] = parametreDeLAction;
 
-                    // On reconstitue le code de l'action.
-                    String codeAction = "";
-                    for (int i = 0; i < newCode.length; i++)
-                        codeAction += newCode[i] + (i < (newCode.length - 1) ? "." : "");
+                        // On reconstitue le code de l'action.
+                        String codeAction = "";
+                        for (int i = 0; i < newCode.length; i++)
+                            codeAction += newCode[i] + (i < (newCode.length - 1) ? "." : "");
 
-                    // On instancie la nouvelle étape avec le nouveau paramètre.
-                    etapePopUp = Etape.getEtapeFromCode(codeAction);
+                        // On instancie la nouvelle étape avec le nouveau paramètre.
+                        etapePopUp = Etape.getEtapeFromCode(codeAction);
 
-                    // On ferme le pop-up.
-                    dialogSaisieInfosAction.dismiss();
+                        // On ferme le pop-up.
+                        dialogSaisieInfosAction.dismiss();
 
-                    if (ajout) {
-                        adapter.scenario.getEtapes().add(etapePopUp);
-                        adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
-                    } else {
-                        int indexAncienneAction = adapter.scenario.getEtapes().indexOf(etape);
-                        adapter.scenario.getEtapes().set(indexAncienneAction, etapePopUp);
-                        adapter.notifyItemChanged(indexAncienneAction);
+                        if (ajout) {
+                            adapter.scenario.getEtapes().add(etapePopUp);
+                            adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
+                        } else {
+                            int indexAncienneAction = adapter.scenario.getEtapes().indexOf(etape);
+                            adapter.scenario.getEtapes().set(indexAncienneAction, etapePopUp);
+                            adapter.notifyItemChanged(indexAncienneAction);
+                        }
+                        modifsNonEnregistrees = true;
                     }
-                    modifsNonEnregistrees = true;
                 }
             });
 

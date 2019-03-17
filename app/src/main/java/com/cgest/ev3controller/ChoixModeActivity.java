@@ -157,14 +157,14 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        /*if (!Utile.connexionBluetoothEtablie) {
+        if (!Utile.connexionBluetoothEtablie) {
             // On lance la recherche du robot sur un autre thread.
             new InitBluetoothTask().execute((ChoixModeActivity) activity);
             Utile.connexionBluetoothEtablie = true;
-        } else {*/
+        } else {
             cacherErreurBluetooth();
             afficherModes();
-        //}
+        }
 
     }
 
@@ -209,8 +209,8 @@ public class ChoixModeActivity extends AppCompatActivity {
         dialogPresentationCapteurs.getBtnNegatif().setVisibility(View.INVISIBLE);
         dialogPresentationCapteurs.afficherBtnOptionnel("Fermer");
 
-        // On fixe la taille de l'image à 420 dp.
-        Utile.setDpHeight(this, dialogPresentationCapteurs.getImgVDialogImage(), 420);
+        // On fixe la taille de l'image à 420 dp sur les tablettes, et à 200dp sur les smartphones.
+        Utile.setDpHeight(this, dialogPresentationCapteurs.getImgVDialogImage(), Utile.isTablet(activity) ? 420 : 150);
 
         idEtapeIntroCapteurs = 0;
         dialogPresentationCapteurs.getBtnPositif().setOnClickListener(new View.OnClickListener() {
@@ -257,6 +257,5 @@ public class ChoixModeActivity extends AppCompatActivity {
         });
 
     }
-
 
 }
