@@ -1,7 +1,13 @@
 package com.cgest.ev3controller.scenario;
 
+import com.cgest.ev3controller.capteur.CapteurCouleur;
+import com.cgest.ev3controller.capteur.CapteurProximite;
+import com.cgest.ev3controller.capteur.CapteurToucher;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class Scenario {
 
@@ -10,6 +16,33 @@ public class Scenario {
 
     // Etapes constituant le scénario.
     private ArrayList<Etape> etapes;
+
+    /*
+    Types d'actions que l'utilisateur peut ajouter à son scénario, qui apparaissent dans la liste de gauche,
+    dans le mode manuel.
+    Ces types d'actions correspondent aux cartes de QR code mises à disposition sur le stand du robot.
+     */
+    public static final List<Etape> TYPES_ACTIONS_UTILISABLES = Collections.unmodifiableList(
+            Arrays.asList(
+                    new Etape[]{
+                            new EtapeAvancer(0, EtapeAvancerReculer.SECONDES), // Avancer pendant une durée
+                            new EtapeAvancer(0, EtapeAvancerReculer.CM), // Avancer une distance
+                            new EtapeAvancer(new CapteurProximite(0)), // Avancer jusqu'à détection d'un objet à proximité (à l'avant)
+                            new EtapeAvancer(new CapteurToucher()), // Avancer jusqu'à détection d'un toucher à l'arrière
+                            new EtapeAvancer(new CapteurCouleur()), // Avancer jusqu'à détection d'une certaine couleur
+                            new EtapeReculer(0, 0), // Reculer pendant une durée
+                            new EtapeReculer(0, 1), // Reculer une distance
+                            new EtapeReculer(new CapteurProximite(0)), // Reculer jusqu'à détection d'un objet à proximité (à l'avant)
+                            new EtapeReculer(new CapteurToucher()), // Reculer jusqu'à détection d'un toucher à l'arrière
+                            new EtapeReculer(new CapteurCouleur()), // Reculer jusqu'à détection d'une certaine couleur
+                            new EtapeRotation(EtapeRotation.DROITE, 0), // Faire une rotation à droite de tant de degrés
+                            new EtapeRotation(EtapeRotation.GAUCHE, 0), // Faire une rotation à gauche de tant de degrés
+                            new EtapePause(0), // Faire une pause de telle ou telle durée
+                            new EtapeBip(), // Faire une "bip"
+                            new EtapeMusique() // Jouer une mélodie
+                    }
+            )
+    );
 
     public Scenario() {
         /* Par défaut, le scénario n'a pas de nom. Il est récupéré dans les fichiers de préférences,

@@ -6,6 +6,8 @@ public abstract class Capteur {
 
     public abstract Object getParamType();
 
+    public abstract int getIdImageDescription();
+
     public static Capteur getCapteurFromCode(String code) {
         String[] codeTab = code.split("\\.");
         switch (codeTab[0]) {

@@ -4,17 +4,18 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 public final class Utile {
 
     public static boolean connexionBluetoothEtablie = false;
+    private static boolean isTablet;
+    private static boolean typeAppareilDetermine = false;
+    private static Context context;
 
     /**
      * Permet d'appliquer la police principale de l'application "fontdinerdotcom_huggable" aux vues de l'application.
@@ -38,14 +39,18 @@ public final class Utile {
         return true;
     }
 
-    public static int getResId(String resName, Class<?> c) {
-        try {
-            Field idField = c.getDeclaredField(resName);
-            return idField.getInt(idField);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+    public static int getIdDrawableAvecNom(String drawableName) {
+        return context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
+    }
+
+    /**
+     * Permet d'obtenir le suffixe des images illustrant les types d'actions.
+     * "_45" pour les tablettes et "_35" pour les smartphones.
+     *
+     * @return
+     */
+    public static String getSuffixeNomImageAction() {
+        return "_" + (isTablet ? "45" : "35");
     }
 
     public static void setDpHeight(Context context, View view, int height) {
@@ -57,9 +62,16 @@ public final class Utile {
     }
 
     public static boolean isTablet(Context context) {
-        boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
-        boolean large = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
-        return (xlarge || large);
+        if (!typeAppareilDetermine) {
+            typeAppareilDetermine = true;
+            boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
+            boolean large = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
+            return (isTablet = (xlarge || large));
+        } else
+            return isTablet;
     }
 
+    public static void setContext(Context context) {
+        Utile.context = context;
+    }
 }

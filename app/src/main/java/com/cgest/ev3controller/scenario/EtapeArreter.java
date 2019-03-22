@@ -1,5 +1,7 @@
 package com.cgest.ev3controller.scenario;
 
+import android.graphics.drawable.Drawable;
+
 public class EtapeArreter extends Etape {
 
     @Override
@@ -8,13 +10,16 @@ public class EtapeArreter extends Etape {
     }
 
     @Override
-    public Object getParamType() {
-        return null;
+    public String getTexteAvecDetailsDescription() {
+        return "";
     }
 
-    @Override
-    public String getDescriptionTextuelle() {
-        return "";
+    public String getTexteDescription() {
+        return "Arrêter";
+    }
+
+    public int getIdImageDescription() {
+        return 0;
     }
 
 }

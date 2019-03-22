@@ -1,5 +1,7 @@
 package com.cgest.ev3controller.scenario;
 
+import com.cgest.ev3controller.Utile;
+
 public class EtapeMusique extends Etape {
 
     @Override
@@ -8,13 +10,16 @@ public class EtapeMusique extends Etape {
     }
 
     @Override
-    public Object getParamType() {
-        return null;
+    public String getTexteAvecDetailsDescription() {
+        return "";
     }
 
-    @Override
-    public String getDescriptionTextuelle() {
+    public String getTexteDescription() {
         return "";
+    }
+
+    public int getIdImageDescription() {
+        return Utile.getIdDrawableAvecNom("icon_musique" + Utile.getSuffixeNomImageAction());
     }
 
 }

@@ -1,8 +1,11 @@
 package com.cgest.ev3controller.scenario;
 
+import com.cgest.ev3controller.Utile;
 import com.cgest.ev3controller.capteur.Capteur;
+import com.cgest.ev3controller.capteur.CapteurCouleur;
+import com.cgest.ev3controller.capteur.CapteurProximite;
 
-public abstract class EtapeAvancerReculer extends Etape {
+public abstract class EtapeAvancerReculer extends Etape implements EtapeParametrable {
 
     // Temps ou distance de parcours.
     private int valeur;
@@ -80,6 +83,50 @@ public abstract class EtapeAvancerReculer extends Etape {
     public Object getParamType() {
         if (capteur != null) return capteur.getParamType();
         return new Integer(0);
+    }
+
+    public int getIdImageDescription() {
+        // Si on avance ou on recule pendant une durée et sur une distance...
+        if (getCapteur() == null) {
+            // Début du nom de l'image.
+            String debutNom;
+            if (getUnite() == SECONDES)
+                debutNom = "icon_horloge";
+            else
+                debutNom = "icon_regle";
+            return Utile.getIdDrawableAvecNom(debutNom + Utile.getSuffixeNomImageAction());
+        } else { // Sinon, si on avance / recule jusqu'à une détection d'un capteur...
+            return getCapteur().getIdImageDescription();
+        }
+    }
+
+    @Override
+    public String getMessageEdition() {
+        if (getCapteur() == null)
+            // Si on avance pendant une durée...
+            if (getUnite() == EtapeAvancerReculer.SECONDES)
+                return "Saisissez la durée de déplacement :";
+            else // Sinon, si on avance sur une distance...
+                return "Saisissez la distance de déplacement :";
+        else if (getCapteur() instanceof CapteurProximite)
+            return "Saisissez la distance de détection :";
+        else if (getCapteur() instanceof CapteurCouleur)
+            return "Sélectionnez la couleur à détecter :";
+        return "";
+    }
+
+    @Override
+    public void setParametre(Object param) {
+        // Si l'action n'est pas d'avancer/reculer jusqu'à détection de quelque chose...
+        if (getCapteur() == null) {
+            // Si le paramètre est un entier...
+            if (param instanceof Integer)
+                // Alors on modifie la valeur (distance ou durée).
+                setValeur((Integer) param);
+            // Sinon, si l'action est d'avancer/reculer jusqu'à détection de quelque chose...
+        } else if (param instanceof Capteur)
+            // On modifie le capteur avec celui passé en paramètre.
+            setCapteur((Capteur) param);
     }
 
 }

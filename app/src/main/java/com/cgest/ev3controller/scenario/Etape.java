@@ -1,16 +1,17 @@
 package com.cgest.ev3controller.scenario;
 
-import android.util.Log;
-
+import com.cgest.ev3controller.Utile;
 import com.cgest.ev3controller.capteur.Capteur;
 
 public abstract class Etape {
 
     public abstract String getCode();
 
-    public abstract String getDescriptionTextuelle();
+    public abstract String getTexteDescription();
 
-    public abstract Object getParamType();
+    public abstract int getIdImageDescription();
+
+    public abstract String getTexteAvecDetailsDescription();
 
     public static Etape getEtapeFromCode(String monEtapeStr) {
         // On découpe le code de l'étape passée en paramètre avec le ".".

@@ -38,6 +38,9 @@ public class ChoixModeActivity extends AppCompatActivity {
     // Numéro de l'image à afficher dans le pop-up de présentation des capteurs du robot.
     private int idEtapeIntroCapteurs;
 
+    // Boolean permettant de passer l'étape de la connexion au robot.
+    private boolean DEBUG = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +160,7 @@ public class ChoixModeActivity extends AppCompatActivity {
             }
         });
 
-        if (!Utile.connexionBluetoothEtablie) {
+        if (!Utile.connexionBluetoothEtablie && !DEBUG) {
             // On lance la recherche du robot sur un autre thread.
             new InitBluetoothTask().execute((ChoixModeActivity) activity);
             Utile.connexionBluetoothEtablie = true;
@@ -220,7 +223,7 @@ public class ChoixModeActivity extends AppCompatActivity {
                     // On récupère le nom de l'image suivante à partir du numéro de l'image.
                     String nomImageCapteur = "intro_" + ++idEtapeIntroCapteurs;
                     // On affiche l'image du capteur.
-                    dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getResId(nomImageCapteur, R.drawable.class)));
+                    dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getIdDrawableAvecNom(nomImageCapteur)));
                     // Si on est à la dernière image, on afficher "Fermer" à la place de "Suivant".
                     if (idEtapeIntroCapteurs == 6)
                         dialogPresentationCapteurs.getBtnPositif().setText("Fermer");
@@ -239,7 +242,7 @@ public class ChoixModeActivity extends AppCompatActivity {
                 // On récupère le nom de l'image suivante à partir du numéro de l'image.
                 String nomImageCapteur = "intro_" + --idEtapeIntroCapteurs;
                 // On affiche l'image du capteur.
-                dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getResId(nomImageCapteur, R.drawable.class)));
+                dialogPresentationCapteurs.getImgVDialogImage().setImageDrawable(getResources().getDrawable(Utile.getIdDrawableAvecNom(nomImageCapteur)));
                 // On affiche le bouton précédent si nécessaire.
                 if (idEtapeIntroCapteurs - 1 < 0)
                     dialogPresentationCapteurs.getBtnNegatif().setVisibility(View.INVISIBLE);

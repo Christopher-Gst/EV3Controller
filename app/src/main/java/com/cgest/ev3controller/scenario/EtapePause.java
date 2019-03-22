@@ -1,6 +1,8 @@
 package com.cgest.ev3controller.scenario;
 
-public class EtapePause extends Etape {
+import com.cgest.ev3controller.Utile;
+
+public class EtapePause extends Etape implements EtapeParametrable {
 
     private int duree;
     // Valeur par défaut pour le constructeur vide.
@@ -33,8 +35,27 @@ public class EtapePause extends Etape {
     }
 
     @Override
-    public String getDescriptionTextuelle() {
+    public String getTexteAvecDetailsDescription() {
         return String.valueOf(duree);
+    }
+
+    public String getTexteDescription() {
+        return "";
+    }
+
+    public int getIdImageDescription() {
+        return Utile.getIdDrawableAvecNom("icon_sablier" + Utile.getSuffixeNomImageAction());
+    }
+
+    @Override
+    public String getMessageEdition() {
+        return "Saisissez la durée de la pause :";
+    }
+
+    @Override
+    public void setParametre(Object param) {
+        if (param instanceof Integer)
+            setDuree((Integer) param);
     }
 
 }

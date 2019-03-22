@@ -1,5 +1,7 @@
 package com.cgest.ev3controller.capteur;
 
+import com.cgest.ev3controller.Utile;
+
 public class CapteurCouleur extends Capteur {
 
     private Couleur couleur;
@@ -29,5 +31,9 @@ public class CapteurCouleur extends Capteur {
     @Override
     public Couleur getParamType() {
         return Couleur.BLANC;
+    }
+
+    public int getIdImageDescription() {
+        return Utile.getIdDrawableAvecNom("icon_capteur_couleur" + Utile.getSuffixeNomImageAction());
     }
 }

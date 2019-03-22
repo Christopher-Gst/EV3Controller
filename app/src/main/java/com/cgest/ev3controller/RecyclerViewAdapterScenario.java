@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cgest.ev3controller.scenario.Etape;
+import com.cgest.ev3controller.scenario.EtapeParametrable;
 import com.cgest.ev3controller.scenario.Scenario;
 
 import java.util.Collections;
@@ -56,7 +57,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         // On affiche les caractéristiques de l'étape sur la view.
         final ViewHolderEtape viewHolder = (ViewHolderEtape) holder;
 
-        viewHolder.layoutActionTexteEtImage.setText(etape.getDescriptionTextuelle());
+        viewHolder.layoutActionTexteEtImage.setText(etape.getTexteAvecDetailsDescription());
 
         // On vérifie si l'appareil est une tablette ou un smartphone.
         boolean isTablette = Utile.isTablet(activity);
@@ -143,7 +144,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
                     final Etape etape = scenario.getEtapes().get(getPosition());
 
                     // Si l'action possède des paramètres modifiables...
-                    if (etape.getParamType() != null) {
+                    if (etape instanceof EtapeParametrable && ((EtapeParametrable) etape).getParamType() != null) {
                         // On affiche le pop-up de modification de l'action.
                         ((EditionScenarioActivity) activity).afficherPopUpEditionEtape(etape, false);
                     }

@@ -1,5 +1,7 @@
 package com.cgest.ev3controller.scenario;
 
+import android.graphics.drawable.Drawable;
+
 import com.cgest.ev3controller.capteur.Capteur;
 import com.cgest.ev3controller.capteur.CapteurToucher;
 
@@ -20,8 +22,12 @@ public class EtapeAvancer extends EtapeAvancerReculer {
     }
 
     @Override
-    public String getDescriptionTextuelle() {
+    public String getTexteAvecDetailsDescription() {
         return "Avancer" + (getCapteur() == null ? " " + getValeur() : "");
+    }
+
+    public String getTexteDescription() {
+        return "Avancer";
     }
 
 }

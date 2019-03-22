@@ -1,6 +1,8 @@
 package com.cgest.ev3controller.scenario;
 
-public class EtapeRotation extends Etape {
+import com.cgest.ev3controller.Utile;
+
+public class EtapeRotation extends Etape implements EtapeParametrable {
 
     // Rotation à droite ou à gauche repérée par des constantes.
     private int sens;
@@ -49,7 +51,26 @@ public class EtapeRotation extends Etape {
     }
 
     @Override
-    public String getDescriptionTextuelle() {
+    public String getTexteAvecDetailsDescription() {
         return "Tourner";
+    }
+
+    public String getTexteDescription() {
+        return "Tourner";
+    }
+
+    public int getIdImageDescription() {
+        return Utile.getIdDrawableAvecNom("icon_" + (sens == DROITE ? "droite" : "gauche") + Utile.getSuffixeNomImageAction());
+    }
+
+    @Override
+    public String getMessageEdition() {
+        return "Saisissez l'angle de rotation (90°, 180°, ...) :";
+    }
+
+    @Override
+    public void setParametre(Object param) {
+        if (param instanceof Integer)
+            setDegres((Integer) param);
     }
 }

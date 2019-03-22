@@ -1,7 +1,6 @@
 package com.cgest.ev3controller;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -18,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgest.ev3controller.capteur.CapteurCouleur;
 import com.cgest.ev3controller.capteur.CapteurProximite;
@@ -26,6 +27,7 @@ import com.cgest.ev3controller.capteur.Couleur;
 import com.cgest.ev3controller.scenario.Etape;
 import com.cgest.ev3controller.scenario.EtapeAvancer;
 import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+import com.cgest.ev3controller.scenario.EtapeParametrable;
 import com.cgest.ev3controller.scenario.EtapePause;
 import com.cgest.ev3controller.scenario.EtapeReculer;
 import com.cgest.ev3controller.scenario.EtapeRotation;
@@ -33,7 +35,8 @@ import com.cgest.ev3controller.scenario.Scenario;
 import com.cgest.ev3controller.scenario.ScenarioManager;
 
 import java.io.IOException;
-import java.util.Collections;
+
+import static com.cgest.ev3controller.Utile.isTablet;
 
 public class EditionScenarioActivity extends AppCompatActivity {
 
@@ -66,9 +69,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
 
     // Adapter de la RecyclerView.
     private RecyclerViewAdapterScenario adapter;
-
-    // Etape en cours d'édition dans la pop-up.
-    Etape etapePopUp = null;
 
     // Indique si des modifications n'ont pas été enregistrées.
     boolean modifsNonEnregistrees = false;
@@ -113,22 +113,11 @@ public class EditionScenarioActivity extends AppCompatActivity {
             linearLPanneauActions.setVisibility(View.VISIBLE);
             imageVSeparationActionsScenario.setVisibility(View.VISIBLE);
 
-            // On applique un ClickListener à tous les boutons permettant d'ajouter des actions au scénario, dans la liste de gauche.
-            for (int i = 0; i < linearLayoutActions.getChildCount(); i++) {
-                final View child = linearLayoutActions.getChildAt(i);
-                if (child instanceof FrameLayout) {
-                    final FrameLayout frameLayoutBoutonAction = (FrameLayout) child;
-                    frameLayoutBoutonAction.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // On récupère le Tag du bouton pour savoir quelle action ajouter au scénario.
-                            final String tagAction = frameLayoutBoutonAction.getTag().toString();
+            /* On charge le Linear Layout "linearLayoutActions" avec des boutons correspondant à tous
+            les types d'actions utilisables.
+             */
+            afficherBoutonsActions();
 
-                            afficherPopUpEditionEtape(Etape.getEtapeFromCode(tagAction), true);
-                        }
-                    });
-                }
-            }
         } else if (mode.equals("scan")) {
             // On récupère les vues.
             imageVScannerUneAction = (ImageView) findViewById(R.id.imageVScannerUneAction);
@@ -234,7 +223,74 @@ public class EditionScenarioActivity extends AppCompatActivity {
 
     }
 
-    public void initRecyclerView() {
+    private void afficherBoutonsActions() {
+        // Si cela n'a pas déjà été fait, on termine la nature de l'appareil (tablette ou smartphone).
+        // Cela est nécessaire pour récupérer les bonnes images des types d'actions.
+        isTablet(activity);
+        // On spécifie l'attribut "context" de Utile pour pouvoir accéder aux ressources de l'application depuis Utile, pour
+        // charger les images des actions.
+        Utile.setContext(activity);
+
+        // Pour chaque type d'action...
+        for (final Etape etape : Scenario.TYPES_ACTIONS_UTILISABLES) {
+            // On créé un FameLayout représentant l'action, parent du bouton.
+            // On lui donne une apparence de bouton.
+            FrameLayout frameLayoutAction = new FrameLayout(activity, null, R.attr.buttonStyle);
+
+            // On créé un Button contenant le texte et l'image de l'action.
+            // Le style du bouton est adapté en fonction du type d'appareil (tablette ou smartphone).
+            ContextThemeWrapper newContext = new ContextThemeWrapper(activity, R.style.btnAvecTexteEtImageCentresSmartphones);
+            Button buttonAction = new Button(newContext);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    etape.getTexteDescription().equals("") ? ViewGroup.LayoutParams.WRAP_CONTENT : ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 0, 0);
+            params.gravity = Gravity.CENTER_HORIZONTAL;
+            buttonAction.setBackgroundDrawable(null);
+            buttonAction.setLayoutParams(params);
+            buttonAction.setClickable(true);
+
+            // On affiche le texte et l'image de l'action.
+            buttonAction.setText(etape.getTexteDescription());
+            try {
+                buttonAction.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
+                float scale = getResources().getDisplayMetrics().density;
+                // On ajuste la distance de séparation du texte et de l'image.
+                int dpAsPixels = etape.getTexteDescription().equals("") ? 0 : ((int) ((Utile.isTablet(activity) ? 10 : 5) * scale + 0.5f));
+                buttonAction.setCompoundDrawablePadding(dpAsPixels);
+            } catch (android.content.res.Resources.NotFoundException e) {
+                e.printStackTrace();
+            }
+
+            // On ajoute le Button au FrameLayout.
+            frameLayoutAction.addView(buttonAction);
+
+            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params1.setMargins(0, 0, 0, 0);
+            params1.gravity = Gravity.CENTER;
+            frameLayoutAction.setLayoutParams(params1);
+
+            frameLayoutAction.setForegroundGravity(Gravity.CENTER);
+            frameLayoutAction.setPadding(0, 0, 0, 0);
+
+            // On ajoute le FrameLayout au LinearLayout de la liste des actions.
+            linearLayoutActions.addView(frameLayoutAction);
+
+            // On spécifie l'événement de click du FrameLayout (affichage d'un pop d'édition de l'action, si elle est paramétrable).
+            View.OnClickListener listenerAjoutAction = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    afficherPopUpEditionEtape(etape, true);
+                }
+            };
+            frameLayoutAction.setOnClickListener(listenerAjoutAction);
+            buttonAction.setOnClickListener(listenerAjoutAction);
+
+        }
+    }
+
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerVScenario);
         adapter = new RecyclerViewAdapterScenario(this, recyclerView);
         recyclerView.setAdapter(adapter);
@@ -247,13 +303,13 @@ public class EditionScenarioActivity extends AppCompatActivity {
         adapter.setTouchHelper(touchHelper);
     }
 
-    public void afficherPopUpEditionEtape(final Etape etape, final boolean ajout) {
-
-        // On récupère le type du paramètre à spécifier pour l'action.
-        Object actionParamType = etape.getParamType();
+    protected void afficherPopUpEditionEtape(final Etape etape, final boolean ajout) {
 
         // Si l'action a des paramètres à spécifier...
-        if (actionParamType != null) {
+        if (etape instanceof EtapeParametrable && ((EtapeParametrable) etape).getParamType() != null) {
+            // On récupère le type du paramètre à spécifier pour l'action.
+            Object actionParamType = ((EtapeParametrable) etape).getParamType();
+
             // On affiche une boîte de dialogue avec le message et les champs de saisie adaptés, pour paramétrer
             // l'action.
             final CustomDialog dialogSaisieInfosAction = new CustomDialog(activity);
@@ -261,24 +317,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
             // a besoin de charger ses vues avant d'agir dessus (dans la méthode onCreate()).
             dialogSaisieInfosAction.show();
             dialogSaisieInfosAction.setTitre("Édition d'une action");
-            String messageDialog = "";
-
-            // On affiche le bon message en fonction du type d'action :
-            if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
-                if (((EtapeAvancerReculer) etape).getCapteur() == null) {
-                    // Si on avance pendant une durée...
-                    if (((EtapeAvancerReculer) etape).getUnite() == EtapeAvancerReculer.SECONDES)
-                        messageDialog = "Saisissez la durée de déplacement :";
-                    else // Sinon, si on avance sur une distance...
-                        messageDialog = "Saisissez la distance de déplacement :";
-                } else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurProximite)
-                    messageDialog = "Saisissez la distance de détection :";
-                else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurCouleur)
-                    messageDialog = "Sélectionnez la couleur à détecter :";
-            } else if (etape instanceof EtapeRotation)
-                messageDialog = "Saisissez l'angle de rotation (90°, 180°, ...) :";
-            else if (etape instanceof EtapePause)
-                messageDialog = "Saisissez la durée de la pause :";
 
             // Si le paramètre de l'action est un entier, on affiche un EditText.
             if (actionParamType instanceof Integer) {
@@ -286,14 +324,13 @@ public class EditionScenarioActivity extends AppCompatActivity {
                 champDeSaisie = (EditText) dialogSaisieInfosAction.getChampSaisie();
             } // Si le paramètre de l'action est une Couleur, on affiche un Spinner.
             else if (actionParamType instanceof Couleur) {
-                messageDialog = "Sélectionnez la couleur à détecter :";
                 dialogSaisieInfosAction.setValeursListeChoix(Couleur.values());
                 dialogSaisieInfosAction.afficherListeChoix();
                 champDeSaisie = (Spinner) dialogSaisieInfosAction.getChampListeChoix();
             }
 
             // On affiche le message et le texte des boutons.
-            dialogSaisieInfosAction.setMessage(messageDialog);
+            dialogSaisieInfosAction.setMessage(((EtapeParametrable) etape).getMessageEdition());
             dialogSaisieInfosAction.afficherBtnNegatif("Annuler");
             dialogSaisieInfosAction.afficherBtnPositif("Valider");
 
@@ -302,47 +339,37 @@ public class EditionScenarioActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     // On récupère la saisie de l'utilisateur.
-                    String parametreDeLAction = champDeSaisie instanceof EditText ? ((EditText) champDeSaisie).getText().toString()
-                            : (champDeSaisie instanceof Spinner ? ((Spinner) champDeSaisie).getSelectedItem().toString() : "");
+                    String parametreActionStr =
+                            champDeSaisie instanceof EditText ? ((EditText) champDeSaisie).getText().toString()
+                                    : (champDeSaisie instanceof Spinner ? ((Spinner) champDeSaisie).getSelectedItem().toString() : "");
 
                     // Si l'utilisateur a saisi quelque chose...
-                    if (parametreDeLAction != null && !parametreDeLAction.isEmpty()) {
-                        // On extrait le code de l'action passée en paramètre.
-                        String[] newCode = etape.getCode().split("\\.");
+                    if (!parametreActionStr.isEmpty()) {
 
-                        int indexParametreAModifier = -1;
-
-                        // En fonction du type de l'action, on en déduit la partie du code de l'action à modifier.
-                        if (etape instanceof EtapeAvancer || etape instanceof EtapeReculer) {
+                        Object parametreAction = null;
+                        // On récupère le paramètre saisi sous forme d'objet.
+                        if (etape instanceof EtapeAvancerReculer) {
                             if (((EtapeAvancerReculer) etape).getCapteur() == null)
-                                indexParametreAModifier = 1;
-                            else
-                                indexParametreAModifier = 2;
-                        } else if (etape instanceof EtapeRotation)
-                            indexParametreAModifier = 2;
-                        else if (etape instanceof EtapePause)
-                            indexParametreAModifier = 1;
+                                parametreAction = Integer.valueOf(parametreActionStr);
+                            else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurProximite)
+                                parametreAction = new CapteurProximite(Integer.valueOf(parametreActionStr));
+                            else if (((EtapeAvancerReculer) etape).getCapteur() instanceof CapteurCouleur)
+                                parametreAction = new CapteurCouleur(Couleur.valueOf(parametreActionStr.toUpperCase()));
+                        } else if (etape instanceof EtapeRotation || etape instanceof EtapePause)
+                            parametreAction = Integer.valueOf(parametreActionStr);
 
-                        // On modifie la partie du code concernée.
-                        newCode[indexParametreAModifier] = parametreDeLAction;
-
-                        // On reconstitue le code de l'action.
-                        String codeAction = "";
-                        for (int i = 0; i < newCode.length; i++)
-                            codeAction += newCode[i] + (i < (newCode.length - 1) ? "." : "");
-
-                        // On instancie la nouvelle étape avec le nouveau paramètre.
-                        etapePopUp = Etape.getEtapeFromCode(codeAction);
+                        // On modifie le paramètre de l'action.
+                        ((EtapeParametrable) etape).setParametre(parametreAction);
 
                         // On ferme le pop-up.
                         dialogSaisieInfosAction.dismiss();
 
                         if (ajout) {
-                            adapter.scenario.getEtapes().add(etapePopUp);
+                            adapter.scenario.getEtapes().add(etape);
                             adapter.notifyItemInserted(adapter.scenario.getEtapes().size() - 1);
                         } else {
                             int indexAncienneAction = adapter.scenario.getEtapes().indexOf(etape);
-                            adapter.scenario.getEtapes().set(indexAncienneAction, etapePopUp);
+                            adapter.scenario.getEtapes().set(indexAncienneAction, etape);
                             adapter.notifyItemChanged(indexAncienneAction);
                         }
                         modifsNonEnregistrees = true;
