@@ -31,8 +31,7 @@ public class ModeAutoActivity extends AppCompatActivity {
     private Button btnModeAutoDroite;
 
     // Angle de rotation à effectuer.
-
-    private static final int ANGLE = 22;
+    private static final int ANGLE = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
