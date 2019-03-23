@@ -149,8 +149,6 @@ public class ChoixModeActivity extends AppCompatActivity {
                 dialogAPropos.getTextVDialogMessage().setLayoutParams(param);
                 dialogAPropos.getTextVDialogMessage().setMovementMethod(new ScrollingMovementMethod());
                 // On baisse la taille du texte des crédits et on change la police pour rendre plus lisible.
-                // Sur smartphone : 14sp --> 12sp
-                // Sur tablette : 24sp --> 20sp.
                 dialogAPropos.getTextVDialogMessage().setTypeface(Typeface.DEFAULT);
             }
         });
