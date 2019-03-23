@@ -33,7 +33,19 @@ public class CapteurProximite extends Capteur {
         return new Integer(0);
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_capteur_obstacle" + Utile.getSuffixeNomImageAction());
+    @Override
+    public String getNomImageDescription() {
+        return "icon_capteur_obstacle" + super.getNomImageDescription();
     }
+
+    @Override
+    public Object clone() {
+        CapteurProximite clone = null;
+        // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+        clone = (CapteurProximite) super.clone();
+        clone.setDistanceDetection(distanceDetection);
+        // on renvoie le clone
+        return clone;
+    }
+
 }

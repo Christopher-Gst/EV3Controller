@@ -1,12 +1,17 @@
 package com.cgest.ev3controller.capteur;
 
-public abstract class Capteur {
+import com.cgest.ev3controller.Utile;
+import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
+
+public abstract class Capteur implements Cloneable {
 
     public abstract String getCode();
 
     public abstract Object getParamType();
 
-    public abstract int getIdImageDescription();
+    public String getNomImageDescription() {
+        return Utile.getSuffixeNomImageAction();
+    }
 
     public static Capteur getCapteurFromCode(String code) {
         String[] codeTab = code.split("\\.");
@@ -38,6 +43,21 @@ public abstract class Capteur {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public Object clone() {
+        Object o = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+            o = super.clone();
+        } catch (CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons
+            // l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+        // on renvoie le clone
+        return o;
     }
 
 }

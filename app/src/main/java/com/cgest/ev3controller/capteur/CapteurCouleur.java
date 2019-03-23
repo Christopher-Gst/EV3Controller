@@ -1,8 +1,9 @@
 package com.cgest.ev3controller.capteur;
 
 import com.cgest.ev3controller.Utile;
+import com.cgest.ev3controller.scenario.EtapeAvancerReculer;
 
-public class CapteurCouleur extends Capteur {
+public class CapteurCouleur extends Capteur implements Cloneable {
 
     private Couleur couleur;
     public final static Couleur COULEUR_PAR_DEFAUT = Couleur.NOIR;
@@ -33,7 +34,19 @@ public class CapteurCouleur extends Capteur {
         return Couleur.BLANC;
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_capteur_couleur" + Utile.getSuffixeNomImageAction());
+    @Override
+    public String getNomImageDescription() {
+        return "icon_capteur_couleur" + super.getNomImageDescription();
     }
+
+    @Override
+    public Object clone() {
+        CapteurCouleur clone = null;
+        // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+        clone = (CapteurCouleur) super.clone();
+        clone.setCouleur(couleur);
+        // on renvoie le clone
+        return clone;
+    }
+
 }

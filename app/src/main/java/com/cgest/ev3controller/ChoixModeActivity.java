@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -146,6 +147,13 @@ public class ChoixModeActivity extends AppCompatActivity {
                 // On fixe la hauteur.
                 dialogAPropos.getTextVDialogMessage().setLayoutParams(param);
                 dialogAPropos.getTextVDialogMessage().setMovementMethod(new ScrollingMovementMethod());
+                // On baisse la taille du texte des crédits.
+                // Sur smartphone : 14sp --> 12sp
+                // Sur tablette : 24sp --> 20sp
+                if (Utile.isTablet(activity))
+                    dialogAPropos.getTextVDialogMessage().setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                else
+                    dialogAPropos.getTextVDialogMessage().setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             }
         });
 

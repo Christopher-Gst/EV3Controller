@@ -3,13 +3,19 @@ package com.cgest.ev3controller.scenario;
 import com.cgest.ev3controller.Utile;
 import com.cgest.ev3controller.capteur.Capteur;
 
-public abstract class Etape {
+public abstract class Etape implements Cloneable {
+
+    // Constructeur par defaut.
+    public Etape() {
+    }
 
     public abstract String getCode();
 
     public abstract String getTexteDescription();
 
-    public abstract int getIdImageDescription();
+    public String getNomImageDescription() {
+        return Utile.getSuffixeNomImageAction();
+    }
 
     public abstract String getTexteAvecDetailsDescription();
 
@@ -52,12 +58,27 @@ public abstract class Etape {
         }
     }
 
-    public static String getRegex(){
+    public static String getRegex() {
         return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(B)|(M)";
     }
 
     public static boolean isCodeValide(String code) {
         return code.matches(getRegex());
+    }
+
+    @Override
+    public Object clone() {
+        Object o = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+            o = super.clone();
+        } catch (CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons
+            // l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+        // on renvoie le clone
+        return o;
     }
 
 }

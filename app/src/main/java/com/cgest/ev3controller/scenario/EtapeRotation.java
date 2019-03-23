@@ -8,6 +8,8 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
     private int sens;
     public final static int DROITE = 0;
     public final static int GAUCHE = 1;
+    public final static int BAISSER = 2;
+    public final static int MONTER = 3;
     // Degré de rotation à effectuer.
     private int degres;
     // Valeurs par défaut pour le constructeur vide.
@@ -59,8 +61,8 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
         return "Tourner";
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_" + (sens == DROITE ? "droite" : "gauche") + Utile.getSuffixeNomImageAction());
+    public String getNomImageDescription() {
+        return "icon_" + (sens == DROITE ? "droite" : "gauche") + super.getNomImageDescription();
     }
 
     @Override
@@ -73,4 +75,17 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
         if (param instanceof Integer)
             setDegres((Integer) param);
     }
+
+
+    @Override
+    public Object clone() {
+        EtapeRotation clone = null;
+        // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+        clone = (EtapeRotation) super.clone();
+        clone.setSens(sens);
+        clone.setDegres(degres);
+        // on renvoie le clone
+        return clone;
+    }
+
 }

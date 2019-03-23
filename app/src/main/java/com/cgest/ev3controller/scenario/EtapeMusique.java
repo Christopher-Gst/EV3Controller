@@ -18,8 +18,8 @@ public class EtapeMusique extends Etape {
         return "";
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_musique" + Utile.getSuffixeNomImageAction());
+    public String getNomImageDescription() {
+        return "icon_musique" + super.getNomImageDescription();
     }
 
 }

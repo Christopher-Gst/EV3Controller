@@ -43,8 +43,8 @@ public class EtapePause extends Etape implements EtapeParametrable {
         return "";
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_sablier" + Utile.getSuffixeNomImageAction());
+    public String getNomImageDescription() {
+        return "icon_sablier" + super.getNomImageDescription();
     }
 
     @Override
@@ -56,6 +56,17 @@ public class EtapePause extends Etape implements EtapeParametrable {
     public void setParametre(Object param) {
         if (param instanceof Integer)
             setDuree((Integer) param);
+    }
+
+
+    @Override
+    public Object clone() {
+        EtapePause clone = null;
+        // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+        clone = (EtapePause) super.clone();
+        clone.setDuree(duree);
+        // on renvoie le clone
+        return clone;
     }
 
 }

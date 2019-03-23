@@ -14,8 +14,9 @@ public class CapteurToucher extends Capteur {
         return null;
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_capteur_toucher" + Utile.getSuffixeNomImageAction());
+    @Override
+    public String getNomImageDescription() {
+        return "icon_capteur_toucher" + super.getNomImageDescription();
     }
 
 }

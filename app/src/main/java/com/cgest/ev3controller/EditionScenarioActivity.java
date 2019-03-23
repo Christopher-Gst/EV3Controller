@@ -246,7 +246,7 @@ public class EditionScenarioActivity extends AppCompatActivity {
             // On spécifie le texte et l'image du bouton.
             Button btnAction = (Button) viewActionButton.findViewById(R.id.btnAction);
             btnAction.setText(etape.getTexteDescription());
-            btnAction.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
+            btnAction.setCompoundDrawablesWithIntrinsicBounds(0, 0, Utile.getIdDrawableAvecNom(etape.getNomImageDescription()), 0);
             // Si l'action n'a pas de texte, on centre bien l'image en mettant l'espace entre le texte et l'image à 0.
             if (etape.getTexteDescription().equals(""))
                 btnAction.setCompoundDrawablePadding(0);
@@ -256,7 +256,8 @@ public class EditionScenarioActivity extends AppCompatActivity {
             frameLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    afficherPopUpEditionEtape(etape, true);
+                    Etape etapeClone = (Etape) etape.clone();
+                    afficherPopUpEditionEtape(etapeClone, true);
                 }
             });
         }

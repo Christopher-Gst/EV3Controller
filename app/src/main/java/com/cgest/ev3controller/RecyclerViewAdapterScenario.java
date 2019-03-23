@@ -56,7 +56,7 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         viewHolder.layoutActionTexteEtImage.setText(etape.getTexteAvecDetailsDescription());
 
         // On affiche l'image de l'action.
-        viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
+        viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, Utile.getIdDrawableAvecNom(etape.getNomImageDescription()), 0);
 
         // On active la possibilité de déplacer les actions grâce au drag and drop.
         viewHolder.imgVDeplacerAction.setOnTouchListener(new View.OnTouchListener() {

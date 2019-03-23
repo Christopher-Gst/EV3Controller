@@ -18,8 +18,8 @@ public class EtapeBip extends Etape {
         return "";
     }
 
-    public int getIdImageDescription() {
-        return Utile.getIdDrawableAvecNom("icon_cloche" + Utile.getSuffixeNomImageAction());
+    public String getNomImageDescription() {
+        return "icon_cloche" + super.getNomImageDescription();
     }
 
 }

@@ -5,7 +5,7 @@ import com.cgest.ev3controller.capteur.Capteur;
 import com.cgest.ev3controller.capteur.CapteurCouleur;
 import com.cgest.ev3controller.capteur.CapteurProximite;
 
-public abstract class EtapeAvancerReculer extends Etape implements EtapeParametrable {
+public abstract class EtapeAvancerReculer extends Etape implements EtapeParametrable, Cloneable {
 
     // Temps ou distance de parcours.
     private int valeur;
@@ -85,7 +85,7 @@ public abstract class EtapeAvancerReculer extends Etape implements EtapeParametr
         return new Integer(0);
     }
 
-    public int getIdImageDescription() {
+    public String getNomImageDescription() {
         // Si on avance ou on recule pendant une durée et sur une distance...
         if (getCapteur() == null) {
             // Début du nom de l'image.
@@ -94,9 +94,9 @@ public abstract class EtapeAvancerReculer extends Etape implements EtapeParametr
                 debutNom = "icon_horloge";
             else
                 debutNom = "icon_regle";
-            return Utile.getIdDrawableAvecNom(debutNom + Utile.getSuffixeNomImageAction());
+            return debutNom + super.getNomImageDescription();
         } else { // Sinon, si on avance / recule jusqu'à une détection d'un capteur...
-            return getCapteur().getIdImageDescription();
+            return getCapteur().getNomImageDescription();
         }
     }
 
@@ -127,6 +127,19 @@ public abstract class EtapeAvancerReculer extends Etape implements EtapeParametr
         } else if (param instanceof Capteur)
             // On modifie le capteur avec celui passé en paramètre.
             setCapteur((Capteur) param);
+    }
+
+    @Override
+    public Object clone() {
+        EtapeAvancerReculer clone = null;
+        // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()
+        clone = (EtapeAvancerReculer) super.clone();
+        clone.setValeur(valeur);
+        clone.setUnite(unite);
+        if (capteur != null)
+            clone.setCapteur((Capteur) capteur.clone());
+        // on renvoie le clone
+        return clone;
     }
 
 }
