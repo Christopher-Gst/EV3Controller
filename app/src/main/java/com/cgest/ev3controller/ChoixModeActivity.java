@@ -2,6 +2,7 @@ package com.cgest.ev3controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
@@ -40,7 +41,7 @@ public class ChoixModeActivity extends AppCompatActivity {
     private int idEtapeIntroCapteurs;
 
     // Boolean permettant de passer l'étape de la connexion au robot.
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,13 +148,10 @@ public class ChoixModeActivity extends AppCompatActivity {
                 // On fixe la hauteur.
                 dialogAPropos.getTextVDialogMessage().setLayoutParams(param);
                 dialogAPropos.getTextVDialogMessage().setMovementMethod(new ScrollingMovementMethod());
-                // On baisse la taille du texte des crédits.
+                // On baisse la taille du texte des crédits et on change la police pour rendre plus lisible.
                 // Sur smartphone : 14sp --> 12sp
-                // Sur tablette : 24sp --> 20sp
-                if (Utile.isTablet(activity))
-                    dialogAPropos.getTextVDialogMessage().setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                else
-                    dialogAPropos.getTextVDialogMessage().setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                // Sur tablette : 24sp --> 20sp.
+                dialogAPropos.getTextVDialogMessage().setTypeface(Typeface.DEFAULT);
             }
         });
 

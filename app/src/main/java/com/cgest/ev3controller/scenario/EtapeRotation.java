@@ -8,8 +8,8 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
     private int sens;
     public final static int DROITE = 0;
     public final static int GAUCHE = 1;
-    public final static int BAISSER = 2;
-    public final static int MONTER = 3;
+    //public final static int BAISSER = 2;
+    //public final static int MONTER = 3;
     // Degré de rotation à effectuer.
     private int degres;
     // Valeurs par défaut pour le constructeur vide.
@@ -54,16 +54,51 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
 
     @Override
     public String getTexteAvecDetailsDescription() {
-        return "Tourner";
+        return getTexteDescription();
     }
 
     public String getTexteDescription() {
         return "Tourner";
     }
 
+    /*
+    public String getTexteDescription() {
+        switch (sens) {
+            case DROITE:
+            case GAUCHE:
+                return "Tourner";
+            case MONTER:
+                return "Lâcher";
+            case BAISSER:
+                return "Saisir";
+            default:
+                return "";
+        }
+    }
+    */
+
     public String getNomImageDescription() {
         return "icon_" + (sens == DROITE ? "droite" : "gauche") + super.getNomImageDescription();
     }
+
+    /*
+    public String getNomImageDescription() {
+        String debutNom = "";
+        switch (sens) {
+            case DROITE:
+                debutNom = "droite";
+                break;
+            case GAUCHE:
+                debutNom = "gauche";
+                break;
+            case MONTER:
+            case BAISSER:
+                debutNom = "bras";
+                break;
+        }
+        return "icon_" + debutNom + super.getNomImageDescription();
+    }
+    */
 
     @Override
     public String getMessageEdition() {
@@ -75,7 +110,6 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
         if (param instanceof Integer)
             setDegres((Integer) param);
     }
-
 
     @Override
     public Object clone() {

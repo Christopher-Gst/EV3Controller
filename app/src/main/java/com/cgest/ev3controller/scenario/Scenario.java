@@ -37,6 +37,8 @@ public class Scenario {
                             new EtapeReculer(new CapteurCouleur()), // Reculer jusqu'à détection d'une certaine couleur
                             new EtapeRotation(EtapeRotation.DROITE, 0), // Faire une rotation à droite de tant de degrés
                             new EtapeRotation(EtapeRotation.GAUCHE, 0), // Faire une rotation à gauche de tant de degrés
+                            //new EtapeRotation(EtapeRotation.BAISSER, 0), // Saisir, attraper un objet.
+                            //new EtapeRotation(EtapeRotation.MONTER, 0), // Lâcher, laisser un objet.
                             new EtapePause(0), // Faire une pause de telle ou telle durée
                             new EtapeBip(), // Faire une "bip"
                             new EtapeMusique() // Jouer une mélodie
