@@ -44,11 +44,11 @@
 
         <LinearLayout
             android:id="@+id/linearLPanneauActions"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:background="#33000000"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textVActions"
@@ -67,7 +67,7 @@
                     android:id="@+id/linearLayoutActions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"/>
+                    android:orientation="vertical"></LinearLayout>
 
             </ScrollView>
 

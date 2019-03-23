@@ -3,7 +3,6 @@ package com.cgest.ev3controller;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,7 +39,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
         this.scenario.setNom(scenario.getNom());
         //notifyItemRangeInserted(0, this.scenario.getEtapes().size() - 1);
         notifyDataSetChanged();
-        Log.e("Liste", "setScenario() fait.");
     }
 
     @Override
@@ -51,51 +49,16 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        Log.e("Liste", "onBindViewHolder");
-
         Etape etape = scenario.getEtapes().get(position);
         // On affiche les caractéristiques de l'étape sur la view.
         final ViewHolderEtape viewHolder = (ViewHolderEtape) holder;
 
         viewHolder.layoutActionTexteEtImage.setText(etape.getTexteAvecDetailsDescription());
 
-        // On vérifie si l'appareil est une tablette ou un smartphone.
-        boolean isTablette = Utile.isTablet(activity);
+        // On affiche l'image de l'action.
+        viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
 
-        String code = etape.getCode();
-        int idImage = 0;
-        // Si on avance ou recule pendant une durée...
-        if (code.matches("(A|R)\\.[0-9]+\\.0")) {
-            idImage = isTablette ? R.drawable.icon_horloge_45 : R.drawable.icon_horloge_35;
-        } // Si on avance ou recule une distance...
-        else if (code.matches("(A|R)\\.[0-9]+\\.1")) {
-            idImage = isTablette ? R.drawable.icon_regle_45 : R.drawable.icon_regle_35;
-        } // Si on avance / reculer jusqu'à détection d'un objet à proximité...
-        else if (code.matches("(A|R)\\.P+\\.[0-9]+")) {
-            idImage = isTablette ? R.drawable.icon_capteur_obstacle_45 : R.drawable.icon_capteur_obstacle_35;
-        } // Si on avance / reculer jusqu'à détection d'un toucher...
-        else if (code.matches("(A|R)\\.T")) {
-            idImage = isTablette ? R.drawable.icon_capteur_toucher_45 : R.drawable.icon_capteur_toucher_35;
-        } // Si on avance / reculer jusqu'à détection d'une couleur...
-        else if (code.matches("(A|R)\\.C\\.[a-z]+")) {
-            idImage = isTablette ? R.drawable.icon_capteur_couleur_45 : R.drawable.icon_capteur_couleur_35;
-        } // Si on fait une rotation à droite...
-        else if (code.matches("ROT\\.0\\.[0-9]+")) {
-            idImage = isTablette ? R.drawable.icon_droite_45 : R.drawable.icon_droite_35;
-        } // Si on fait une rotation à gauche...
-        else if (code.matches("ROT\\.1\\.[0-9]+")) {
-            idImage = isTablette ? R.drawable.icon_gauche_45 : R.drawable.icon_gauche_35;
-        } // Si on fait une pause...
-        else if (code.matches("P\\.[0-9]+")) {
-            idImage = isTablette ? R.drawable.icon_sablier_45 : R.drawable.icon_sablier_35;
-        } else if (code.equals("B")) {
-            idImage = isTablette ? R.drawable.icon_cloche_45 : R.drawable.icon_cloche_35;
-        } else if (code.equals("M")) {
-            idImage = isTablette ? R.drawable.icon_musique_45 : R.drawable.icon_musique_35;
-        }
-        if (idImage != 0)
-            viewHolder.layoutActionTexteEtImage.setCompoundDrawablesWithIntrinsicBounds(0, 0, idImage, 0);
-
+        // On active la possibilité de déplacer les actions grâce au drag and drop.
         viewHolder.imgVDeplacerAction.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -115,7 +78,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        Log.e("liste", String.valueOf(scenario.getEtapes().size()));
         return scenario.getEtapes().size();
     }
 
@@ -139,8 +101,6 @@ public class RecyclerViewAdapterScenario extends RecyclerView.Adapter<RecyclerVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e(TAG, scenario.getEtapes().get(getPosition()).getCode());
-
                     final Etape etape = scenario.getEtapes().get(getPosition());
 
                     // Si l'action possède des paramètres modifiables...

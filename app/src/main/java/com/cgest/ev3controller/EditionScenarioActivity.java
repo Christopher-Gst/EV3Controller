@@ -1,6 +1,7 @@
 package com.cgest.ev3controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -233,61 +236,31 @@ public class EditionScenarioActivity extends AppCompatActivity {
 
         // Pour chaque type d'action...
         for (final Etape etape : Scenario.TYPES_ACTIONS_UTILISABLES) {
-            // On créé un FameLayout représentant l'action, parent du bouton.
-            // On lui donne une apparence de bouton.
-            FrameLayout frameLayoutAction = new FrameLayout(activity, null, R.attr.buttonStyle);
+            // On charge en mémoire l'interface des boutons d'action.
+            LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            // On créé un Button contenant le texte et l'image de l'action.
-            // Le style du bouton est adapté en fonction du type d'appareil (tablette ou smartphone).
-            ContextThemeWrapper newContext = new ContextThemeWrapper(activity, R.style.btnAvecTexteEtImageCentresSmartphones);
-            Button buttonAction = new Button(newContext);
+            // On ajoute le bouton à la liste.
+            View viewActionButton = inflater.inflate(R.layout.layout_bouton_action, null);
+            linearLayoutActions.addView(viewActionButton);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    etape.getTexteDescription().equals("") ? ViewGroup.LayoutParams.WRAP_CONTENT : ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 0, 0);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
-            buttonAction.setBackgroundDrawable(null);
-            buttonAction.setLayoutParams(params);
-            buttonAction.setClickable(true);
+            // On spécifie le texte et l'image du bouton.
+            Button btnAction = (Button) viewActionButton.findViewById(R.id.btnAction);
+            btnAction.setText(etape.getTexteDescription());
+            btnAction.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
+            // Si l'action n'a pas de texte, on centre bien l'image en mettant l'espace entre le texte et l'image à 0.
+            if (etape.getTexteDescription().equals(""))
+                btnAction.setCompoundDrawablePadding(0);
 
-            // On affiche le texte et l'image de l'action.
-            buttonAction.setText(etape.getTexteDescription());
-            try {
-                buttonAction.setCompoundDrawablesWithIntrinsicBounds(0, 0, etape.getIdImageDescription(), 0);
-                float scale = getResources().getDisplayMetrics().density;
-                // On ajuste la distance de séparation du texte et de l'image.
-                int dpAsPixels = etape.getTexteDescription().equals("") ? 0 : ((int) ((Utile.isTablet(activity) ? 10 : 5) * scale + 0.5f));
-                buttonAction.setCompoundDrawablePadding(dpAsPixels);
-            } catch (android.content.res.Resources.NotFoundException e) {
-                e.printStackTrace();
-            }
-
-            // On ajoute le Button au FrameLayout.
-            frameLayoutAction.addView(buttonAction);
-
-            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params1.setMargins(0, 0, 0, 0);
-            params1.gravity = Gravity.CENTER;
-            frameLayoutAction.setLayoutParams(params1);
-
-            frameLayoutAction.setForegroundGravity(Gravity.CENTER);
-            frameLayoutAction.setPadding(0, 0, 0, 0);
-
-            // On ajoute le FrameLayout au LinearLayout de la liste des actions.
-            linearLayoutActions.addView(frameLayoutAction);
-
-            // On spécifie l'événement de click du FrameLayout (affichage d'un pop d'édition de l'action, si elle est paramétrable).
-            View.OnClickListener listenerAjoutAction = new View.OnClickListener() {
+            // On spéficie que le clic du framelayout provoque l'affichage d'un pop-up pour paramétrer l'action.
+            FrameLayout frameLayout = (FrameLayout) viewActionButton.findViewById(R.id.frameLBtnAction);
+            frameLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     afficherPopUpEditionEtape(etape, true);
                 }
-            };
-            frameLayoutAction.setOnClickListener(listenerAjoutAction);
-            buttonAction.setOnClickListener(listenerAjoutAction);
-
+            });
         }
+
     }
 
     private void initRecyclerView() {
