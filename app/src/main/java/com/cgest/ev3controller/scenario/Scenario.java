@@ -14,12 +14,11 @@ public class Scenario {
     // Nom du scénario, enregistré dans les préférences partagées de l'application.
     private String nom;
 
-    // Etapes constituant le scénario.
+    // Liste des étapes du scénario.
     private ArrayList<Etape> etapes;
 
     /*
-    Types d'actions que l'utilisateur peut ajouter à son scénario, qui apparaissent dans la liste de gauche,
-    dans le mode manuel.
+    Types d'actions que l'utilisateur peut ajouter à son scénario, qui apparaissent dans la liste de gauche du mode manuel.
     Ces types d'actions correspondent aux cartes de QR code mises à disposition sur le stand du robot.
      */
     public static final List<Etape> TYPES_ACTIONS_UTILISABLES = Collections.unmodifiableList(
@@ -56,8 +55,7 @@ public class Scenario {
 
     /**
      * Permet d'ajouter une étape au scénario.
-     *
-     * @param etape L'étape à ajouter.
+     * @param etape Etape à ajouter au scénario.
      */
     public void ajouterEtape(Etape etape) {
         etapes.add(etape);
@@ -65,9 +63,8 @@ public class Scenario {
 
     /**
      * Permet de supprimer une étape du scénario.
-     *
-     * @param etape L'étape à supprimer.
-     * @return
+     * @param etape Etape à supprimer du scénario.
+     * @return True si le scénario contenait l'étape spécifiée, sinon False.
      */
     public boolean supprimerEtape(Etape etape) {
         return etapes.remove(etape);
@@ -84,21 +81,10 @@ public class Scenario {
     }
 
     /**
-     * Permet d'intervertir deux étapes du scénario.
-     *
-     * @param indexEtapeA L'index dans le scénario de l'une des deux étapes à intervertir.
-     * @param indexEtapeB L'index dans le scénario de l'autre des deux étapes à intervertir.
-     */
-    public void intervertirEtapes(int indexEtapeA, int indexEtapeB) {
-        Collections.swap(etapes, indexEtapeA, indexEtapeA);
-    }
-
-    /**
-     * Permet d'obtenir le code d'un scénario.
-     * Les codes des différentes étapes sont séparés par un ";".
-     * Par conséquent, il n'y a pas de ";" à la fin de la chaîne.
-     *
-     * @return
+     * Permet d'obtenir le code du scénario. Le code est constitué de la concaténation des
+     * codes des étapes du scénario, séparés par un point-virgule. Attention, il n'y a pas de point-virgule
+     * à la fin du code.
+     * @return Le code du scénario.
      */
     public String getCode() {
         String code = "";
@@ -110,10 +96,9 @@ public class Scenario {
     }
 
     /**
-     * Permet d'obtenir une instance d'un nouveau Scenario à partir de son code.
-     *
-     * @param code Le code du scénario à obtenir.
-     * @return Le scénario associé au code passé en paramètre.S
+     * Permet d'obtenir une instance du scénario dont le code est passé en paramètre.
+     * @param code Le code du scénario.
+     * @return Une instance du scénario dont le code est passé en paramètre.
      */
     public static Scenario getScenarioFromCode(String code) {
         Scenario sc = new Scenario();
@@ -140,6 +125,10 @@ public class Scenario {
         this.nom = nom;
     }
 
+    /**
+     * Permet d'obtenir la liste des étapes du scénario.
+     * @return La liste des étapes du scénario.
+     */
     public ArrayList<Etape> getEtapes() {
         return etapes;
     }

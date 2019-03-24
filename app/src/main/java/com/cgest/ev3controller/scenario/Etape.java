@@ -5,20 +5,68 @@ import com.cgest.ev3controller.capteur.Capteur;
 
 public abstract class Etape implements Cloneable {
 
-    // Constructeur par defaut.
+    /**
+     * Constructeur par défaut.
+     */
     public Etape() {
     }
 
-    public abstract String getCode();
+    // ***** Description textuelle et imagée de l'étape. *****
 
+    /**
+     * Permet d'obtenir la description textuelle de l'étape affiché dans les boutons de la liste de gauche du mode manuel.
+     *
+     * @return
+     */
     public abstract String getTexteDescription();
 
+    /**
+     * Permet d'obtenir le nom de l'image de l'étape, au format "icon_XXX_[35 ou 45]"
+     * (35px pour un affichage sur téléphone et 45px pour un affichage sur tablette).
+     * Le nombre de pixels est calculé automatique en fonction du type d'appareil,
+     * grâce à l'appel de la méthode getSuffixeNomImageAction() de la classe Utile.
+     *
+     * @return Le nom de l'image de l'étape, au format "icon_XXX_[35 ou 45]"
+     */
     public String getNomImageDescription() {
         return Utile.getSuffixeNomImageAction();
     }
 
+    /**
+     * Permet d'obtenir la description textuelle de l'étape, avec plus de détails,
+     * affichée dans la liste de droite des modes manuel et scan.
+     * Par exemple, avec la méthode getTexteDescription(), on obtiendrait "Avancer",
+     * alors qu'avec cette méthode, on obtient "Avancer 20".
+     *
+     * @return
+     */
     public abstract String getTexteAvecDetailsDescription();
 
+    // ***** Gestion du code de l'étape. *****
+
+    /**
+     * Permet d'obtenir le code de l'étape (e.g. "A.20.0").
+     *
+     * @return
+     */
+    public abstract String getCode();
+
+    /**
+     * Permet de savoir si le code d'une étape est valide, autrement dit si un code correspond à une étape pouvant être réellement instanciée.
+     *
+     * @param code Le code à faire valider.
+     * @return True si le code correspond à une étape pouvant être réellement instanciée, sinon False.
+     */
+    public static boolean isCodeValide(String code) {
+        return code.matches(getRegex());
+    }
+
+    /**
+     * Permet d'obtenir un objet de type Etape à partir de son code.
+     *
+     * @param monEtapeStr Code de l'étape.
+     * @return L'objet Etape correspondant au code.
+     */
     public static Etape getEtapeFromCode(String monEtapeStr) {
         // On découpe le code de l'étape passée en paramètre avec le ".".
         String[] code = monEtapeStr.split("\\.");
@@ -59,13 +107,14 @@ public abstract class Etape implements Cloneable {
     }
 
     public static String getRegex() {
-        return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1)\\.[0-9]+)|(P\\.[0-9]+)|(B)|(M)";
+        return "((A|R)\\.[0-9]+\\.(0|1))|((A|R)\\.P+\\.[0-9]+)|((A|R)\\.T)|((A|R)\\.C\\.[a-z]+)|(ROT\\.(0|1|2|3)\\.[0-9]+)|(P\\.[0-9]+)|(B)|(M)";
     }
 
-    public static boolean isCodeValide(String code) {
-        return code.matches(getRegex());
-    }
-
+    /**
+     * Permet de créer une nouvelle étape dont les valeurs des attributs extactement les mêmes que ceux de l'instance actuelle.
+     *
+     * @return
+     */
     @Override
     public Object clone() {
         Object o = null;
