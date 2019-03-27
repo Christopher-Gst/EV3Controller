@@ -8,4 +8,6 @@ public interface EtapeParametrable {
 
     public void setParametre(Object param);
 
+    public Object getParametre();
+
 }

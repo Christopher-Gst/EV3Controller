@@ -38,6 +38,7 @@ import com.cgest.ev3controller.scenario.Scenario;
 import com.cgest.ev3controller.scenario.ScenarioManager;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.cgest.ev3controller.Utile.isTablet;
 
@@ -102,10 +103,12 @@ public class EditionScenarioActivity extends AppCompatActivity {
         btnEnregistrerScenario = (Button) findViewById(R.id.btnEnregistrerScenario);
         btnEditionScenarioOuvrirUnScenario = (Button) findViewById(R.id.btnEditionScenarioOuvrirUnScenario);
 
+        // On récupère les vues.
+        linearLayoutActions = (LinearLayout) findViewById(R.id.linearLayoutActions);
+
         // On affecte les vues restantes en fonction du mode(manuel ou scan).
         if (mode.equals("manuel")) {
-            // On récupère les vues.
-            linearLayoutActions = (LinearLayout) findViewById(R.id.linearLayoutActions);
+
             linearLPanneauActions = (LinearLayout) findViewById(R.id.linearLPanneauActions);
             imageVSeparationActionsScenario = (ImageView) findViewById(R.id.imageVSeparationActionsScenario);
             textVActions = (TextView) findViewById(R.id.textVActions);
@@ -158,6 +161,11 @@ public class EditionScenarioActivity extends AppCompatActivity {
                     }
                 }
             });
+
+             /* On charge le Linear Layout "linearLayoutActions" avec des boutons correspondant à tous
+            les types d'actions utilisables.
+             */
+            afficherBoutonsActions();
         }
 
         textVEditionScenarioNomDuScenario.setText(NOM_NOUVEAU_SCENARIO);
@@ -188,8 +196,6 @@ public class EditionScenarioActivity extends AppCompatActivity {
         btnEditionScenarioOuvrirUnScenario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG, String.valueOf(modifsNonEnregistrees));
-
                 // Si le scénario actuel contient des actions et que l'utilisateur a fait des modifications qu'il n'a pas enregistré...
                 if (modifsNonEnregistrees) {
                     // On informe l'utilisateur qu'il n'a pas enregistré le scénario.
@@ -296,11 +302,15 @@ public class EditionScenarioActivity extends AppCompatActivity {
             if (actionParamType instanceof Integer) {
                 dialogSaisieInfosAction.afficherSaisieNombre();
                 champDeSaisie = (EditText) dialogSaisieInfosAction.getChampSaisie();
+                if (((EtapeParametrable) etape).getParametre() != null && (Integer)((EtapeParametrable) etape).getParametre() != 0)
+                    ((EditText) champDeSaisie).setText(((EtapeParametrable) etape).getParametre().toString());
             } // Si le paramètre de l'action est une Couleur, on affiche un Spinner.
             else if (actionParamType instanceof Couleur) {
                 dialogSaisieInfosAction.setValeursListeChoix(Couleur.values());
                 dialogSaisieInfosAction.afficherListeChoix();
                 champDeSaisie = (Spinner) dialogSaisieInfosAction.getChampListeChoix();
+                if (((EtapeParametrable) etape).getParametre() != null)
+                    ((Spinner)  champDeSaisie).setSelection((Arrays.asList(Couleur.values())).indexOf((Couleur)((EtapeParametrable) etape).getParametre()));
             }
 
             // On affiche le message et le texte des boutons.

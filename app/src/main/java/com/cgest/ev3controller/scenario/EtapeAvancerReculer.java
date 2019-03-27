@@ -130,6 +130,20 @@ public abstract class EtapeAvancerReculer extends Etape implements EtapeParametr
     }
 
     @Override
+    public Object getParametre() {
+        // Si l'action n'est pas d'avancer/reculer jusqu'à détection de quelque chose...
+        if (getCapteur() == null) {
+            return valeur;
+        } else {
+            if (capteur instanceof CapteurCouleur)
+                return ((CapteurCouleur) capteur).getCouleur();
+            if (capteur instanceof CapteurProximite)
+                return ((CapteurProximite) capteur).getDistanceDetection();
+        }
+        return null;
+    }
+
+    @Override
     public Object clone() {
         EtapeAvancerReculer clone = null;
         // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()

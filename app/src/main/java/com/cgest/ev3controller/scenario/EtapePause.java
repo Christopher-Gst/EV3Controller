@@ -58,6 +58,10 @@ public class EtapePause extends Etape implements EtapeParametrable {
             setDuree((Integer) param);
     }
 
+    @Override
+    public Object getParametre() {
+        return getDuree();
+    }
 
     @Override
     public Object clone() {

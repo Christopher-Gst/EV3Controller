@@ -112,6 +112,11 @@ public class EtapeRotation extends Etape implements EtapeParametrable {
     }
 
     @Override
+    public Object getParametre() {
+        return getDegres();
+    }
+
+    @Override
     public Object clone() {
         EtapeRotation clone = null;
         // On récupère l'instance à renvoyer par l'appel de la méthode super.clone()

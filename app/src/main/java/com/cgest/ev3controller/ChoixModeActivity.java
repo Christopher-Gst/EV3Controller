@@ -41,7 +41,7 @@ public class ChoixModeActivity extends AppCompatActivity {
     private int idEtapeIntroCapteurs;
 
     // Boolean permettant de passer l'étape de la connexion au robot.
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

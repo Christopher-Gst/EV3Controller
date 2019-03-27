@@ -44,7 +44,7 @@
 
         <LinearLayout
             android:id="@+id/linearLPanneauActions"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="match_parent"
             android:background="#33000000"
             android:orientation="vertical"
