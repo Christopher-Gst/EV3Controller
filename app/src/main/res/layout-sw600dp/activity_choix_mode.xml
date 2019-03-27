@@ -107,7 +107,7 @@
             android:layout_marginTop="8dp"
             android:elevation="10dp"
             android:rotation="-20"
-            android:src="@drawable/logo_mode_manuel2"
+            android:src="@drawable/logo_mode_manuel"
             app:layout_constraintStart_toStartOf="@+id/btnModeManuel"
             app:layout_constraintTop_toTopOf="parent"></ImageView>
 
