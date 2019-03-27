@@ -27,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/btnChoixModeCredits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,6 @@
             android:id="@+id/btnModeManuel"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/button_background_home"
             android:paddingVertical="0dp"
             android:paddingLeft="100dp"
@@ -47,15 +46,13 @@
             android:textColor="#FFFFFF"
             android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/imgVModeManuel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btnModeScan"
             app:layout_constraintTop_toTopOf="@+id/imgVModeManuel" />
 
         <Button
             android:id="@+id/btnModeScan"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/button_background_home"
             android:paddingVertical="0dp"
             android:paddingLeft="115dp"
@@ -65,8 +62,7 @@
             android:textColor="#FFFFFF"
             android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/imgVModeScan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btnModeAuto"
             app:layout_constraintTop_toTopOf="@+id/imgVModeScan" />
 
         <Button
